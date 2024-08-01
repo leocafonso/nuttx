@@ -35,6 +35,13 @@ config ARCH_BOARD_ARDUINO_DUE
 		This options selects the Arduino DUE board featuring the Atmel
 		ATSAM3X8E MCU running at 84 MHz.
 
+config ARCH_BOARD_ARDUINO_R4_MINIMA
+	bool "Arduino R4 Minima"
+	depends on ARCH_CHIP_RA4M1
+	---help---
+		This options selects the Arduino R4 Minima board featuring the Renesas
+		R7FA4M1 MCU running at 48 MHz.
+
 config ARCH_BOARD_ARDUINO_M0
 	bool "Arduino M0"
 	depends on ARCH_CHIP_SAMD21G18A
@@ -3166,6 +3173,7 @@ config ARCH_BOARD
 	default "amber"                     if ARCH_BOARD_AMBER
 	default "arduino-mega2560"          if ARCH_BOARD_ARDUINO_MEGA2560
 	default "arduino-due"               if ARCH_BOARD_ARDUINO_DUE
+	default "arduino-due"               if ARCH_BOARD_ARDUINO_R4_MINIMA
 	default "arduino-m0"                if ARCH_BOARD_ARDUINO_M0
 	default "arduino-nano-33ble"        if ARCH_BOARD_ARDUINO_NANO_33BLE
 	default "arduino-nano-33ble-rev2"   if ARCH_BOARD_ARDUINO_NANO_33BLE_REV2
@@ -3805,6 +3813,9 @@ source "boards/arm/rp2040/adafruit-qt-py-rp2040/Kconfig"
 endif
 if ARCH_BOARD_ARDUINO_DUE
 source "boards/arm/sam34/arduino-due/Kconfig"
+endif
+if ARCH_BOARD_ARDUINO_R4_MINIMA
+source "boards/arm/ra4m1/arduino-r4-minima/Kconfig"
 endif
 if ARCH_BOARD_ARDUINO_M0
 source "boards/arm/samd2l2/arduino-m0/Kconfig"
@@ -4462,6 +4473,9 @@ source "boards/risc-v/hpm6000/hpm6360evk/Kconfig"
 endif
 if ARCH_BOARD_HPM6750EVK2
 source "boards/risc-v/hpm6750/hpm6750evk2/Kconfig"
+endif
+if ARCH_BOARD_AT32F437_MINI
+source "boards/arm/at32/at32f437-mini/Kconfig"
 endif
 if ARCH_BOARD_AT32F437_MINI
 source "boards/arm/at32/at32f437-mini/Kconfig"
