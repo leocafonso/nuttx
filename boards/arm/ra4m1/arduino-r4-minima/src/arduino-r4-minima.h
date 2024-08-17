@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/src/sam_userleds.c
+ * boards/arm/sam34/arduino-due/src/arduino-due.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,88 +18,58 @@
  *
  ****************************************************************************/
 
+#ifndef __BOARDS_ARM_RA4M1_ARDUINO_R4_MINIMA_SRC_H
+#define __BOARDS_ARM_RA4M1_ARDUINO_R4_MINIMA_SRC_H
+
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
+#include <nuttx/compiler.h>
 
 #include <stdint.h>
-#include <stdbool.h>
-#include <debug.h>
 
-#include "chip.h"
-#include "sam_gpio.h"
-#include "arduino-due.h"
+#include <arch/irq.h>
+#include <nuttx/irq.h>
 
-#include <arch/board/board.h>
-
-#ifndef CONFIG_ARCH_LEDS
 
 /****************************************************************************
- * Public Functions
+ * Pre-processor Definitions
+ ****************************************************************************/
+
+
+
+/****************************************************************************
+ * Public Types
  ****************************************************************************/
 
 /****************************************************************************
- * Name: board_userled_initialize
+ * Public Data
  ****************************************************************************/
 
-uint32_t board_userled_initialize(void)
-{
-  /* Configure LED1-2 GPIOs for output */
-
-  sam_configgpio(GPIO_LED_L);
-  sam_configgpio(GPIO_LED_RX);
-  sam_configgpio(GPIO_LED_TX);
-  return BOARD_NLEDS;
-}
+#ifndef __ASSEMBLY__
 
 /****************************************************************************
- * Name: board_userled
+ * Public Functions Definitions
  ****************************************************************************/
-
-void board_userled(int led, bool ledon)
-{
-  uint32_t ledcfg;
-
-  if (led == BOARD_LED_L)
-    {
-      ledcfg = GPIO_LED_RX;
-    }
-  else if (led == BOARD_LED_RX)
-    {
-      ledcfg = GPIO_LED_RX;
-      ledon = !ledon;
-    }
-  else if (led == BOARD_LED_TX)
-    {
-      ledcfg = GPIO_LED_TX;
-      ledon = !ledon;
-    }
-  else
-    {
-      return;
-    }
-
-  sam_gpiowrite(ledcfg, ledon);
-}
 
 /****************************************************************************
- * Name: board_userled_all
+ * Name: sam_bringup
+ *
+ * Description:
+ *   Perform architecture-specific initialization
+ *
+ *   CONFIG_BOARD_LATE_INITIALIZE=y :
+ *     Called from board_late_initialize().
+ *
+ *   CONFIG_BOARD_LATE_INITIALIZE=y && CONFIG_BOARDCTL=y :
+ *     Called from the NSH library
+ *
  ****************************************************************************/
 
-void board_userled_all(uint32_t ledset)
-{
-  bool ledon;
+int ra4m1_bringup(void);
 
-  ledon = ((ledset & BOARD_LED_L_BIT) != 0);
-  sam_gpiowrite(GPIO_LED_L, ledon);
 
-  ledon = ((ledset & BOARD_LED_RX_BIT) != 0);
-  sam_gpiowrite(GPIO_LED_RX, ledon);
-
-  ledon = ((ledset & BOARD_LED_TX_BIT) != 0);
-  sam_gpiowrite(GPIO_LED_TX, ledon);
-}
-
-#endif /* !CONFIG_ARCH_LEDS */
+#endif /* __ASSEMBLY__ */
+#endif /* __BOARDS_ARM_RA4M1_ARDUINO_R4_MINIMA_SRC_H */

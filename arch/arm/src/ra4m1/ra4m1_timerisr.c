@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/src/sam_appinit.c
+ * arch/arm/src/stm32f7/stm32_timerisr.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -24,53 +24,65 @@
 
 #include <nuttx/config.h>
 
-#include <sys/types.h>
-#include <nuttx/board.h>
+#include <stdint.h>
+#include <time.h>
+#include <debug.h>
+#include <nuttx/arch.h>
+#include <arch/board/board.h>
 
-#include "arduino-due.h"
+#include "nvic.h"
+#include "clock/clock.h"
+#include "arm_internal.h"
+#include "chip.h"
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
+
+
+/****************************************************************************
+ * Private Functions
+ ****************************************************************************/
+
 
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Name: board_app_initialize
+ * Function:  up_timer_initialize
  *
  * Description:
- *   Perform application specific initialization.  This function is never
- *   called directly from application code, but only indirectly via the
- *   (non-standard) boardctl() interface using the command BOARDIOC_INIT.
- *
- * Input Parameters:
- *   arg - The boardctl() argument is passed to the board_app_initialize()
- *         implementation without modification.  The argument has no
- *         meaning to NuttX; the meaning of the argument is a contract
- *         between the board-specific initialization logic and the
- *         matching application logic.  The value could be such things as a
- *         mode enumeration value, a set of DIP switch switch settings, a
- *         pointer to configuration data read from a file or serial FLASH,
- *         or whatever you would like to do with it.  Every implementation
- *         should accept zero/NULL as a default configuration.
- *
- * Returned Value:
- *   Zero (OK) is returned on success; a negated errno value is returned on
- *   any failure to indicate the nature of the failure.
+ *   This function is called during start-up to initialize the timer
+ *   interrupt.
  *
  ****************************************************************************/
 
-int board_app_initialize(uintptr_t arg)
+void up_timer_initialize(void)
 {
-#ifdef CONFIG_BOARD_LATE_INITIALIZE
-  /* Board initialization already performed by board_late_initialize() */
+  uint32_t regval;
 
-  return OK;
-#else
-  /* Perform board-specific initialization */
+  /* Configure SysTick to interrupt at the requested rate */
 
-  return sam_bringup();
-#endif
+  // putreg32(SYSTICK_RELOAD, NVIC_SYSTICK_RELOAD);
+  // putreg32(0, NVIC_SYSTICK_CURRENT);
+
+  // /* Attach the timer interrupt vector */
+
+  // //irq_attach(STM32_IRQ_SYSTICK, (xcpt_t)stm32_timerisr, NULL);
+
+  // /* Enable SysTick interrupts:
+  //  *
+  //  *   NVIC_SYSTICK_CTRL_CLKSOURCE=0 : Use the implementation defined clock
+  //  *                                   source which, for the STM32F7, will be
+  //  *                                   HCLK/8
+  //  *   NVIC_SYSTICK_CTRL_TICKINT=1   : Generate interrupts
+  //  *   NVIC_SYSTICK_CTRL_ENABLE      : Enable the counter
+  //  */
+
+  // regval = (NVIC_SYSTICK_CTRL_TICKINT | NVIC_SYSTICK_CTRL_ENABLE);
+  // putreg32(regval, NVIC_SYSTICK_CTRL);
+
+  /* And enable the timer interrupt */
+
 }

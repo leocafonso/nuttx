@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/src/sam_spidev.c
+ * boards/arm/sam34/arduino-due/src/sam_boot.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -22,25 +22,38 @@
  * Included Files
  ****************************************************************************/
 
-#include <debug.h>
-#include <arch/board/board.h>
+#include <nuttx/config.h>
 
-#include "sam_spi.h"
-#include "hardware/sam3x_pinmap.h"
+#include <debug.h>
+
+#include <nuttx/board.h>
+
+#include "arduino-r4-minima.h"
 
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
 
-void sam_spi0select(uint32_t devid, bool selected)
+
+/****************************************************************************
+ * Name: board_late_initialize
+ *
+ * Description:
+ *   If CONFIG_BOARD_LATE_INITIALIZE is selected, then an additional
+ *   initialization call will be performed in the boot-up sequence to a
+ *   function called board_late_initialize(). board_late_initialize() will be
+ *   called immediately after up_initialize() is called and just before the
+ *   initial application is started.  This additional initialization phase
+ *   may be used, for example, to initialize board-specific device drivers.
+ *
+ ****************************************************************************/
+
+#ifdef CONFIG_BOARD_LATE_INITIALIZE
+void board_late_initialize(void)
 {
-  spiinfo("devid: %08x CS: %s\n",
-          (unsigned int)devid, selected ? "assert" : "de-assert");
-  sam_gpiowrite(GPIO_SPI0_CS, !selected);
+  /* Perform board-specific initialization */
+
+  ra4m1_bringup();
 }
 
-uint8_t sam_spi0status(struct spi_dev_s *dev, uint32_t devid)
-{
-  spiinfo("Returning nothing\n");
-  return 0;
-}
+#endif

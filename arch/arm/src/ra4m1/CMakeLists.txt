@@ -1,5 +1,5 @@
 # ##############################################################################
-# boards/arm/nrf52/thingy91-nrf52/src/CMakeLists.txt
+# arch/arm/src/nrf53/CMakeLists.txt
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more contributor
 # license agreements.  See the NOTICE file distributed with this work for
@@ -18,8 +18,11 @@
 #
 # ##############################################################################
 
-set(SRCS ra4m1_boot.c ra4m1_bringup.c ra4m1_appinit.c)
+set(SRCS
+    ra4m1_start.c
+    ra4m1_irq.c
+    ra4m1_serial.c
+    ra4m1_timerisr.c
+    )
 
-target_sources(board PRIVATE ${SRCS})
-
-set_property(GLOBAL PROPERTY LD_SCRIPT "${NUTTX_BOARD_DIR}/scripts/arduino-r4-minima.ld")
+target_sources(arch PRIVATE ${SRCS})

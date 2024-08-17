@@ -32,40 +32,14 @@
 #include <nuttx/leds/userled.h>
 #include <nuttx/spi/spi_transfer.h>
 
-#include "arduino-due.h"
+#include "arduino-r4-minima.h"
 
 #include <arch/board/board.h>
-#include "sam_spi.h"
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-#undef HAVE_LEDS
-
-#if !defined(CONFIG_ARCH_LEDS) && defined(CONFIG_USERLED_LOWER)
-#  define HAVE_LEDS 1
-#endif
-
-#if defined(CONFIG_ARDUINO_ITHEAD_TFT) && defined(CONFIG_SPI_BITBANG) && \
-    defined(CONFIG_MMCSD_SPI)
-
-/* Support for the SD card slot on the ITEAD TFT shield */
-
-/* Verify NSH PORT and SLOT settings */
-
-#  define SAM34_MMCSDSLOTNO    0 /* There is only one slot */
-
-#  if defined(CONFIG_NSH_MMCSDSLOTNO) && CONFIG_NSH_MMCSDSLOTNO != SAM34_MMCSDSLOTNO
-#    error Only one MMC/SD slot:  Slot 0 (CONFIG_NSH_MMCSDSLOTNO)
-#  endif
-
-/* Default MMC/SD minor number */
-
-#  ifndef CONFIG_NSH_MMCSDMINOR
-#    define CONFIG_NSH_MMCSDMINOR 0
-#  endif
-#endif
 
 /****************************************************************************
  * Public Functions
@@ -85,77 +59,9 @@
  *
  ****************************************************************************/
 
-int sam_bringup(void)
+int ra4m1_bringup(void)
 {
   int ret;
-
-#ifdef CONFIG_FS_PROCFS
-
-  /* Mount the procfs file system */
-
-  ret = nx_mount(NULL, "/proc", "procfs", 0, NULL);
-  if (ret < 0)
-    {
-      syslog(LOG_ERR, "ERROR: Failed to mount procfs at /proc: %d\n",
-            ret);
-    }
-#endif
-
-#if defined(CONFIG_ARDUINO_ITHEAD_TFT) && defined(CONFIG_SPI_BITBANG) && \
-    defined(CONFIG_MMCSD_SPI)
-
-  /* Initialize the SPI-based MMC/SD slot */
-
-  int ret = sam_sdinitialize(CONFIG_NSH_MMCSDMINOR);
-  if (ret < 0)
-    {
-      syslog(LOG_ERR,
-             "board_app_initialize: Failed to initialize MMC/SD slot: %d\n",
-             ret);
-      return ret;
-    }
-#endif
-
-#if defined(CONFIG_ARDUINO_ITHEAD_TFT) && defined(CONFIG_SPI_BITBANG) && \
-    defined(CONFIG_INPUT_ADS7843E)
-  /* Initialize the touchscreen */
-
-  ret = sam_tsc_setup(0);
-  if (ret < 0)
-    {
-      syslog(LOG_ERR, "ERROR: sam_tsc_setup failed: %d\n", ret);
-    }
-#endif
-
-#ifdef HAVE_LEDS
-  board_userled_initialize();
-
-  /* Register the LED driver */
-
-  ret = userled_lower_initialize(LED_DRIVER_PATH);
-  if (ret < 0)
-    {
-      syslog(LOG_ERR, "ERROR: userled_lower_initialize() failed: %d\n", ret);
-      return ret;
-    }
-#endif
-
-#ifdef CONFIG_SAM34_SPI0
-  sam_configgpio(GPIO_SPI0_CS);
-
-  struct spi_dev_s *spi;
-  spi = sam_spibus_initialize(0);
-
-  if (!spi)
-    {
-      syslog(LOG_ERR, "ERROR: Failed to initialize SPI port 0\n");
-      return -1;
-    }
-  else
-    {
-      spi_register(spi, 0);
-    }
-#endif
 
   UNUSED(ret);
   return OK;

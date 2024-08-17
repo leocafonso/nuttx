@@ -33,7 +33,7 @@
  */
 
 #include <arch/ra4m1/chip.h>
-#include "hardware/ra4_memorymap.h"
+// #include "hardware/ra4_memorymap.h"
 
 /* Include the chip interrupt definition file */
 
@@ -48,6 +48,6 @@
  * IRQ header file included by arch/ra4m1/irq.h.
  */
 
-//#define ARMV7M_PERIPHERAL_INTERRUPTS  SAM_IRQ_NEXTINT
+#define ARMV7M_PERIPHERAL_INTERRUPTS  53
 
 #endif /* __ARCH_ARM_SRC_RA4M1_CHIP_H */

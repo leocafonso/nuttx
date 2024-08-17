@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/sam34/sam_start.c
+ * arch/arm/src/stm32f0l0g0/stm32_start.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -29,47 +29,21 @@
 #include <debug.h>
 
 #include <nuttx/init.h>
+#include <arch/board/board.h>
+#include <arm_internal.h>
 
-#include "arm_internal.h"
-#include "nvic.h"
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-/* .data is positioned first in the primary RAM followed immediately by .bss.
- * The IDLE thread stack lies just after .bss and has size give by
- * CONFIG_IDLETHREAD_STACKSIZE;  The heap then begins just after the IDLE.
- * ARM EABI requires 64 bit stack alignment.
- */
-
-#define HEAP_BASE      ((uintptr_t)_ebss + CONFIG_IDLETHREAD_STACKSIZE)
+#define IDLE_STACK ((uint32_t)_ebss + CONFIG_IDLETHREAD_STACKSIZE)
 
 /****************************************************************************
  * Public Data
  ****************************************************************************/
 
-/* g_idle_topstack: _sbss is the start of the BSS region as defined by the
- * linker script. _ebss lies at the end of the BSS region. The idle task
- * stack starts at the end of BSS and is of size CONFIG_IDLETHREAD_STACKSIZE.
- * The IDLE thread is the thread that the system boots on and, eventually,
- * becomes the IDLE, do nothing task that runs only when there is nothing
- * else to run.  The heap continues from there until the end of memory.
- * g_idle_topstack is a read-only variable the provides this computed
- * address.
- */
-
-const uintptr_t g_idle_topstack = HEAP_BASE;
-
-/****************************************************************************
- * Private Function prototypes
- ****************************************************************************/
-
-#ifdef CONFIG_ARMV7M_STACKCHECK
-/* We need to get r10 set before we can allow instrumentation calls */
-
-void __start(void) noinstrument_function;
-#endif
+const uintptr_t g_idle_topstack = IDLE_STACK;
 
 /****************************************************************************
  * Private Functions
@@ -79,7 +53,7 @@ void __start(void) noinstrument_function;
  * Name: showprogress
  *
  * Description:
- *   Print a character on the UART to show boot status.
+ *   Print a character on the CONSOLE USART to show boot status.
  *
  ****************************************************************************/
 
@@ -106,19 +80,11 @@ void __start(void)
   const uint32_t *src;
   uint32_t *dest;
 
-#ifdef CONFIG_SMP
-  /* Disable CMCC0 */
+  /* Configure the uart so that we can get debug output as soon as possible */
 
-  putreg32(0, 0x4007c008);
-  while ((getreg32(0x4007c00c) & 0x01) != 0);
-#endif
-
-#ifdef CONFIG_ARMV7M_STACKCHECK
-  /* Set the stack limit before we attempt to call any functions */
-
-  __asm__ volatile("sub r10, sp, %0" : :
-                   "r"(CONFIG_IDLETHREAD_STACKSIZE - 64) :);
-#endif
+  // stm32_clockconfig();
+  // stm32_lowsetup();
+  showprogress('A');
 
   /* Clear .bss.  We'll do this inline (vs. calling memset) just to be
    * certain that there are no issues with the state of global variables.
@@ -128,6 +94,8 @@ void __start(void)
     {
       *dest++ = 0;
     }
+
+  showprogress('B');
 
   /* Move the initialized data section from his temporary holding spot in
    * FLASH into the correct place in SRAM.  The correct place in SRAM is
@@ -142,37 +110,18 @@ void __start(void)
       *dest++ = *src++;
     }
 
-  /* Copy any necessary code sections from FLASH to RAM.  The correct
-   * destination in SRAM is given by _sramfuncs and _eramfuncs.  The
-   * temporary location is in flash after the data initialization code
-   * at _framfuncs.  This must be done before sam_clockconfig() can be
-   * called (at least for the SAM4L family).
-   */
+  showprogress('C');
 
-#ifdef CONFIG_ARCH_RAMFUNCS
-  for (src = (const uint32_t *)_framfuncs,
-       dest = (uint32_t *)_sramfuncs; dest < (uint32_t *)_eramfuncs;
-      )
-    {
-      *dest++ = *src++;
-    }
+#ifdef CONFIG_ARCH_PERF_EVENTS
+  up_perf_init((void *)STM32_SYSCLK_FREQUENCY);
 #endif
-
-#ifdef CONFIG_ARMV7M_STACKCHECK
-  arm_stack_check_init();
-#endif
-
-  /* Configure the UART so that we can get debug output as soon as possible */
-
-  // TODO: Add Serial initialization
-  showprogress('A');
 
   /* Perform early serial initialization */
 
 #ifdef USE_EARLYSERIALINIT
-  arm_earlyserialinit();
+  // arm_earlyserialinit();
 #endif
-  showprogress('B');
+  showprogress('D');
 
   /* For the case of the separate user-/kernel-space build, perform whatever
    * platform specific initialization of the user memory is required.
@@ -181,14 +130,14 @@ void __start(void)
    */
 
 #ifdef CONFIG_BUILD_PROTECTED
-  sam_userspace();
-  showprogress('C');
+  // stm32_userspace();
+  showprogress('E');
 #endif
 
   /* Initialize onboard resources */
 
-  // TODO: Add Arduino Uno R4 board initialization
-  showprogress('D');
+  // stm32_boardinitialize();
+  showprogress('F');
 
   /* Then start NuttX */
 

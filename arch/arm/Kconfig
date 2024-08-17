@@ -317,7 +317,7 @@ config ARCH_CHIP_NUC1XX
 	---help---
 		Nuvoton NUC100/120 architectures (ARM Cortex-M0).
 
-config ARCH_CHIP_R4M1
+config ARCH_CHIP_RA4M1
 	bool "Renesas RA4M1"
 	select ARCH_CORTEXM4
 	select ARCH_BOARD_COMMON
