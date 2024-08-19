@@ -31,6 +31,7 @@
 #include <nuttx/init.h>
 #include <arch/board/board.h>
 #include <arm_internal.h>
+#include "ra4m1_clockconfig.h"
 
 
 /****************************************************************************
@@ -82,7 +83,7 @@ void __start(void)
 
   /* Configure the uart so that we can get debug output as soon as possible */
 
-  // stm32_clockconfig();
+  ra4m1_clockconfig();
   // stm32_lowsetup();
   showprogress('A');
 

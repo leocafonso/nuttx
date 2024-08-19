@@ -32,11 +32,15 @@
 
 #include "arm_internal.h"
 #include "ra4m1_clockconfig.h"
+#include "hardware/ra4m1_flash.h"
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
-
+/* Key code for writing PRCR register. */
+#define BSP_PRV_PRCR_KEY                        (0xA500U)
+#define BSP_PRV_PRCR_UNLOCK                     ((BSP_PRV_PRCR_KEY) | 0x3U)
+#define BSP_PRV_PRCR_LOCK                       ((BSP_PRV_PRCR_KEY) | 0x0U)
 
 /****************************************************************************
  * Public Data
@@ -70,5 +74,5 @@
 
 void ra4m1_clockconfig(void)
 {
- 
+ modifyreg32(RA4M1_FCACHEE_REG, RA4M1_FCACHEEN, 0);
 }
