@@ -33,7 +33,7 @@
  */
 
 #include <arch/ra4m1/chip.h>
-// #include "hardware/ra4_memorymap.h"
+#include "hardware/ra4m1_memorymap.h"
 
 /* Include the chip interrupt definition file */
 

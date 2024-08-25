@@ -29,8 +29,9 @@
 #include <debug.h>
 
 #include <nuttx/init.h>
-#include <arch/board/board.h>
-#include <arm_internal.h>
+#include "arch/board/board.h"
+#include "arm_internal.h"
+#include "nvic.h"
 #include "ra4m1_clockconfig.h"
 
 

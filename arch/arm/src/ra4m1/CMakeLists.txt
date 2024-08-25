@@ -20,10 +20,10 @@
 
 set(SRCS
     ra4m1_start.c
-    ra4m1_irq.c
     ra4m1_serial.c
     ra4m1_timerisr.c
     ra4m1_clockconfig.c
+    ra4m1_irq.c
     )
 
 target_sources(arch PRIVATE ${SRCS})

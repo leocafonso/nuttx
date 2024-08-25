@@ -33,24 +33,17 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
-/* FCACHE register offsets ****************************************************/
-
-                                          /* 0x0000-0x0100 Reserved */
-#define RA4M1_FCACHEE_OFFSET       0x0100 /* Flash Cache Enable Register */
-#define RA4M1_FCACHEIV_OFFSET      0x0104 /* Flash Cache Invalidate Register */
-
-/* Register Addresses *******************************************************/
-
-#define RA4M1_FCACHEE_REG              (R_FCACHE_BASE+RA4M1_FCACHEE_OFFSET)
-#define RA4M1_FCACHEIV_REG             (R_FCACHE_BASE+RA4M1_FCACHEIV_OFFSET)
-
-/* FCACHE register bit definitions ********************************************/
-
-/* Flash Cache Enable Register (16-bit value) */
-#define RA4M1_FCACHEEN         (1 << 0)  /* Bit 0: FCACHE Enable */
-
-/* Flash Cache Enable Register (16-bit value) */
-#define RA4M1_FCACHEIV         (1 << 0)  /* Bit 0: Flash Cache Invalidate */
+/* FCACHE - Flash Cache */
+#define R_FCACHE_FCACHEE_OFFSET           0x0100
+#define R_FCACHE_FCACHEE                  (R_FCACHE_BASE + R_FCACHE_FCACHEE_OFFSET)
+#define R_FCACHE_FCACHEE_FCACHEEN         (1 <<  0) /* 01: FCACHE Enable */
+#define R_FCACHE_FCACHEIV_OFFSET          0x0104
+#define R_FCACHE_FCACHEIV                 (R_FCACHE_BASE + R_FCACHE_FCACHEIV_OFFSET)
+#define R_FCACHE_FCACHEIV_FCACHEIV        (1 <<  0) /* 01: FCACHE Invalidation */
+#define R_FCACHE_FLWT_OFFSET              0x011c
+#define R_FCACHE_FLWT                     (R_FCACHE_BASE + R_FCACHE_FLWT_OFFSET)
+#define R_FCACHE_FLWT_FLWT                (3 <<  0) /* 01: These bits represent the ratio of the CPU clock period to the Flash memory access time. */
+#define R_FCACHE_FLWT_FLWT_MASK           (0x07)
 
 
 #endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H */

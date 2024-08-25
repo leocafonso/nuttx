@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/scripts/arduino-due.ld
+ * boards/arm/ra4m1/arduino-r4-minima/scripts/arduino-r4-minima.ld
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -24,10 +24,8 @@
 
 MEMORY
 {
-  flash (rx)   : ORIGIN = 0x00000000, LENGTH = 512K
-  sram0 (rwx)  : ORIGIN = 0x20000000, LENGTH = 64K
-  sram1 (rwx)  : ORIGIN = 0x20080000, LENGTH = 32K
-  nfcram (rwx) : ORIGIN = 0x20100000, LENGTH = 4K
+  flash (rx)   : ORIGIN = 0x00000000, LENGTH = 256K
+  sram (rwx)  : ORIGIN = 0x20000000, LENGTH = 32K
 }
 
 OUTPUT_ARCH(arm)
@@ -39,6 +37,8 @@ SECTIONS
     {
         _stext = ABSOLUTE(.);
         *(.vectors)
+        . = _stext + 0x400;
+        KEEP(*(.rom_registers*))
         *(.text .text.*)
         *(.fixup)
         *(.gnu.warning)
@@ -80,18 +80,9 @@ SECTIONS
         CONSTRUCTORS
         . = ALIGN(4);
         _edata = ABSOLUTE(.);
-    } > sram0 AT > flash
+    } > sram AT > flash
 
     _eronly = LOADADDR(.data);
-
-    .ramfunc ALIGN(4):
-    {
-        _sramfuncs = ABSOLUTE(.);
-        *(.ramfunc  .ramfunc.*)
-        _eramfuncs = ABSOLUTE(.);
-    } > sram0 AT > flash
-
-    _framfuncs = LOADADDR(.ramfunc);
 
     .bss :
     {
@@ -101,7 +92,7 @@ SECTIONS
         *(COMMON)
         . = ALIGN(4);
         _ebss = ABSOLUTE(.);
-    } > sram0
+    } > sram
 
     /* Stabs debugging sections. */
 

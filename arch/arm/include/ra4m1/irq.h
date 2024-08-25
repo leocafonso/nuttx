@@ -44,29 +44,32 @@
 
 /* Common Processor Exceptions (vectors 0-15) */
 
-#define RA4_IRQ_RESERVED       (0) /* Reserved vector (only used with CONFIG_DEBUG_FEATURES) */
+#define RA4M1_IRQ_RESERVED       (0) /* Reserved vector (only used with CONFIG_DEBUG_FEATURES) */
                                    /* Vector  0: Reset stack pointer value */
                                    /* Vector  1: Reset (not handler as an IRQ) */
-#define RA4_IRQ_NMI            (2) /* Vector  2: Non-Maskable Interrupt (NMI) */
-#define RA4_IRQ_HARDFAULT      (3) /* Vector  3: Hard fault */
-#define RA4_IRQ_MEMFAULT       (4) /* Vector  4: Memory management (MPU) */
-#define RA4_IRQ_BUSFAULT       (5) /* Vector  5: Bus fault */
-#define RA4_IRQ_USAGEFAULT     (6) /* Vector  6: Usage fault */
-#define RA4_IRQ_SVCALL        (11) /* Vector 11: SVC call */
-#define RA4_IRQ_DBGMONITOR    (12) /* Vector 12: Debug Monitor */
+#define RA4M1_IRQ_NMI            (2) /* Vector  2: Non-Maskable Interrupt (NMI) */
+#define RA4M1_IRQ_HARDFAULT      (3) /* Vector  3: Hard fault */
+#define RA4M1_IRQ_MEMFAULT       (4) /* Vector  4: Memory management (MPU) */
+#define RA4M1_IRQ_BUSFAULT       (5) /* Vector  5: Bus fault */
+#define RA4M1_IRQ_USAGEFAULT     (6) /* Vector  6: Usage fault */
+#define RA4M1_IRQ_SVCALL        (11) /* Vector 11: SVC call */
+#define RA4M1_IRQ_DBGMONITOR    (12) /* Vector 12: Debug Monitor */
                                    /* Vector 13: Reserved */
-#define RA4_IRQ_PENDSV        (14) /* Vector 14: Pendable system service request */
-#define RA4_IRQ_SYSTICK       (15) /* Vector 15: System tick */
+#define RA4M1_IRQ_PENDSV        (14) /* Vector 14: Pendable system service request */
+#define RA4M1_IRQ_SYSTICK       (15) /* Vector 15: System tick */
 
 /* Chip-Specific External interrupts */
 
-#define RA4_IRQ_EXTINT        (16) /* Vector number of the first external interrupt */
+#define RA4M1_IRQ_FIRST        (16) /* Vector number of the first external interrupt */
+
 
 #if defined(CONFIG_ARCH_CHIP_R7FA4M1ABxxFP)
 #  include <arch/ra4m1/ra4m1_irq.h>
 #else
-#  error Unrecognized SAM architecture
+#  error Unrecognized RA4M1 architecture
 #endif
+
+#define NR_IRQS               (RA4M1_IRQ_FIRST + RA4M1_IRQ_NEXTINT)
 
 /****************************************************************************
  * Public Types

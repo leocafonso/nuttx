@@ -28,16 +28,48 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-
+#include <nuttx/config.h>
+#include <nuttx/irq.h>
+#include <arch/ra4m1/chip.h>
 /****************************************************************************
  * Pre-processor Prototypes
  ****************************************************************************/
 
 
 /* Total number of IRQ numbers */
-
-#define NR_IRQS               0
-
+#  define RA4M1_IRQ_IELSR0       (RA4M1_IRQ_FIRST + 0)  /* 0:  Event selected in the ICU.IELSR0 register */
+#  define RA4M1_IRQ_IELSR1       (RA4M1_IRQ_FIRST + 1)  /* 1:  Event selected in the ICU.IELSR1 register */
+#  define RA4M1_IRQ_IELSR2       (RA4M1_IRQ_FIRST + 2)  /* 2:  Event selected in the ICU.IELSR2 register */
+#  define RA4M1_IRQ_IELSR3       (RA4M1_IRQ_FIRST + 3)  /* 3:  Event selected in the ICU.IELSR3 register */
+#  define RA4M1_IRQ_IELSR4       (RA4M1_IRQ_FIRST + 4)  /* 4:  Event selected in the ICU.IELSR4 register */
+#  define RA4M1_IRQ_IELSR5       (RA4M1_IRQ_FIRST + 5)  /* 5:  Event selected in the ICU.IELSR5 register */
+#  define RA4M1_IRQ_IELSR6       (RA4M1_IRQ_FIRST + 6)  /* 6:  Event selected in the ICU.IELSR6 register */
+#  define RA4M1_IRQ_IELSR7       (RA4M1_IRQ_FIRST + 7)  /* 7:  Event selected in the ICU.IELSR7 register */
+#  define RA4M1_IRQ_IELSR8       (RA4M1_IRQ_FIRST + 8)  /* 8:  Event selected in the ICU.IELSR8 register */
+#  define RA4M1_IRQ_IELSR9       (RA4M1_IRQ_FIRST + 9)  /* 9:  Event selected in the ICU.IELSR9 register */
+#  define RA4M1_IRQ_IELSR10      (RA4M1_IRQ_FIRST + 10)  /* 10:  Event selected in the ICU.IELSR10 register */
+#  define RA4M1_IRQ_IELSR11      (RA4M1_IRQ_FIRST + 11)  /* 11:  Event selected in the ICU.IELSR11 register */
+#  define RA4M1_IRQ_IELSR12      (RA4M1_IRQ_FIRST + 12)  /* 12:  Event selected in the ICU.IELSR12 register */
+#  define RA4M1_IRQ_IELSR13      (RA4M1_IRQ_FIRST + 13)  /* 13:  Event selected in the ICU.IELSR13 register */
+#  define RA4M1_IRQ_IELSR14      (RA4M1_IRQ_FIRST + 14)  /* 14:  Event selected in the ICU.IELSR14 register */
+#  define RA4M1_IRQ_IELSR15      (RA4M1_IRQ_FIRST + 15)  /* 15:  Event selected in the ICU.IELSR15 register */
+#  define RA4M1_IRQ_IELSR16      (RA4M1_IRQ_FIRST + 16)  /* 16:  Event selected in the ICU.IELSR16 register */
+#  define RA4M1_IRQ_IELSR17      (RA4M1_IRQ_FIRST + 17)  /* 17:  Event selected in the ICU.IELSR17 register */
+#  define RA4M1_IRQ_IELSR18      (RA4M1_IRQ_FIRST + 18)  /* 18:  Event selected in the ICU.IELSR18 register */
+#  define RA4M1_IRQ_IELSR19      (RA4M1_IRQ_FIRST + 19)  /* 19:  Event selected in the ICU.IELSR19 register */
+#  define RA4M1_IRQ_IELSR20      (RA4M1_IRQ_FIRST + 20)  /* 20:  Event selected in the ICU.IELSR20 register */
+#  define RA4M1_IRQ_IELSR21      (RA4M1_IRQ_FIRST + 21)  /* 21:  Event selected in the ICU.IELSR21 register */
+#  define RA4M1_IRQ_IELSR22      (RA4M1_IRQ_FIRST + 22)  /* 22:  Event selected in the ICU.IELSR22 register */
+#  define RA4M1_IRQ_IELSR23      (RA4M1_IRQ_FIRST + 23)  /* 23:  Event selected in the ICU.IELSR23 register */
+#  define RA4M1_IRQ_IELSR24      (RA4M1_IRQ_FIRST + 24)  /* 24:  Event selected in the ICU.IELSR24 register */
+#  define RA4M1_IRQ_IELSR25      (RA4M1_IRQ_FIRST + 25)  /* 25:  Event selected in the ICU.IELSR25 register */
+#  define RA4M1_IRQ_IELSR26      (RA4M1_IRQ_FIRST + 26)  /* 26:  Event selected in the ICU.IELSR26 register */
+#  define RA4M1_IRQ_IELSR27      (RA4M1_IRQ_FIRST + 27)  /* 27:  Event selected in the ICU.IELSR27 register */
+#  define RA4M1_IRQ_IELSR28      (RA4M1_IRQ_FIRST + 28)  /* 28:  Event selected in the ICU.IELSR28 register */
+#  define RA4M1_IRQ_IELSR29      (RA4M1_IRQ_FIRST + 29)  /* 29:  Event selected in the ICU.IELSR29 register */
+#  define RA4M1_IRQ_IELSR30      (RA4M1_IRQ_FIRST + 30)  /* 30:  Event selected in the ICU.IELSR30 register */
+#  define RA4M1_IRQ_IELSR31      (RA4M1_IRQ_FIRST + 31)  /* 31:  Event selected in the ICU.IELSR31 register */
+#  define RA4M1_IRQ_NEXTINT      (32)
 /****************************************************************************
  * Public Types
  ****************************************************************************/

@@ -31,6 +31,7 @@
 #include <nuttx/irq.h>
 #include <nuttx/arch.h>
 #include <arch/irq.h>
+#include <arch/armv7-m/nvicpri.h>
 
 #include "nvic.h"
 #include "arm_internal.h"
@@ -52,10 +53,29 @@
 
 void up_irqinitialize(void)
 {
+  uint32_t regaddr;
+  int num_priority_registers;
+  int i;
 
+  /* Disable all interrupts */
+
+  for (i = 0; i < NR_IRQS - RA4M1_IRQ_FIRST; i += 32)
+    {
+      putreg32(0xffffffff, NVIC_IRQ_CLEAR(i));
+    }
+
+  putreg32((uint32_t)_vectors, NVIC_VECTAB);
+
+  /* Attach the SVCall and Hard Fault exception handlers.  The SVCall
+   * exception is used for performing context switches; The Hard Fault
+   * must also be caught because a SVCall may show up as a Hard Fault
+   * under certain conditions.
+   */
+
+  irq_attach(RA4M1_IRQ_SVCALL, arm_svcall, NULL);
+  irq_attach(RA4M1_IRQ_HARDFAULT, arm_hardfault, NULL);
 
   /* And finally, enable interrupts */
-
   up_irq_enable();
 
 }

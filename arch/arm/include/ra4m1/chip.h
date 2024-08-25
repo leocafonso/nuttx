@@ -44,7 +44,7 @@
 /* Internal memory */
 
 #  define RA4M1_FLASH_SIZE            (256*1024)   /* 256KB */
-#  define SAM34_SRAM0_SIZE            (48*1024)    /* 48KB */
+#  define RA4M1_SRAM0_SIZE            (48*1024)    /* 48KB */
 
 /* FEATURE      R7FA4M1ABxxFP  R7FA4M1ABxxLJ  R7FA4M1ABxxFM R7FA4M1ABxxNB R7FA4M1ABxxFL R7FA4M1ABxxNE R7FA4M1ABxxNF
  * -----------  -------------  -------------  ------------- ------------- ------------- ------------- -------------
