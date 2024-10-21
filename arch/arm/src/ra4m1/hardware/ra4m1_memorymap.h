@@ -89,7 +89,7 @@
  #define R_MPU_MMPU_BASE     0x40000000UL
  #define R_MPU_SMPU_BASE     0x40000C00UL
  #define R_MPU_SPMON_BASE    0x40000D00UL
- #define R_MSTP_BASE         (0x40047000UL - 4UL) /* MSTPCRA is not located in R_MSTP so the base address must be moved so that MSTPCRB is located at 0x40047000. */
+ #define R_MSTP_BASE         0x40047000UL 
  #define R_OPAMP_BASE        0x40086000UL
  #define R_PORT0_BASE        0x40040000UL
  #define R_PORT1_BASE        0x40040020UL

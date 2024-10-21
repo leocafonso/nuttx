@@ -84,9 +84,7 @@ void __start(void)
 
   /* Configure the uart so that we can get debug output as soon as possible */
 
-  ra4m1_clockconfig();
-  // stm32_lowsetup();
-  showprogress('A');
+
 
   /* Clear .bss.  We'll do this inline (vs. calling memset) just to be
    * certain that there are no issues with the state of global variables.
@@ -97,7 +95,6 @@ void __start(void)
       *dest++ = 0;
     }
 
-  showprogress('B');
 
   /* Move the initialized data section from his temporary holding spot in
    * FLASH into the correct place in SRAM.  The correct place in SRAM is
@@ -112,18 +109,22 @@ void __start(void)
       *dest++ = *src++;
     }
 
-  showprogress('C');
+  ra4m1_clockconfig();
+  arm_fpuconfig();
+  ra4m1_lowsetup();
+  showprogress('A');
 
 #ifdef CONFIG_ARCH_PERF_EVENTS
   up_perf_init((void *)STM32_SYSCLK_FREQUENCY);
 #endif
+  showprogress('B');
+
 
   /* Perform early serial initialization */
-
 #ifdef USE_EARLYSERIALINIT
-  // arm_earlyserialinit();
+  arm_earlyserialinit();
 #endif
-  showprogress('D');
+  showprogress('C');
 
   /* For the case of the separate user-/kernel-space build, perform whatever
    * platform specific initialization of the user memory is required.
@@ -133,13 +134,13 @@ void __start(void)
 
 #ifdef CONFIG_BUILD_PROTECTED
   // stm32_userspace();
-  showprogress('E');
+  showprogress('D');
 #endif
 
   /* Initialize onboard resources */
 
   // stm32_boardinitialize();
-  showprogress('F');
+  showprogress('E');
 
   /* Then start NuttX */
 

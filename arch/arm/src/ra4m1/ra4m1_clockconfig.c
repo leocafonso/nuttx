@@ -40,6 +40,19 @@ static const uint32_t g_bsp_rom_registers[]  __attribute__((section(".rom_regist
 {
     (uint32_t) 0xFFFFFFFF,
     (uint32_t) 0xFFFFAEC3, /* HOCO = 32 MHz. Voltage Detection 0 = 3.84 V */
+    (uint32_t) 0x00FFFFFC,
+    (uint32_t) 0x00FFFFFF,
+    (uint32_t) 0x00FFFFFC,
+    (uint32_t) 0x00FFFFFF,
+    (uint32_t) 0x00FFFFFC,
+    (uint32_t) 0x00FFFFFF,
+    (uint32_t) 0x200FFFFC,
+    (uint32_t) 0x200FFFFF,
+    (uint32_t) 0x407FFFFC,
+    (uint32_t) 0x407FFFFF,
+    (uint32_t) 0x400DFFFC,
+    (uint32_t) 0x400DFFFF,
+    (uint32_t) 0xffffffff
 };
 
 /****************************************************************************
@@ -99,4 +112,10 @@ void ra4m1_clockconfig(void)
     modifyreg16(R_FCACHE_FCACHEE, R_FCACHE_FCACHEE_FCACHEEN, 0);
 
     modifyreg8(R_SYSTEM_SCKSCR, R_SYSTEM_SCKSCR_CKSEL_MASK, 0);
+
+    /* lock VBTCR1 register. */
+    putreg16(0, R_SYSTEM_PRCR);
+
+    /* PCLKA = 32Mhz */
+    putreg32(0, R_SYSTEM_SCKDIVCR);
 } 

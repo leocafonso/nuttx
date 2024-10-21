@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/sam34/sam_gpio.c
+ * arch/arm/src/ra4m1/ra4m1_gpio.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -35,19 +35,7 @@
 
 #include "arm_internal.h"
 #include "chip.h"
-#include "sam_gpio.h"
-#include "sam_periphclks.h"
-
-#if defined(CONFIG_ARCH_CHIP_SAM3U) || defined(CONFIG_ARCH_CHIP_SAM3X) || \
-    defined(CONFIG_ARCH_CHIP_SAM3A)
-#  include "hardware/sam3u_pio.h"
-#elif defined(CONFIG_ARCH_CHIP_SAM4E)
-#  include "hardware/sam4e_pio.h"
-#elif defined(CONFIG_ARCH_CHIP_SAM4CM) || defined(CONFIG_ARCH_CHIP_SAM4S)
-#  include "hardware/sam4s_pio.h"
-#else
-#  error Unrecognized SAM architecture
-#endif
+#include "ra4m1_gpio.h"
 
 /****************************************************************************
  * Private Data

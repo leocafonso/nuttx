@@ -15,3 +15,20 @@ config ARCH_CHIP_R7FA4M1ABxxFP
 	select ARCH_CORTEXM4
 
 endchoice # RA4M1 Chip Selection
+
+menu "RA4M1 Peripheral Support"
+
+config RA4M1_UART0
+	bool "UART 0"
+	default y
+	select UART0_SERIALDRIVER
+	select ARCH_HAVE_SERIAL_TERMIOS
+
+config RA4M1_UART2
+	bool "UART 0"
+	default y
+	select UART2_SERIALDRIVER
+	select ARCH_HAVE_SERIAL_TERMIOS
+
+endmenu # AT91SAM3/4 Peripheral Support
+
