@@ -42,10 +42,9 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
-
+#define HAVE_CONSOLE 1
 /* Configuration ************************************************************/
 #define BSP_PRV_PRCR_KEY                        (0xA500U)
-#define HAVE_CONSOLE 1
 
 /****************************************************************************
  * Private Types
@@ -83,7 +82,6 @@ void arm_lowputc(char ch)
 {
 #ifdef HAVE_CONSOLE
   irqstate_t flags;
-  uint32_t test;
   for (; ; )
     {
 

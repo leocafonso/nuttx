@@ -84,6 +84,15 @@ SECTIONS
 
     _eronly = LOADADDR(.data);
 
+    .ramfunc ALIGN(4):
+    {
+        _sramfuncs = ABSOLUTE(.);
+        *(.ramfunc  .ramfunc.*)
+        _eramfuncs = ABSOLUTE(.);
+    } > sram AT > flash
+
+    _framfuncs = LOADADDR(.ramfunc);
+
     .bss :
     {
         _sbss = ABSOLUTE(.);

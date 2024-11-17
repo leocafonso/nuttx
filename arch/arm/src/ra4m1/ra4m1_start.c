@@ -33,6 +33,7 @@
 #include "arm_internal.h"
 #include "nvic.h"
 #include "ra4m1_clockconfig.h"
+#include "ra4m1_lowputc.h"
 
 
 /****************************************************************************

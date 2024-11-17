@@ -260,19 +260,19 @@ void up_irqinitialize(void)
   irq_attach(RA4M1_IRQ_HARDFAULT, arm_hardfault, NULL);
 #if(CONFIG_UART2_SERIAL_CONSOLE)
   regaddr = SCI2_RXI - RA4M1_IRQ_FIRST;
-  regval = ELC_EVENT_SCI0_RXI;
+  regval = ELC_EVENT_SCI2_RXI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 
   regaddr = SCI2_TXI - RA4M1_IRQ_FIRST;
-  regval = ELC_EVENT_SCI0_TXI;
+  regval = ELC_EVENT_SCI2_TXI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 
   regaddr = SCI2_TEI - RA4M1_IRQ_FIRST;
-  regval = ELC_EVENT_SCI0_TEI;
+  regval = ELC_EVENT_SCI2_TEI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 
   regaddr = SCI2_ERI - RA4M1_IRQ_FIRST;
-  regval = ELC_EVENT_SCI0_ERI;
+  regval = ELC_EVENT_SCI2_ERI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 #endif
   /* Set the priority of the SVCall interrupt */

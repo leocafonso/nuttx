@@ -76,3 +76,13 @@ void ra4m1_attach_icu(elc_event_t event)
     regval =  event;
     putreg32(regval, R_ICU_IELSR(i));
 }
+
+void ra4m1_clear_ir(int irq)
+{
+  uint32_t regaddr; 
+  regaddr = irq - RA4M1_IRQ_FIRST;
+  modifyreg32(R_ICU_IELSR(regaddr), R_ICU_IELSR_IR, 0);
+  getreg32(R_ICU_IELSR(regaddr));
+}
+
+

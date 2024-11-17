@@ -210,5 +210,6 @@ typedef enum e_elc_event_ra4m1
 } elc_event_t;
 
 void ra4m1_attach_icu(elc_event_t event);
+void ra4m1_clear_ir(int irq);
 
 #endif
