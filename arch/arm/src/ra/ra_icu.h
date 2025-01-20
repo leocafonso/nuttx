@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/ra4m1_lowputc.h
+ * arch/arm/src/ra/ra_lowputc.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,13 +18,13 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M1_ICU_H
-#define __ARCH_ARM_SRC_RA4M1_ICU_H
+#ifndef __ARCH_ARM_SRC_RA_ICU_H
+#define __ARCH_ARM_SRC_RA_ICU_H
 
 /****************************************************************************
  * Public Data
  ****************************************************************************/
-typedef enum e_elc_event_ra4m1
+typedef enum e_elc_event_ra
 {
     ELC_EVENT_NONE                          = (0x0),   // Link disabled
     ELC_EVENT_ICU_IRQ0                      = (0x001), // External pin interrupt 0
@@ -209,7 +209,7 @@ typedef enum e_elc_event_ra4m1
     ELC_EVENT_SPI1_TEI                      = (0x0B6)  // Transmission complete event
 } elc_event_t;
 
-void ra4m1_attach_icu(elc_event_t event);
-void ra4m1_clear_ir(int irq);
+void ra_attach_icu(elc_event_t event);
+void ra_clear_ir(int irq);
 
 #endif

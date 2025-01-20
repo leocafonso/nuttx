@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/ra4m1_lowputc.h
+ * arch/arm/src/ra/ra_icu.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,71 +18,71 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M_LOWPUTC_H
-#define __ARCH_ARM_SRC_RA4M_LOWPUTC_H
-
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
-#include <nuttx/compiler.h>
 
 #include <sys/types.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <unistd.h>
+#include <string.h>
+#include <assert.h>
+#include <errno.h>
+#include <debug.h>
+
+#ifdef CONFIG_SERIAL_TERMIOS
+#  include <termios.h>
+#endif
+
+#include <nuttx/irq.h>
+#include <nuttx/arch.h>
+#include <nuttx/fs/ioctl.h>
+#include <nuttx/serial/serial.h>
+
+#include <arch/board/board.h>
 
 #include "arm_internal.h"
 #include "chip.h"
+
+#include "hardware/ra_sci.h"
+#include "hardware/ra_mstp.h"
+#include "hardware/ra_system.h"
+#include "hardware/ra_icu.h"
+#include "ra_icu.h"
+#include "ra_lowputc.h"
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
 /****************************************************************************
- * Public Types
+ * Private Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Inline Functions
+ * Public Functions
  ****************************************************************************/
-
-#ifndef __ASSEMBLY__
-
-/****************************************************************************
- * Public Data
- ****************************************************************************/
-
-#undef EXTERN
-#if defined(__cplusplus)
-#define EXTERN extern "C"
-extern "C"
+void ra_attach_icu(elc_event_t event)
 {
-#else
-#define EXTERN extern
-#endif
-
-/****************************************************************************
- * Public Function Prototypes
- ****************************************************************************/
-
-/****************************************************************************
- * Name: ra4m1_lowsetup
- *
- * Description:
- *   Called at the very beginning of _start.
- *   Performs low level initialization including setup of the console UART.
- *   This UART done early so that the serial console is available for
- *   debugging very early in the boot sequence.
- *
- ****************************************************************************/
-
-void ra4m1_lowsetup(void);
-
-#undef EXTERN
-#if defined(__cplusplus)
+    uint32_t regval;
+    int i = 0;
+    do{
+        regval = getreg32(R_ICU_IELSR(i));
+        i++;
+    }while(i < RA_IRQ_NEXTINT && regval != 0);
+    regval =  event;
+    putreg32(regval, R_ICU_IELSR(i));
 }
-#endif
 
-#endif /* __ASSEMBLY__ */
-#endif /* __ARCH_ARM_SRC_RA4M_LOWPUTC_H */
+void ra_clear_ir(int irq)
+{
+  uint32_t regaddr; 
+  regaddr = irq - RA_IRQ_FIRST;
+  modifyreg32(R_ICU_IELSR(regaddr), R_ICU_IELSR_IR, 0);
+  getreg32(R_ICU_IELSR(regaddr));
+}
+
+

@@ -35,8 +35,8 @@
 
 #include "nvic.h"
 #include "arm_internal.h"
-#include "ra4m1_icu.h"
-#include "hardware/ra4m1_icu.h"
+#include "ra_icu.h"
+#include "hardware/ra_icu.h"
 
 /* #include "stm32_irq.h" */
 
@@ -59,14 +59,14 @@
  ****************************************************************************/
 
 /****************************************************************************
- * Name: ra4m1_dumpnvic
+ * Name: ra_dumpnvic
  *
  * Description:
  *   Dump some interesting NVIC registers
  *
  ****************************************************************************/
 /****************************************************************************
- * Name: sam_prioritize_syscall
+ * Name: ra_prioritize_syscall
  *
  * Description:
  *   Set the priority of an exception.  This function may be needed
@@ -75,7 +75,7 @@
  ****************************************************************************/
 
 #ifdef CONFIG_ARMV7M_USEBASEPRI
-static inline void ra4m1_prioritize_syscall(int priority)
+static inline void ra_prioritize_syscall(int priority)
 {
   uint32_t regval;
 
@@ -89,7 +89,7 @@ static inline void ra4m1_prioritize_syscall(int priority)
 #endif
 
 #if defined(CONFIG_DEBUG_IRQ_INFO)
-static void ra4m1_dumpnvic(const char *msg, int irq)
+static void ra_dumpnvic(const char *msg, int irq)
 {
   irqstate_t flags;
 
@@ -140,11 +140,11 @@ static void ra4m1_dumpnvic(const char *msg, int irq)
   leave_critical_section(flags);
 }
 #else
-#  define ra4m1_dumpnvic(msg, irq)
+#  define ra_dumpnvic(msg, irq)
 #endif
 
 /****************************************************************************
- * Name: ra4m1_irqinfo
+ * Name: ra_irqinfo
  *
  * Description:
  *   Given an IRQ number, provide the register and bit setting to enable or
@@ -152,18 +152,18 @@ static void ra4m1_dumpnvic(const char *msg, int irq)
  *
  ****************************************************************************/
 
-static int ra4m1_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
+static int ra_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
                          uintptr_t offset)
 {
   int n;
 
-  DEBUGASSERT(irq >= RA4M1_IRQ_NMI && irq < NR_IRQS);
+  DEBUGASSERT(irq >= RA_IRQ_NMI && irq < NR_IRQS);
 
   /* Check for external interrupt */
 
-  if (irq >= RA4M1_IRQ_FIRST)
+  if (irq >= RA_IRQ_FIRST)
     {
-      n        = irq - RA4M1_IRQ_FIRST;
+      n        = irq - RA_IRQ_FIRST;
       *regaddr = NVIC_IRQ_ENABLE(n) + offset;
       *bit     = (uint32_t)1 << (n & 0x1f);
     }
@@ -173,19 +173,19 @@ static int ra4m1_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
   else
     {
       *regaddr = NVIC_SYSHCON;
-      if (irq == RA4M1_IRQ_MEMFAULT)
+      if (irq == RA_IRQ_MEMFAULT)
         {
           *bit = NVIC_SYSHCON_MEMFAULTENA;
         }
-      else if (irq == RA4M1_IRQ_BUSFAULT)
+      else if (irq == RA_IRQ_BUSFAULT)
         {
           *bit = NVIC_SYSHCON_BUSFAULTENA;
         }
-      else if (irq == RA4M1_IRQ_USAGEFAULT)
+      else if (irq == RA_IRQ_USAGEFAULT)
         {
           *bit = NVIC_SYSHCON_USGFAULTENA;
         }
-      else if (irq == RA4M1_IRQ_SYSTICK)
+      else if (irq == RA_IRQ_SYSTICK)
         {
           *regaddr = NVIC_SYSTICK_CTRL;
           *bit = NVIC_SYSTICK_CTRL_ENABLE;
@@ -216,7 +216,7 @@ void up_irqinitialize(void)
 
   /* Disable all interrupts */
 
-  for (i = 0; i < NR_IRQS - RA4M1_IRQ_FIRST; i += 32)
+  for (i = 0; i < NR_IRQS - RA_IRQ_FIRST; i += 32)
     {
       putreg32(0xffffffff, NVIC_IRQ_CLEAR(i));
     }
@@ -256,28 +256,28 @@ void up_irqinitialize(void)
    * under certain conditions.
    */
 
-  irq_attach(RA4M1_IRQ_SVCALL, arm_svcall, NULL);
-  irq_attach(RA4M1_IRQ_HARDFAULT, arm_hardfault, NULL);
+  irq_attach(RA_IRQ_SVCALL, arm_svcall, NULL);
+  irq_attach(RA_IRQ_HARDFAULT, arm_hardfault, NULL);
 #if(CONFIG_UART2_SERIAL_CONSOLE)
-  regaddr = SCI2_RXI - RA4M1_IRQ_FIRST;
+  regaddr = SCI2_RXI - RA_IRQ_FIRST;
   regval = ELC_EVENT_SCI2_RXI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 
-  regaddr = SCI2_TXI - RA4M1_IRQ_FIRST;
+  regaddr = SCI2_TXI - RA_IRQ_FIRST;
   regval = ELC_EVENT_SCI2_TXI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 
-  regaddr = SCI2_TEI - RA4M1_IRQ_FIRST;
+  regaddr = SCI2_TEI - RA_IRQ_FIRST;
   regval = ELC_EVENT_SCI2_TEI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 
-  regaddr = SCI2_ERI - RA4M1_IRQ_FIRST;
+  regaddr = SCI2_ERI - RA_IRQ_FIRST;
   regval = ELC_EVENT_SCI2_ERI;
   putreg32(regval, R_ICU_IELSR(regaddr));
 #endif
   /* Set the priority of the SVCall interrupt */
   #ifdef CONFIG_ARMV7M_USEBASEPRI
-    ra4m1_prioritize_syscall(NVIC_SYSH_SVCALL_PRIORITY);
+    ra_prioritize_syscall(NVIC_SYSH_SVCALL_PRIORITY);
   #endif
 
 
@@ -300,7 +300,7 @@ void up_disable_irq(int irq)
   uint32_t regval;
   uint32_t bit;
 
-  if (ra4m1_irqinfo(irq, &regaddr, &bit, NVIC_CLRENA_OFFSET) == 0)
+  if (ra_irqinfo(irq, &regaddr, &bit, NVIC_CLRENA_OFFSET) == 0)
     {
       /* Modify the appropriate bit in the register to disable the interrupt.
        * For normal interrupts, we need to set the bit in the associated
@@ -308,7 +308,7 @@ void up_disable_irq(int irq)
        * clear the bit in the System Handler Control and State Register.
        */
 
-      if (irq >= RA4M1_IRQ_FIRST)
+      if (irq >= RA_IRQ_FIRST)
         {
           putreg32(bit, regaddr);
         }
@@ -335,7 +335,7 @@ void up_enable_irq(int irq)
   uint32_t regval;
   uint32_t bit;
 
-  if (ra4m1_irqinfo(irq, &regaddr, &bit, NVIC_ENA_OFFSET) == 0)
+  if (ra_irqinfo(irq, &regaddr, &bit, NVIC_ENA_OFFSET) == 0)
     {
       /* Modify the appropriate bit in the register to enable the interrupt.
        * For normal interrupts, we need to set the bit in the associated
@@ -343,7 +343,7 @@ void up_enable_irq(int irq)
        * set the bit in the System Handler Control and State Register.
        */
 
-      if (irq >= RA4M1_IRQ_FIRST)
+      if (irq >= RA_IRQ_FIRST)
         {
           putreg32(bit, regaddr);
         }
@@ -386,10 +386,10 @@ int up_prioritize_irq(int irq, int priority)
   uint32_t regval;
   int shift;
 
-  DEBUGASSERT(irq >= RA4M1_IRQ_MEMFAULT && irq < NR_IRQS &&
+  DEBUGASSERT(irq >= RA_IRQ_MEMFAULT && irq < NR_IRQS &&
               (unsigned)priority <= NVIC_SYSH_PRIORITY_MIN);
 
-  if (irq < RA4M1_IRQ_FIRST)
+  if (irq < RA_IRQ_FIRST)
     {
       /* NVIC_SYSH_PRIORITY() maps {0..15} to one of three priority
        * registers (0-3 are invalid)
@@ -402,7 +402,7 @@ int up_prioritize_irq(int irq, int priority)
     {
       /* NVIC_IRQ_PRIORITY() maps {0..} to one of many priority registers */
 
-      irq    -= RA4M1_IRQ_FIRST;
+      irq    -= RA_IRQ_FIRST;
       regaddr = NVIC_IRQ_PRIORITY(irq);
     }
 

@@ -26,8 +26,8 @@
  ****************************************************************************/
 
 #include <nuttx/config.h>
-#include <arch/ra4m1/chip.h>
-#include "ra4m1_memorymap.h"
+#include <arch/ra/chip.h>
+#include "ra_memorymap.h"
 
 /****************************************************************************
  * Pre-processor Definitions

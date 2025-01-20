@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/chip.h
+ * boards/arm/sam34/arduino-due/include/board.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M1_CHIP_H
-#define __ARCH_ARM_SRC_RA4M1_CHIP_H
+#ifndef __BOARDS_ARM_RA_ARDUINO_UNO_R4_INCLUDE_BOARD_H
+#define __BOARDS_ARM_RA_ARDUINO_UNO_R4_INCLUDE_BOARD_H
 
 /****************************************************************************
  * Included Files
@@ -27,27 +27,41 @@
 
 #include <nuttx/config.h>
 
-/* Include the memory map and the chip definitions file.
- * Other chip hardware files should then include this file for the proper
- * setup.
- */
-
-#include <arch/ra4m1/chip.h>
-#include "hardware/ra4m1_memorymap.h"
-
-/* Include the chip interrupt definition file */
-
-#include <arch/ra4m1/irq.h>
-
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-/* Provide the required number of peripheral interrupt vector definitions as
- * well. The definition SAM_IRQ_NEXTINT simply comes from the chip-specific
- * IRQ header file included by arch/ra4m1/irq.h.
+/* Clocking *****************************************************************/
+
+/* 
+ * This is the canonical configuration:
+ *   System Clock source      : HOCO 
+ *   ICLK(Hz)                 : 32000000   
+ *   PCLKA(Hz)                : 32000000    
+ *   PCLKB(Hz)                : 32000000            
+ *   PCLKC(Hz)                : 32000000            
+ *   PCLKD(Hz)                : 32000000  
+ *   FCLK(Hz)                 : 32000000 
+ *   USBCLK(Hz)               : 0 
  */
 
-#define ARMV7M_PERIPHERAL_INTERRUPTS  53
+/* HOCO - 24 MHz RC factory-trimmed
+ * LOCO - 32 KHz RC
+ */
 
-#endif /* __ARCH_ARM_SRC_RA4M1_CHIP_H */
+#define RA_HOCO_FREQUENCY     32000000ul
+#define RA_LOCO_FREQUENCY     32768ul
+#define RA_MOCO_FREQUENCY     8000000ul
+
+#define RA_HOCOEN     1
+
+/* Clocks divisor are  1/2^n where n can go from 0 to 6*/
+
+#define RA_FCK_DIV       0
+#define RA_ICK_DIV       0
+#define RA_PCKA_DIV      0
+#define RA_PCKB_DIV      0
+#define RA_PCKC_DIV      0
+#define RA_PCKD_DIV      0
+
+#endif /* __BOARDS_ARM_RA_ARDUINO_UNO_R4_INCLUDE_BOARD_H */

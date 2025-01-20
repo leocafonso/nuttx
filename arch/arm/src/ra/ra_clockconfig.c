@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/ra4m1_clockconfig.c
+ * arch/arm/src/ra/ra_clockconfig.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -30,11 +30,11 @@
 #include <arch/board/board.h>
 
 #include "arm_internal.h"
-#include "ra4m1_clockconfig.h"
-#include "hardware/ra4m1_flash.h"
-#include "hardware/ra4m1_system.h"
+#include "ra_clockconfig.h"
+#include "hardware/ra_flash.h"
+#include "hardware/ra_system.h"
 
-#define HOCO_FREQ RA4M1_HOCO_FREQUENCY
+#define HOCO_FREQ RA_HOCO_FREQUENCY
 
 #if HOCO_FREQ == 24000000ul
 #define OFS1_HOCO_FREQ 0
@@ -140,7 +140,7 @@ const struct opt_set_mem ops __attribute__((section(".rom_registers"))) __attrib
         .LVDAS = 0x1, /* Disable voltage monitor 0 following reset */
         .VDSEL1 = 0x3,
         .RSVD2 = 0x3,
-        .HOCOEN = !RA4M1_HOCOEN,
+        .HOCOEN = !RA_HOCOEN,
         .RSVD3 = 0x7,
         .HOCOFRQ1 = OFS1_HOCO_FREQ,
         .RSVD4 = 0x1ffff,
@@ -192,22 +192,22 @@ const struct opt_set_mem ops __attribute__((section(".rom_registers"))) __attrib
  ****************************************************************************/
 
 /****************************************************************************
- * Name: ra4m1_clockconfig
+ * Name: ra_clockconfig
  *
  * Description:
- *   Called to initialize the RA4M1.  This does whatever setup is needed to
+ *   Called to initialize the RA.  This does whatever setup is needed to
  *   put the SoC in a usable state.  This includes the initialization of
  *   clocking using the settings in board.h.
  *
  ****************************************************************************/
 
-void ra4m1_clockconfig(void)
+void ra_clockconfig(void)
 {
     /* Unlock VBTCR1 register. */
     putreg16((BSP_PRV_PRCR_KEY | R_SYSTEM_PRCR_PRC0 | R_SYSTEM_PRCR_PRC1), R_SYSTEM_PRCR);
 
     /* The VBTCR1.BPWSWSTP must be set after reset on MCUs that have VBTCR1.BPWSWSTP. Reference section 11.2.1
-     * "VBATT Control Register 1 (VBTCR1)" and Figure 11.2 "Setting flow of the VBTCR1.BPWSWSTP bit" in the RA4M1 manual
+     * "VBATT Control Register 1 (VBTCR1)" and Figure 11.2 "Setting flow of the VBTCR1.BPWSWSTP bit" in the RA manual
      * R01UM0007EU0110. This must be done before bsp_clock_init because LOCOCR, LOCOUTCR, SOSCCR, and SOMCR cannot
      * be accessed until VBTSR.VBTRVLD is set. */
     modifyreg8(R_SYSTEM_VBTCR1, 0, R_SYSTEM_VBTCR1_BPWSWSTP);
@@ -231,11 +231,11 @@ void ra4m1_clockconfig(void)
                  R_SYSTEM_SCKDIVCR_PCKB_MASK << R_SYSTEM_SCKDIVCR_PCKB_SHIFT |
                  R_SYSTEM_SCKDIVCR_PCKC_MASK << R_SYSTEM_SCKDIVCR_PCKC_SHIFT |
                  R_SYSTEM_SCKDIVCR_PCKD_MASK << R_SYSTEM_SCKDIVCR_PCKD_SHIFT),
-                (RA4M1_FCK_DIV << R_SYSTEM_SCKDIVCR_FCK_SHIFT |
-                 RA4M1_ICK_DIV << R_SYSTEM_SCKDIVCR_ICK_SHIFT |
-                 RA4M1_PCKA_DIV << R_SYSTEM_SCKDIVCR_PCKA_SHIFT |
-                 RA4M1_PCKB_DIV << R_SYSTEM_SCKDIVCR_PCKB_SHIFT |
-                 RA4M1_PCKC_DIV << R_SYSTEM_SCKDIVCR_PCKC_SHIFT |
-                 RA4M1_PCKD_DIV << R_SYSTEM_SCKDIVCR_PCKD_SHIFT));
+                (RA_FCK_DIV << R_SYSTEM_SCKDIVCR_FCK_SHIFT |
+                 RA_ICK_DIV << R_SYSTEM_SCKDIVCR_ICK_SHIFT |
+                 RA_PCKA_DIV << R_SYSTEM_SCKDIVCR_PCKA_SHIFT |
+                 RA_PCKB_DIV << R_SYSTEM_SCKDIVCR_PCKB_SHIFT |
+                 RA_PCKC_DIV << R_SYSTEM_SCKDIVCR_PCKC_SHIFT |
+                 RA_PCKD_DIV << R_SYSTEM_SCKDIVCR_PCKD_SHIFT));
                  
 }

@@ -3,18 +3,23 @@
 # see the file kconfig-language.txt in the NuttX tools repository.
 #
 
-comment "RA4M1 Configuration Options"
+comment "RA Configuration Options"
 
 choice
-	prompt "RA4M1 Chip Selection"
+	prompt "RA Chip Selection"
 	default ARCH_CHIP_R7FA4M1ABxxFP
-	depends on ARCH_CHIP_RA4M1
+	depends on ARCH_CHIP_RA
 
 config ARCH_CHIP_R7FA4M1ABxxFP 
 	bool "R7FA4M1ABxxFP"
-	select ARCH_CORTEXM4
+	select RA4M1_FAMILY
 
-endchoice # RA4M1 Chip Selection
+endchoice # RA4 Chip Selection
+
+config RA4M1_FAMILY
+	bool
+	default n
+	select ARCH_CORTEXM4
 
 menu "RA4M1 Peripheral Support"
 

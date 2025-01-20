@@ -32,8 +32,8 @@
 #include "arch/board/board.h"
 #include "arm_internal.h"
 #include "nvic.h"
-#include "ra4m1_clockconfig.h"
-#include "ra4m1_lowputc.h"
+#include "ra_clockconfig.h"
+#include "ra_lowputc.h"
 
 
 /****************************************************************************
@@ -110,9 +110,9 @@ void __start(void)
       *dest++ = *src++;
     }
 
-  ra4m1_clockconfig();
+  ra_clockconfig();
   arm_fpuconfig();
-  ra4m1_lowsetup();
+  ra_lowsetup();
   showprogress('A');
 
 #ifdef CONFIG_ARCH_PERF_EVENTS

@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/ra4m1_start.h
+ * arch/arm/src/ra/hardware/ra_memorymap.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,18 +18,20 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M1_RA_START_H
-#define __ARCH_ARM_SRC_RA4M1_RA_START_H
+#ifndef __ARCH_ARM_SRC_RA_HARDWARE_RA_MEMORYMAP_H
+#define __ARCH_ARM_SRC_RA_HARDWARE_RA_MEMORYMAP_H
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
+#include "chip.h"
 
-/****************************************************************************
- * Public Function Prototypes
- ****************************************************************************/
+#if defined(CONFIG_RA4M1_FAMILY)
+#  include "hardware/ra4m1_memorymap.h"
+#else
+#  error "Unsupported RA memory map"
+#endif
 
-
-#endif /* __ARCH_ARM_SRC_RA4M1_RA_START_H */
+#endif /* __ARCH_ARM_SRC_RA_HARDWARE_RA_MEMORYMAP_H */

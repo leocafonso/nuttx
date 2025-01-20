@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/include/ra4m1/chip.h
+ * arch/arm/include/ra/chip.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_INCLUDE_RA4M1_CHIP_H
-#define __ARCH_ARM_INCLUDE_RA4M1_CHIP_H
+#ifndef __ARCH_ARM_INCLUDE_RA_CHIP_H
+#define __ARCH_ARM_INCLUDE_RA_CHIP_H
 
 /****************************************************************************
  * Included Files
@@ -33,7 +33,7 @@
 
 /* Get customizations for each supported chip */
 
-/* RA4M1 Family *********************************************************/
+/* RA Family *********************************************************/
 
 /* Common FEATURES
  * Flash        256KB
@@ -43,8 +43,8 @@
 
 /* Internal memory */
 
-#  define RA4M1_FLASH_SIZE            (256*1024)   /* 256KB */
-#  define RA4M1_SRAM0_SIZE            (48*1024)    /* 48KB */
+#  define RA_FLASH_SIZE            (256*1024)   /* 256KB */
+#  define RA_SRAM0_SIZE            (48*1024)    /* 48KB */
 
 /* FEATURE      R7FA4M1ABxxFP  R7FA4M1ABxxLJ  R7FA4M1ABxxFM R7FA4M1ABxxNB R7FA4M1ABxxFL R7FA4M1ABxxNE R7FA4M1ABxxNF
  * -----------  -------------  -------------  ------------- ------------- ------------- ------------- -------------
@@ -82,4 +82,4 @@
  * Public Functions Prototypes
  ****************************************************************************/
 
-#endif /* __ARCH_ARM_INCLUDE_RA4M1_CHIP_H */
+#endif /* __ARCH_ARM_INCLUDE_RA_CHIP_H */

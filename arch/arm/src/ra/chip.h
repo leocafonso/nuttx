@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/hardware/ra4m1_flash.h
+ * arch/arm/src/ra/chip.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,32 +18,36 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H
-#define __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H
+#ifndef __ARCH_ARM_SRC_RA_CHIP_H
+#define __ARCH_ARM_SRC_RA_CHIP_H
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
-#include <arch/ra4m1/chip.h>
-#include "ra4m1_memorymap.h"
+
+/* Include the memory map and the chip definitions file.
+ * Other chip hardware files should then include this file for the proper
+ * setup.
+ */
+
+#include <arch/ra/chip.h>
+#include "hardware/ra4m1_memorymap.h"
+
+/* Include the chip interrupt definition file */
+
+#include <arch/ra/irq.h>
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-/* FCACHE - Flash Cache */
-#define R_FCACHE_FCACHEE_OFFSET           0x0100
-#define R_FCACHE_FCACHEE                  (R_FCACHE_BASE + R_FCACHE_FCACHEE_OFFSET)
-#define R_FCACHE_FCACHEE_FCACHEEN         (1 <<  0) /* 01: FCACHE Enable */
-#define R_FCACHE_FCACHEIV_OFFSET          0x0104
-#define R_FCACHE_FCACHEIV                 (R_FCACHE_BASE + R_FCACHE_FCACHEIV_OFFSET)
-#define R_FCACHE_FCACHEIV_FCACHEIV        (1 <<  0) /* 01: FCACHE Invalidation */
-#define R_FCACHE_FLWT_OFFSET              0x011c
-#define R_FCACHE_FLWT                     (R_FCACHE_BASE + R_FCACHE_FLWT_OFFSET)
-#define R_FCACHE_FLWT_FLWT                (3 <<  0) /* 01: These bits represent the ratio of the CPU clock period to the Flash memory access time. */
-#define R_FCACHE_FLWT_FLWT_MASK           (0x07)
+/* Provide the required number of peripheral interrupt vector definitions as
+ * well. The definition RA_IRQ_NEXTINT simply comes from the chip-specific
+ * IRQ header file included by arch/ra/irq.h.
+ */
 
+#define ARMV7M_PERIPHERAL_INTERRUPTS  53
 
-#endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H */
+#endif /* __ARCH_ARM_SRC_RA_CHIP_H */

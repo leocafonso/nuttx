@@ -30,11 +30,11 @@
 #include <nuttx/arch.h>
 
 #include "arm_internal.h"
-#include "ra4m1_lowputc.h"
-#include "hardware/ra4m1_sci.h"
-#include "hardware/ra4m1_mstp.h"
-#include "hardware/ra4m1_system.h"
-#include "hardware/ra4m1_gpio.h"
+#include "ra_lowputc.h"
+#include "hardware/ra_sci.h"
+#include "hardware/ra_mstp.h"
+#include "hardware/ra_system.h"
+#include "hardware/ra_gpio.h"
 
 /* The board.h file may redefine pin configurations defined in sam_pinmap.h */
 #include <arch/board/board.h>
@@ -132,7 +132,7 @@ int up_putc(int ch)
 }
 
 /****************************************************************************
- * Name: ra4m1_lowsetup
+ * Name: ra_lowsetup
  *
  * Description:
  *   This performs basic initialization of the USART used for the serial
@@ -141,7 +141,7 @@ int up_putc(int ch)
  *
  ****************************************************************************/
 
-void ra4m1_lowsetup(void)
+void ra_lowsetup(void)
 {
   uint32_t regval;
   regval = R_PMISC_PWPR_PFSWE;

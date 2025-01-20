@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/sam34/sam_clockconfig.h
+ * arch/arm/src/ra/ra_clockconfig.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M1_CLOCKCONFIG_H
-#define __ARCH_ARM_SRC_RA4M1_CLOCKCONFIG_H
+#ifndef __ARCH_ARM_SRC_RA_CLOCKCONFIG_H
+#define __ARCH_ARM_SRC_RA_CLOCKCONFIG_H
 
 /****************************************************************************
  * Included Files
@@ -68,7 +68,7 @@ extern "C"
  *
  ****************************************************************************/
 
-void ra4m1_clockconfig(void);
+void ra_clockconfig(void);
 
 #undef EXTERN
 #if defined(__cplusplus)
@@ -76,4 +76,4 @@ void ra4m1_clockconfig(void);
 #endif
 
 #endif /* __ASSEMBLY__ */
-#endif /* __ARCH_ARM_SRC_RA4M1_CLOCKCONFIG_H */
+#endif /* __ARCH_ARM_SRC_RA_CLOCKCONFIG_H */

@@ -38,7 +38,7 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
-#define SYSTICK_CLOCK  (RA4M1_HOCO_FREQUENCY)
+#define SYSTICK_CLOCK  (RA_HOCO_FREQUENCY)
 
 #define SYSTICK_RELOAD ((SYSTICK_CLOCK / CLK_TCK) - 1)
 
@@ -55,7 +55,7 @@
  * Private Functions
  ****************************************************************************/
 /****************************************************************************
- * Function:  ra4m1_timerisr
+ * Function:  ra_timerisr
  *
  * Description:
  *   The timer ISR will perform a variety of services for various portions
@@ -64,7 +64,7 @@
  ****************************************************************************/
 
 #if !defined(CONFIG_ARMV7M_SYSTICK) && !defined(CONFIG_TIMER_ARCH)
-static int ra4m1_timerisr(int irq, uint32_t *regs, void *arg)
+static int ra_timerisr(int irq, uint32_t *regs, void *arg)
 {
   /* Process timer interrupt */
 
@@ -110,7 +110,7 @@ void up_timer_initialize(void)
 #endif
 
 #if defined(CONFIG_ARMV7M_SYSTICK) && defined(CONFIG_TIMER_ARCH)
-  up_timer_set_lowerhalf(systick_initialize(true, RA4M1_HOCO_FREQUENCY, -1));
+  up_timer_set_lowerhalf(systick_initialize(true, RA_HOCO_FREQUENCY, -1));
 #else
   /* Configure SysTick to interrupt at the requested rate */
 
@@ -118,7 +118,7 @@ void up_timer_initialize(void)
 
   /* Attach the timer interrupt vector */
 
-  irq_attach(RA4M1_IRQ_SYSTICK, (xcpt_t)ra4m1_timerisr, NULL);
+  irq_attach(RA_IRQ_SYSTICK, (xcpt_t)ra_timerisr, NULL);
 
   /* Enable SysTick interrupts */
 
@@ -127,6 +127,6 @@ void up_timer_initialize(void)
 
   /* And enable the timer interrupt */
 
-  up_enable_irq(RA4M1_IRQ_SYSTICK);
+  up_enable_irq(RA_IRQ_SYSTICK);
 #endif
 }

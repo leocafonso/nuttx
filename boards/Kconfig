@@ -3815,7 +3815,7 @@ if ARCH_BOARD_ARDUINO_DUE
 source "boards/arm/sam34/arduino-due/Kconfig"
 endif
 if ARCH_BOARD_ARDUINO_R4_MINIMA
-source "boards/arm/ra4m1/arduino-r4-minima/Kconfig"
+source "boards/arm/ra/arduino-r4-minima/Kconfig"
 endif
 if ARCH_BOARD_ARDUINO_M0
 source "boards/arm/samd2l2/arduino-m0/Kconfig"

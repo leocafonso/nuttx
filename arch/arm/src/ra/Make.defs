@@ -24,22 +24,22 @@
 
 include armv7-m/Make.defs
 
-# Required RA4M1 files
+# Required RA files
 
-#CHIP_CSRCS  = ra4m1_allocateheap.c sra4m1_irq.c ra4m1_lowputc.c ra4m1_serial.c
-#CHIP_CSRCS += ra4m1_start.c
+#CHIP_CSRCS  = ra_allocateheap.c sra_irq.c ra_lowputc.c ra_serial.c
+#CHIP_CSRCS += ra_start.c
 CHIP_CSRCS  = a4m1_clockconfig.c 
-CHIP_CSRCS += ra4m1_start.c
+CHIP_CSRCS += ra_start.c
 
-# Configuration-dependent RA4M1 files
+# Configuration-dependent RA files
 
 # ifneq ($(CONFIG_SCHED_TICKLESS),y)
 # CHIP_CSRCS += sam_timerisr.c
 # endif
 
 
-#ifeq ($(CONFIG_ARCH_CHIP_RA4M1,y)
-#CHIP_CSRCS += ra4m1_clockconfig.c ra4m1_gpio.c
+#ifeq ($(CONFIG_ARCH_CHIP_RA,y)
+#CHIP_CSRCS += ra_clockconfig.c ra_gpio.c
 #endif
 
-endif # CONFIG_ARCH_CHIP_RA4M1
+endif # CONFIG_ARCH_CHIP_RA

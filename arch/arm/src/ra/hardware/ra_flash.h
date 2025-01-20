@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/include/board.h
+ * arch/arm/src/ra/hardware/ra_flash.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,50 +18,32 @@
  *
  ****************************************************************************/
 
-#ifndef __BOARDS_ARM_RA4M1_ARDUINO_UNO_R4_INCLUDE_BOARD_H
-#define __BOARDS_ARM_RA4M1_ARDUINO_UNO_R4_INCLUDE_BOARD_H
+#ifndef __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H
+#define __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
+#include <arch/ra/chip.h>
+#include "ra_memorymap.h"
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-/* Clocking *****************************************************************/
+/* FCACHE - Flash Cache */
+#define R_FCACHE_FCACHEE_OFFSET           0x0100
+#define R_FCACHE_FCACHEE                  (R_FCACHE_BASE + R_FCACHE_FCACHEE_OFFSET)
+#define R_FCACHE_FCACHEE_FCACHEEN         (1 <<  0) /* 01: FCACHE Enable */
+#define R_FCACHE_FCACHEIV_OFFSET          0x0104
+#define R_FCACHE_FCACHEIV                 (R_FCACHE_BASE + R_FCACHE_FCACHEIV_OFFSET)
+#define R_FCACHE_FCACHEIV_FCACHEIV        (1 <<  0) /* 01: FCACHE Invalidation */
+#define R_FCACHE_FLWT_OFFSET              0x011c
+#define R_FCACHE_FLWT                     (R_FCACHE_BASE + R_FCACHE_FLWT_OFFSET)
+#define R_FCACHE_FLWT_FLWT                (3 <<  0) /* 01: These bits represent the ratio of the CPU clock period to the Flash memory access time. */
+#define R_FCACHE_FLWT_FLWT_MASK           (0x07)
 
-/* 
- * This is the canonical configuration:
- *   System Clock source      : HOCO 
- *   ICLK(Hz)                 : 32000000   
- *   PCLKA(Hz)                : 32000000    
- *   PCLKB(Hz)                : 32000000            
- *   PCLKC(Hz)                : 32000000            
- *   PCLKD(Hz)                : 32000000  
- *   FCLK(Hz)                 : 32000000 
- *   USBCLK(Hz)               : 0 
- */
 
-/* HOCO - 24 MHz RC factory-trimmed
- * LOCO - 32 KHz RC
- */
-
-#define RA4M1_HOCO_FREQUENCY     32000000ul
-#define RA4M1_LOCO_FREQUENCY     32768ul
-#define RA4M1_MOCO_FREQUENCY     8000000ul
-
-#define RA4M1_HOCOEN     1
-
-/* Clocks divisor are  1/2^n where n can go from 0 to 6*/
-
-#define RA4M1_FCK_DIV       0
-#define RA4M1_ICK_DIV       0
-#define RA4M1_PCKA_DIV      0
-#define RA4M1_PCKB_DIV      0
-#define RA4M1_PCKC_DIV      0
-#define RA4M1_PCKD_DIV      0
-
-#endif /* __BOARDS_ARM_RA4M1_ARDUINO_UNO_R4_INCLUDE_BOARD_H */
+#endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H */

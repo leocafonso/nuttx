@@ -47,11 +47,11 @@
 #include "arm_internal.h"
 #include "chip.h"
 
-#include "hardware/ra4m1_sci.h"
-#include "hardware/ra4m1_mstp.h"
-#include "hardware/ra4m1_system.h"
-#include "ra4m1_lowputc.h"
-#include "ra4m1_icu.h"
+#include "hardware/ra_sci.h"
+#include "hardware/ra_mstp.h"
+#include "hardware/ra_system.h"
+#include "ra_lowputc.h"
+#include "ra_icu.h"
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -254,7 +254,7 @@ static void up_detach(struct uart_dev_s *dev)
 static int up_rxinterrupt(int irq, void *context, void *arg)
 {
   struct uart_dev_s *dev = (struct uart_dev_s *)arg;
-  ra4m1_clear_ir(irq);
+  ra_clear_ir(irq);
   uart_recvchars(dev);
   return OK;
 }
@@ -270,7 +270,7 @@ static int up_rxinterrupt(int irq, void *context, void *arg)
 static int up_txinterrupt(int irq, void *context, void *arg)
 {
   struct uart_dev_s *dev = (struct uart_dev_s *)arg;
-  ra4m1_clear_ir(irq);
+  ra_clear_ir(irq);
   uart_xmitchars(dev);
 
   return OK;
