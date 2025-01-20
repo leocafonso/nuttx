@@ -38,9 +38,7 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
-#define RA4M1_HOCO_FREQUENCY     32000000ul
-
-#  define SYSTICK_CLOCK  (RA4M1_HOCO_FREQUENCY)
+#define SYSTICK_CLOCK  (RA4M1_HOCO_FREQUENCY)
 
 #define SYSTICK_RELOAD ((SYSTICK_CLOCK / CLK_TCK) - 1)
 

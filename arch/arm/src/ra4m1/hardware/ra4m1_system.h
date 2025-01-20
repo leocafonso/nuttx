@@ -39,8 +39,8 @@
 #define R_SYSTEM_VBTCR1_BPWSWSTP          (1 <<  0) /* 01: Battery Power supply Switch Stop */
 #define R_SYSTEM_VBTCR2_OFFSET            0x04b0
 #define R_SYSTEM_VBTCR2                   (R_SYSTEM_BASE + R_SYSTEM_VBTCR2_OFFSET)
-#define R_SYSTEM_VBTCR2_VBTLVDLVL         (2 <<  6) /* 40: VBATT Pin Voltage Low Voltage Detect Level Select Bit */
-#define R_SYSTEM_VBTCR2_VBTLVDLVL_MASK         (0x03)
+#define R_SYSTEM_VBTCR2_VBTLVDLVL_SHIFT   6 /* 40: VBATT Pin Voltage Low Voltage Detect Level Select Bit */
+#define R_SYSTEM_VBTCR2_VBTLVDLVL_MASK    (0x03)
 #define R_SYSTEM_VBTCR2_VBTLVDEN          (1 <<  4) /* 10: VBATT Pin Low Voltage Detect Enable Bit */
 #define R_SYSTEM_VBTSR_OFFSET             0x04b1
 #define R_SYSTEM_VBTSR                    (R_SYSTEM_BASE + R_SYSTEM_VBTSR_OFFSET)
@@ -112,50 +112,84 @@
 #define R_SYSTEM_VBTBKR(p)                (R_SYSTEM_BASE + R_SYSTEM_VBTBKR_OFFSET + (p)*0x0001)
 #define R_SYSTEM_VBTBKR_VBTBKR            (8 <<  0) /* 01: VBTBKR is a 512-byte readable/writable register to store data powered by VBATT. The value of this register is retained even when VCC is not powered but VBATT is powered. VBTBKR is initialized by VBATT selected voltage power-on-reset. */
 #define R_SYSTEM_VBTBKR_VBTBKR_MASK            (0xff)
-#define R_SYSTEM_SCKDIVCR_OFFSET          0x0020
-#define R_SYSTEM_SCKDIVCR                 (R_SYSTEM_BASE + R_SYSTEM_SCKDIVCR_OFFSET)
-#define R_SYSTEM_SCKDIVCR_FCK             (3 << 28) /* 10000000: Flash IF Clock (FCLK) Select */
-#define R_SYSTEM_SCKDIVCR_FCK_MASK             (0x07)
-#define R_SYSTEM_SCKDIVCR_ICK             (3 << 24) /* 1000000: System Clock (ICLK) Select */
+
+#define R_SYSTEM_SCKDIVCR_OFFSET                0x0020
+#define R_SYSTEM_SCKDIVCR                       (R_SYSTEM_BASE + R_SYSTEM_SCKDIVCR_OFFSET)
+#define R_SYSTEM_SCKDIVCR_FCK_SHIFT             (28) /* 10000000: Flash IF Clock (FCLK) Select */
+#define R_SYSTEM_SCKDIVCR_FCK_MASK              (0x07)
+
+#define R_SYSTEM_SCKDIVCR_ICK_SHIFT            (24) /* 1000000: System Clock (ICLK) Select */
 #define R_SYSTEM_SCKDIVCR_ICK_MASK             (0x07)
-#define R_SYSTEM_SCKDIVCR_PCKA            (3 << 12) /* 1000: Peripheral Module Clock A (PCLKA) Select */
-#define R_SYSTEM_SCKDIVCR_PCKA_MASK            (0x07)
-#define R_SYSTEM_SCKDIVCR_PCKB            (3 <<  8) /* 100: Peripheral Module Clock B (PCLKB) Select */
-#define R_SYSTEM_SCKDIVCR_PCKB_MASK            (0x07)
-#define R_SYSTEM_SCKDIVCR_PCKC            (3 <<  4) /* 10: Peripheral Module Clock C (PCLKC) Select */
-#define R_SYSTEM_SCKDIVCR_PCKC_MASK            (0x07)
-#define R_SYSTEM_SCKDIVCR_PCKD            (3 <<  0) /* 01: Peripheral Module Clock D (PCLKD) Select */
+
+
+#define R_SYSTEM_SCKDIVCR_PCKA_SHIFT            (12) /* 1000: Peripheral Module Clock A (PCLKA) Select */
+#define R_SYSTEM_SCKDIVCR_PCKA_MASK             (0x07)
+
+
+#define R_SYSTEM_SCKDIVCR_PCKB_SHIFT            (8) /* 100: Peripheral Module Clock B (PCLKB) Select */
+#define R_SYSTEM_SCKDIVCR_PCKB_MASK             (0x07)
+
+
+#define R_SYSTEM_SCKDIVCR_PCKC_SHIFT            (4) /* 10: Peripheral Module Clock C (PCLKC) Select */
+#define R_SYSTEM_SCKDIVCR_PCKC_MASK             (0x07)
+
+
+#define R_SYSTEM_SCKDIVCR_PCKD_SHIFT           (0) /* 01: Peripheral Module Clock D (PCLKD) Select */
 #define R_SYSTEM_SCKDIVCR_PCKD_MASK            (0x07)
+
+
 #define R_SYSTEM_SCKSCR_OFFSET            0x0026
 #define R_SYSTEM_SCKSCR                   (R_SYSTEM_BASE + R_SYSTEM_SCKSCR_OFFSET)
-#define R_SYSTEM_SCKSCR_CKSEL             (3 <<  0) /* 01: Clock Source Select Selecting the system clock source faster than 32MHz(system clock source > 32MHz ) is prohibit when SCKDIVCR.ICK[2:0] bits select the division-by-1 and MEMWAIT.MEMWAIT =0. */
-#define R_SYSTEM_SCKSCR_CKSEL_MASK             (0x07)
+#define R_SYSTEM_SCKSCR_CKSEL_SHIFT       (0) /* 01: Clock Source Select Selecting the system clock source faster than 32MHz(system clock source > 32MHz ) is prohibit when SCKDIVCR.ICK[2:0] bits select the division-by-1 and MEMWAIT.MEMWAIT =0. */
+#define R_SYSTEM_SCKSCR_CKSEL_MASK        (0x07)
+# define R_SYSTEM_SCKSCR_CKSEL_HOCO       (0 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
+# define R_SYSTEM_SCKSCR_CKSEL_MOCO       (1 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
+# define R_SYSTEM_SCKSCR_CKSEL_LOCO       (2 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
+# define R_SYSTEM_SCKSCR_CKSEL_MOSC       (3 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
+# define R_SYSTEM_SCKSCR_CKSEL_SOSC       (4 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
+# define R_SYSTEM_SCKSCR_CKSEL_PLL        (5 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
+
 #define R_SYSTEM_PLLCR_OFFSET             0x002a
 #define R_SYSTEM_PLLCR                    (R_SYSTEM_BASE + R_SYSTEM_PLLCR_OFFSET)
 #define R_SYSTEM_PLLCR_PLLSTP             (1 <<  0) /* 01: PLL Stop Control */
+
 #define R_SYSTEM_PLLCCR2_OFFSET           0x002b
 #define R_SYSTEM_PLLCCR2                  (R_SYSTEM_BASE + R_SYSTEM_PLLCCR2_OFFSET)
-#define R_SYSTEM_PLLCCR2_PLODIV           (2 <<  6) /* 40: PLL Output Frequency Division Ratio Select */
-#define R_SYSTEM_PLLCCR2_PLODIV_MASK           (0x03)
-#define R_SYSTEM_PLLCCR2_PLLMUL           (5 <<  0) /* 01: PLL Frequency Multiplication Factor Select */
-#define R_SYSTEM_PLLCCR2_PLLMUL_MASK           (0x1f)
+#define R_SYSTEM_PLLCCR2_PLODIV_SHIFT     (6) /* 40: PLL Output Frequency Division Ratio Select */
+#define R_SYSTEM_PLLCCR2_PLODIV_MASK      (0x03)
+#define R_SYSTEM_PLLCCR2_PLLMUL_SHIFT     (0) /* 01: PLL Frequency Multiplication Factor Select */
+#define R_SYSTEM_PLLCCR2_PLLMUL_MASK      (0x1f)
+
 #define R_SYSTEM_MEMWAIT_OFFSET           0x0031
 #define R_SYSTEM_MEMWAIT                  (R_SYSTEM_BASE + R_SYSTEM_MEMWAIT_OFFSET)
 #define R_SYSTEM_MEMWAIT_MEMWAIT          (1 <<  0) /* 01: Memory Wait Cycle Select Note: Writing 0 to the MEMWAIT is prohibited when SCKDIVCR.ICK selects division by 1 and SCKSCR.CKSEL[2:0] bits select the system clock source that is faster than 32 MHz (ICLK > 32 MHz). */
+
 #define R_SYSTEM_MOSCCR_OFFSET            0x0032
 #define R_SYSTEM_MOSCCR                   (R_SYSTEM_BASE + R_SYSTEM_MOSCCR_OFFSET)
 #define R_SYSTEM_MOSCCR_MOSTP             (1 <<  0) /* 01: Main Clock Oscillator Stop Note: MOMCR register must be set before setting MOSTP to 0. */
+
 #define R_SYSTEM_HOCOCR_OFFSET            0x0036
 #define R_SYSTEM_HOCOCR                   (R_SYSTEM_BASE + R_SYSTEM_HOCOCR_OFFSET)
 #define R_SYSTEM_HOCOCR_HCSTP             (1 <<  0) /* 01: HOCO Stop */
+
 #define R_SYSTEM_MOCOCR_OFFSET            0x0038
 #define R_SYSTEM_MOCOCR                   (R_SYSTEM_BASE + R_SYSTEM_MOCOCR_OFFSET)
 #define R_SYSTEM_MOCOCR_MCSTP             (1 <<  0) /* 01: MOCO Stop */
+
+#define R_SYSTEM_SOSCCR_OFFSET            0x0480
+#define R_SYSTEM_SOSCCR                   (R_SYSTEM_BASE + R_SYSTEM_SOSCCR_OFFSET)
+#define R_SYSTEM_SOSCCR_SOSTP             (1 <<  0) /* 01: Sub-Clock Oscillator Stop */
+
+#define R_SYSTEM_LOCOCR_OFFSET            0x0490
+#define R_SYSTEM_LOCOCR                   (R_SYSTEM_BASE + R_SYSTEM_LOCOCR_OFFSET)
+#define R_SYSTEM_LOCOCR_LCSTP             (1 <<  0) /* 01: LOCO Stop */
+
 #define R_SYSTEM_OSCSF_OFFSET             0x003c
 #define R_SYSTEM_OSCSF                    (R_SYSTEM_BASE + R_SYSTEM_OSCSF_OFFSET)
-#define R_SYSTEM_OSCSF_PLLSF              (1 <<  5) /* 20: PLL Clock Oscillation Stabilization Flag */
-#define R_SYSTEM_OSCSF_MOSCSF             (1 <<  3) /* 08: Main Clock Oscillation Stabilization Flag */
-#define R_SYSTEM_OSCSF_HOCOSF             (1 <<  0) /* 01: HOCO Clock Oscillation Stabilization Flag NOTE: The HOCOSF bit value after a reset is 1 when the OFS1.HOCOEN bit is 0. It is 0 when the OFS1.HOCOEN bit is 1. */
+# define R_SYSTEM_OSCSF_PLLSF              (1 <<  5) /* 20: PLL Clock Oscillation Stabilization Flag */
+# define R_SYSTEM_OSCSF_MOSCSF             (1 <<  3) /* 08: Main Clock Oscillation Stabilization Flag */
+# define R_SYSTEM_OSCSF_HOCOSF             (1 <<  0) /* 01: HOCO Clock Oscillation Stabilization Flag NOTE: The HOCOSF bit value after a reset is 1 when the OFS1.HOCOEN bit is 0. It is 0 when the OFS1.HOCOEN bit is 1. */
+
 #define R_SYSTEM_CKOCR_OFFSET             0x003e
 #define R_SYSTEM_CKOCR                    (R_SYSTEM_BASE + R_SYSTEM_CKOCR_OFFSET)
 #define R_SYSTEM_CKOCR_CKOEN              (1 <<  7) /* 80: Clock out enable */
@@ -203,16 +237,12 @@
 #define R_SYSTEM_MOMCR                    (R_SYSTEM_BASE + R_SYSTEM_MOMCR_OFFSET)
 #define R_SYSTEM_MOMCR_MOSEL              (1 <<  6) /* 40: Main Clock Oscillator Switching */
 #define R_SYSTEM_MOMCR_MODRV1             (1 <<  3) /* 08: Main Clock Oscillator Drive Capability 1 Switching */
-#define R_SYSTEM_SOSCCR_OFFSET            0x0480
-#define R_SYSTEM_SOSCCR                   (R_SYSTEM_BASE + R_SYSTEM_SOSCCR_OFFSET)
-#define R_SYSTEM_SOSCCR_SOSTP             (1 <<  0) /* 01: Sub-Clock Oscillator Stop */
+
 #define R_SYSTEM_SOMCR_OFFSET             0x0481
 #define R_SYSTEM_SOMCR                    (R_SYSTEM_BASE + R_SYSTEM_SOMCR_OFFSET)
 #define R_SYSTEM_SOMCR_SODRV              (2 <<  0) /* 01: Sub-Clock Oscillator Drive Capability Switching */
 #define R_SYSTEM_SOMCR_SODRV_MASK              (0x03)
-#define R_SYSTEM_LOCOCR_OFFSET            0x0490
-#define R_SYSTEM_LOCOCR                   (R_SYSTEM_BASE + R_SYSTEM_LOCOCR_OFFSET)
-#define R_SYSTEM_LOCOCR_LCSTP             (1 <<  0) /* 01: LOCO Stop */
+
 #define R_SYSTEM_LOCOUTCR_OFFSET          0x0492
 #define R_SYSTEM_LOCOUTCR                 (R_SYSTEM_BASE + R_SYSTEM_LOCOUTCR_OFFSET)
 #define R_SYSTEM_LOCOUTCR_LOCOUTRM        (8 <<  0) /* 01: LOCO User Trimming 1000_0000 : -128 1000_0001 : -127 1000_0010 : -126 . . . 1111_1111 : -1 0000_0000 : Center Code 0000_0001 : +1 . . . 0111_1101 : +125 0111_1110 : +126 0111_1111 : +127 These bits are added to original LOCO trimming bits */

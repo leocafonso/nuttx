@@ -31,4 +31,37 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
+/* Clocking *****************************************************************/
+
+/* 
+ * This is the canonical configuration:
+ *   System Clock source      : HOCO 
+ *   ICLK(Hz)                 : 32000000   
+ *   PCLKA(Hz)                : 32000000    
+ *   PCLKB(Hz)                : 32000000            
+ *   PCLKC(Hz)                : 32000000            
+ *   PCLKD(Hz)                : 32000000  
+ *   FCLK(Hz)                 : 32000000 
+ *   USBCLK(Hz)               : 0 
+ */
+
+/* HOCO - 24 MHz RC factory-trimmed
+ * LOCO - 32 KHz RC
+ */
+
+#define RA4M1_HOCO_FREQUENCY     32000000ul
+#define RA4M1_LOCO_FREQUENCY     32768ul
+#define RA4M1_MOCO_FREQUENCY     8000000ul
+
+#define RA4M1_HOCOEN     1
+
+/* Clocks divisor are  1/2^n where n can go from 0 to 6*/
+
+#define RA4M1_FCK_DIV       0
+#define RA4M1_ICK_DIV       0
+#define RA4M1_PCKA_DIV      0
+#define RA4M1_PCKB_DIV      0
+#define RA4M1_PCKC_DIV      0
+#define RA4M1_PCKD_DIV      0
+
 #endif /* __BOARDS_ARM_RA4M1_ARDUINO_UNO_R4_INCLUDE_BOARD_H */
