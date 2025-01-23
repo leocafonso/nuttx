@@ -36,7 +36,6 @@
 #include "nvic.h"
 #include "arm_internal.h"
 #include "ra_icu.h"
-#include "hardware/ra_icu.h"
 
 /* #include "stm32_irq.h" */
 
@@ -210,7 +209,7 @@ static int ra_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
 void up_irqinitialize(void)
 {
   uint32_t regaddr;
-  uint32_t regval;
+
   int num_priority_registers;
   int i;
 
@@ -258,23 +257,32 @@ void up_irqinitialize(void)
 
   irq_attach(RA_IRQ_SVCALL, arm_svcall, NULL);
   irq_attach(RA_IRQ_HARDFAULT, arm_hardfault, NULL);
-#if(CONFIG_UART2_SERIAL_CONSOLE)
-  regaddr = SCI2_RXI - RA_IRQ_FIRST;
-  regval = ELC_EVENT_SCI2_RXI;
-  putreg32(regval, R_ICU_IELSR(regaddr));
 
-  regaddr = SCI2_TXI - RA_IRQ_FIRST;
-  regval = ELC_EVENT_SCI2_TXI;
-  putreg32(regval, R_ICU_IELSR(regaddr));
-
-  regaddr = SCI2_TEI - RA_IRQ_FIRST;
-  regval = ELC_EVENT_SCI2_TEI;
-  putreg32(regval, R_ICU_IELSR(regaddr));
-
-  regaddr = SCI2_ERI - RA_IRQ_FIRST;
-  regval = ELC_EVENT_SCI2_ERI;
-  putreg32(regval, R_ICU_IELSR(regaddr));
+#ifdef CONFIG_RA_SCI0 
+  ra_attach_icu(ELC_EVENT_SCI0_RXI, SCI0_RXI);
+  ra_attach_icu(ELC_EVENT_SCI0_TXI, SCI0_TXI);
+  ra_attach_icu(ELC_EVENT_SCI0_TEI, SCI0_TEI);
+  ra_attach_icu(ELC_EVENT_SCI0_ERI, SCI0_ERI);
 #endif
+#ifdef CONFIG_RA_SCI1
+  ra_attach_icu(ELC_EVENT_SCI1_RXI, SCI1_RXI);
+  ra_attach_icu(ELC_EVENT_SCI1_TXI, SCI1_TXI);
+  ra_attach_icu(ELC_EVENT_SCI1_TEI, SCI1_TEI);
+  ra_attach_icu(ELC_EVENT_SCI1_ERI, SCI1_ERI);
+#endif
+#ifdef CONFIG_RA_SCI2
+  ra_attach_icu(ELC_EVENT_SCI2_RXI, SCI2_RXI);
+  ra_attach_icu(ELC_EVENT_SCI2_TXI, SCI2_TXI);
+  ra_attach_icu(ELC_EVENT_SCI2_TEI, SCI2_TEI);
+  ra_attach_icu(ELC_EVENT_SCI2_ERI, SCI2_ERI);
+#endif
+#ifdef CONFIG_RA_SCI9
+  ra_attach_icu(ELC_EVENT_SCI9_RXI, SCI9_RXI);
+  ra_attach_icu(ELC_EVENT_SCI9_TXI, SCI9_TXI);
+  ra_attach_icu(ELC_EVENT_SCI9_TEI, SCI9_TEI);
+  ra_attach_icu(ELC_EVENT_SCI9_ERI, SCI9_ERI);
+#endif
+
   /* Set the priority of the SVCall interrupt */
   #ifdef CONFIG_ARMV7M_USEBASEPRI
     ra_prioritize_syscall(NVIC_SYSH_SVCALL_PRIORITY);

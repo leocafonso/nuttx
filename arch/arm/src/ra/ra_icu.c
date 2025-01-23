@@ -34,7 +34,7 @@
 #include <debug.h>
 
 #ifdef CONFIG_SERIAL_TERMIOS
-#  include <termios.h>
+#include <termios.h>
 #endif
 
 #include <nuttx/irq.h>
@@ -50,7 +50,6 @@
 #include "hardware/ra_sci.h"
 #include "hardware/ra_mstp.h"
 #include "hardware/ra_system.h"
-#include "hardware/ra_icu.h"
 #include "ra_icu.h"
 #include "ra_lowputc.h"
 
@@ -65,24 +64,15 @@
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
-void ra_attach_icu(elc_event_t event)
+void ra_attach_icu(elc_event_t event, uint8_t int_num)
 {
-    uint32_t regval;
-    int i = 0;
-    do{
-        regval = getreg32(R_ICU_IELSR(i));
-        i++;
-    }while(i < RA_IRQ_NEXTINT && regval != 0);
-    regval =  event;
-    putreg32(regval, R_ICU_IELSR(i));
+  putreg32(event, R_ICU_IELSR(int_num - RA_IRQ_FIRST));
 }
 
 void ra_clear_ir(int irq)
 {
-  uint32_t regaddr; 
+  uint32_t regaddr;
   regaddr = irq - RA_IRQ_FIRST;
   modifyreg32(R_ICU_IELSR(regaddr), R_ICU_IELSR_IR, 0);
   getreg32(R_ICU_IELSR(regaddr));
 }
-
-

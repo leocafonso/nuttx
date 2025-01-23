@@ -58,8 +58,8 @@
  ****************************************************************************/
 #define BSP_PRV_PRCR_KEY                        (0xA500U)
 
-#    define CONSOLE_DEV         g_uart0port  /* UART0 is console */
-#    define TTYS0_DEV           g_uart0port  /* UART0 is ttyS0 */
+#    define CONSOLE_DEV         g_uart2port  /* UART0 is console */
+#    define TTYS0_DEV           g_uart2port  /* UART0 is ttyS0 */
 #    define UART0_ASSIGNED      1
 #  define HAVE_CONSOLE 1
 /****************************************************************************
@@ -131,21 +131,21 @@ static const struct uart_ops_s g_uart_ops =
 
 /* I/O buffers */
 
-static char g_uart0rxbuffer[CONFIG_UART0_RXBUFSIZE];
-static char g_uart0txbuffer[CONFIG_UART0_TXBUFSIZE];
+static char g_uart2rxbuffer[CONFIG_UART2_RXBUFSIZE];
+static char g_uart2txbuffer[CONFIG_UART2_TXBUFSIZE];
 
 
-static uart_dev_t g_uart0port =
+static uart_dev_t g_uart2port =
 {
   .recv     =
   {
-    .size   = CONFIG_UART0_RXBUFSIZE,
-    .buffer = g_uart0rxbuffer,
+    .size   = CONFIG_UART2_RXBUFSIZE,
+    .buffer = g_uart2rxbuffer,
   },
   .xmit     =
   {
-    .size   = CONFIG_UART0_TXBUFSIZE,
-    .buffer = g_uart0txbuffer,
+    .size   = CONFIG_UART2_TXBUFSIZE,
+    .buffer = g_uart2txbuffer,
   },
   .ops      = &g_uart_ops,
   .priv     = &g_uart0priv,

@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4_ICU_H
-#define __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4_ICU_H
+#ifndef __ARCH_ARM_SRC_RA4M1_HARDWARE_RA_ICU_H
+#define __ARCH_ARM_SRC_RA4M1_HARDWARE_RA_ICU_H
 
 /****************************************************************************
  * Included Files
@@ -28,7 +28,12 @@
 #include <nuttx/config.h>
 
 #include "chip.h"
-#include "hardware/ra4m1_memorymap.h"
+#include "hardware/ra_memorymap.h"
+#if defined(CONFIG_RA4M1_FAMILY)
+#  include "hardware/ra4m1_icu.h"
+#else
+#  error "Unsupported RA memory map"
+#endif
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -149,4 +154,4 @@
  * Public Functions Prototypes
  ****************************************************************************/
 
-#endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4_ICU_H */
+#endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA_ICU_H */
