@@ -12,10 +12,10 @@ choice
 
 config ARCH_CHIP_R7FA4M1ABxxFP 
 	bool "R7FA4M1ABxxFP"
-	select RA_HAVE_SCI0
-	select RA_HAVE_SCI1
-	select RA_HAVE_SCI2
-	select RA_HAVE_SCI9
+	select RA_HAVE_SCI0_UART
+	select RA_HAVE_SCI1_UART
+	select RA_HAVE_SCI2_UART
+	select RA_HAVE_SCI9_UART
 	select RA4M1_FAMILY
 
 endchoice # RA4 Chip Selection
@@ -27,49 +27,49 @@ config RA4M1_FAMILY
 
 menu "RA4M1 Peripheral Support"
 
-config RA_HAVE_SCI0
+config RA_HAVE_SCI0_UART
 	bool
 	default n
 
-config RA_HAVE_SCI1
+config RA_HAVE_SCI1_UART
 	bool
 	default n
 
-config RA_HAVE_SCI2
+config RA_HAVE_SCI2_UART
 	bool
 	default n
 
-config RA_HAVE_SCI9
+config RA_HAVE_SCI9_UART
 	bool
 	default n
 
-config RA_SCI0
+config RA_SCI0_UART
 	bool "UART 0"
 	default n
-	depends on RA_HAVE_SCI0
+	depends on RA_HAVE_SCI0_UART
 	select UART0_SERIALDRIVER
 	select ARCH_HAVE_SERIAL_TERMIOS
 
-config RA_SCI1
+config RA_SCI1_UART
 	bool "UART 1"
 	default n
-	depends on RA_HAVE_SCI1
+	depends on RA_HAVE_SCI1_UART
 	select UART0_SERIALDRIVER
 	select ARCH_HAVE_SERIAL_TERMIOS
 
-config RA_SCI2
+config RA_SCI2_UART
 	bool "UART 2"
 	default y
-	depends on RA_HAVE_SCI2
+	depends on RA_HAVE_SCI2_UART
 	select UART2_SERIALDRIVER
 	select ARCH_HAVE_SERIAL_TERMIOS
 
-config RA_SCI9
+config RA_SCI9_UART
 	bool "UART 9"
 	default n
-	depends on RA_HAVE_SCI9
+	depends on RA_HAVE_SCI9_UART
 	select UART9_SERIALDRIVER
 	select ARCH_HAVE_SERIAL_TERMIOS
 
-endmenu # AT91SAM3/4 Peripheral Support
+endmenu # RA4M1 Peripheral Support
 

@@ -258,7 +258,7 @@ void up_irqinitialize(void)
   irq_attach(RA_IRQ_SVCALL, arm_svcall, NULL);
   irq_attach(RA_IRQ_HARDFAULT, arm_hardfault, NULL);
 
-#ifdef CONFIG_RA_SCI0 
+#ifdef CONFIG_RA_SCI0_UART 
   ra_attach_icu(ELC_EVENT_SCI0_RXI, SCI0_RXI);
   ra_attach_icu(ELC_EVENT_SCI0_TXI, SCI0_TXI);
   ra_attach_icu(ELC_EVENT_SCI0_TEI, SCI0_TEI);
