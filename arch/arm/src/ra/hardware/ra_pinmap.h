@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/sam34/sam_gpio.h
+ * arch/arm/src/ra/hardware/ra_pinmap.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_SAM34_SAM_GPIO_H
-#define __ARCH_ARM_SRC_SAM34_SAM_GPIO_H
+#ifndef __ARCH_ARM_SRC_RA_HARDWARE_RA_PINMAP_H
+#define __ARCH_ARM_SRC_RA_HARDWARE_RA_PINMAP_H
 
 /****************************************************************************
  * Included Files
@@ -27,71 +27,29 @@
 
 #include <nuttx/config.h>
 
-#include <stdint.h>
-#include <stdbool.h>
-
 #include "chip.h"
-#include "hardware/ra_gpio.h"
-#include "hardware/ra_pinmap.h"
+#include "hardware/ra_memorymap.h"
+
+#if defined(CONFIG_RA4M1_FAMILY)
+#  include "hardware/ra4m1_pinmap.h"
+#else
+#  error "Unsupported RA memory map"
+#endif
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
 /****************************************************************************
- * Public Function Prototypes
+ * Public Types
  ****************************************************************************/
-
-#ifndef __ASSEMBLY__
-
-#undef EXTERN
-#if defined(__cplusplus)
-#define EXTERN extern "C"
-extern "C"
-{
-#else
-#define EXTERN extern
-#endif
-
-/* Must be big enough to hold the 32-bit encoding */
-
-typedef struct gpio_pinset
-{
-    uint32_t offset;
-    uint32_t cfg;
-}gpio_pinset_t;
 
 /****************************************************************************
- * Name: ra_configgpio
- *
- * Description:
- *   Configure a GPIO pin based on bit-encoded description of the pin.
- *
+ * Public Data
  ****************************************************************************/
-void ra_configgpio(gpio_pinset_t cfgset);
 
 /****************************************************************************
- * Name: ra_gpiowrite
- *
- * Description:
- *   Write one or zero to the selected GPIO pin
- *
+ * Public Functions Prototypes
  ****************************************************************************/
-void ra_gpiowrite(gpio_pinset_t pinset, bool value);
 
-/****************************************************************************
- * Name: sam_gpioread
- *
- * Description:
- *   Read one or zero from the selected GPIO pin
- *
- ****************************************************************************/
-bool ra_gpioread(gpio_pinset_t pinset);
-
-#undef EXTERN
-#if defined(__cplusplus)
-}
-#endif
-
-#endif /* __ASSEMBLY__ */
-#endif /* __ARCH_ARM_SRC_SAM34_SAM_GPIO_H */
+#endif /* __ARCH_ARM_SRC_RA_HARDWARE_RA_PINMAP_H */

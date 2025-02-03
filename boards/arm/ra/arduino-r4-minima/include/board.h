@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/include/board.h
+ * boards/arm/rA/arduino-r4-minima/include/board.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -57,11 +57,23 @@
 
 /* Clocks divisor are  1/2^n where n can go from 0 to 6*/
 
-#define RA_FCK_DIV       0
-#define RA_ICK_DIV       0
-#define RA_PCKA_DIV      0
-#define RA_PCKB_DIV      0
-#define RA_PCKC_DIV      0
-#define RA_PCKD_DIV      0
+#define RA_FCK_DIV       R_SYSTEM_SCKDIVCR_FCK_DIV_1
+#define RA_ICK_DIV       R_SYSTEM_SCKDIVCR_ICK_DIV_1
+#define RA_PCKA_DIV      R_SYSTEM_SCKDIVCR_PCKA_DIV_1
+#define RA_PCKB_DIV      R_SYSTEM_SCKDIVCR_PCKB_DIV_1
+#define RA_PCKC_DIV      R_SYSTEM_SCKDIVCR_PCKC_DIV_1
+#define RA_PCKD_DIV      R_SYSTEM_SCKDIVCR_PCKD_DIV_1
+
+/* Alternate function pin selections ****************************************/
+
+#define GPIO_SCI2_RX   GPIO_RXD2_MISO2_SCL2_1  /* P301 */
+#define GPIO_SCI2_TX   GPIO_TXD2_MOSI2_SDA2_1  /* P302 */
+
+#define GPIO_SCI1_RX   GPIO_RXD1_MISO1_SCL1_3  /* P502 */
+#define GPIO_SCI1_TX   GPIO_TXD1_MOSI1_SDA1_3  /* P501 */
+
+#define GPIO_SCI9_RX   GPIO_RXD9_MISO9_SCL9_1  /* P110 */
+#define GPIO_SCI9_TX   GPIO_TXD9_MOSI9_SDA9_1  /* P109 */
+
 
 #endif /* __BOARDS_ARM_RA_ARDUINO_UNO_R4_INCLUDE_BOARD_H */

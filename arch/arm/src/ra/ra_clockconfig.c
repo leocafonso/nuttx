@@ -218,24 +218,17 @@ void ra_clockconfig(void)
     /* Disable FCache. */
     modifyreg16(R_FCACHE_FCACHEE, R_FCACHE_FCACHEE_FCACHEEN, 0);
 
-    modifyreg8(R_SYSTEM_SCKSCR, R_SYSTEM_SCKSCR_CKSEL_MASK, 0);
+    modifyreg8(R_SYSTEM_SCKSCR, R_SYSTEM_SCKSCR_CKSEL_CLEAR, R_SYSTEM_SCKSCR_CKSEL_HOCO);
 
     /* lock VBTCR1 register. */
     putreg16(0, R_SYSTEM_PRCR);
 
     /* PCLKA = 32Mhz */
+
     modifyreg32(R_SYSTEM_SCKDIVCR,
-                (R_SYSTEM_SCKDIVCR_FCK_MASK << R_SYSTEM_SCKDIVCR_FCK_SHIFT |
-                 R_SYSTEM_SCKDIVCR_ICK_MASK << R_SYSTEM_SCKDIVCR_ICK_SHIFT |
-                 R_SYSTEM_SCKDIVCR_PCKA_MASK << R_SYSTEM_SCKDIVCR_PCKA_SHIFT |
-                 R_SYSTEM_SCKDIVCR_PCKB_MASK << R_SYSTEM_SCKDIVCR_PCKB_SHIFT |
-                 R_SYSTEM_SCKDIVCR_PCKC_MASK << R_SYSTEM_SCKDIVCR_PCKC_SHIFT |
-                 R_SYSTEM_SCKDIVCR_PCKD_MASK << R_SYSTEM_SCKDIVCR_PCKD_SHIFT),
-                (RA_FCK_DIV << R_SYSTEM_SCKDIVCR_FCK_SHIFT |
-                 RA_ICK_DIV << R_SYSTEM_SCKDIVCR_ICK_SHIFT |
-                 RA_PCKA_DIV << R_SYSTEM_SCKDIVCR_PCKA_SHIFT |
-                 RA_PCKB_DIV << R_SYSTEM_SCKDIVCR_PCKB_SHIFT |
-                 RA_PCKC_DIV << R_SYSTEM_SCKDIVCR_PCKC_SHIFT |
-                 RA_PCKD_DIV << R_SYSTEM_SCKDIVCR_PCKD_SHIFT));
+                (R_SYSTEM_SCKDIVCR_FCK_DIV_CLEAR  | R_SYSTEM_SCKDIVCR_ICK_DIV_CLEAR  | R_SYSTEM_SCKDIVCR_PCKA_DIV_CLEAR  |
+                 R_SYSTEM_SCKDIVCR_PCKB_DIV_CLEAR | R_SYSTEM_SCKDIVCR_PCKC_DIV_CLEAR | R_SYSTEM_SCKDIVCR_PCKD_DIV_CLEAR  ),
+                (RA_FCK_DIV                       | RA_ICK_DIV                       | RA_PCKA_DIV                       |
+                 RA_PCKB_DIV                      | RA_PCKC_DIV                      | RA_PCKD_DIV ));
                  
 }

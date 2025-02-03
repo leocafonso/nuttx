@@ -31,18 +31,84 @@
 
 #include "arm_internal.h"
 #include "ra_lowputc.h"
+#include "ra_gpio.h"
 #include "hardware/ra_sci.h"
 #include "hardware/ra_mstp.h"
 #include "hardware/ra_system.h"
-#include "hardware/ra_gpio.h"
 
-/* The board.h file may redefine pin configurations defined in sam_pinmap.h */
+/* The board.h file may redefine pin configurations defined in ra_pinmap.h */
 #include <arch/board/board.h>
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
+/* Is there a serial console?  It could be on UART0-1 or USART0-3 */
+
+#if defined(CONFIG_UART0_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI0_UART)
+#undef CONFIG_UART1_SERIAL_CONSOLE
+#undef CONFIG_UART2_SERIAL_CONSOLE
+#undef CONFIG_UART9_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
+#elif defined(CONFIG_UART1_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI1_UART)
+#undef CONFIG_UART0_SERIAL_CONSOLE
+#undef CONFIG_UART2_SERIAL_CONSOLE
+#undef CONFIG_UART9_SERIAL_CONSOLE
+#define HAVE_CONSOLE 1
+#elif defined(CONFIG_UART2_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI2_UART)
+#undef CONFIG_UART0_SERIAL_CONSOLE
+#undef CONFIG_UART1_SERIAL_CONSOLE
+#undef CONFIG_UART9_SERIAL_CONSOLE
+#define HAVE_CONSOLE 1
+#elif defined(CONFIG_UART9_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI9_UART)
+#undef CONFIG_UART0_SERIAL_CONSOLE
+#undef CONFIG_UART1_SERIAL_CONSOLE
+#undef CONFIG_UART2_SERIAL_CONSOLE
+#define HAVE_CONSOLE 1
+#else
+#ifndef CONFIG_NO_SERIAL_CONSOLE
+#warning "No valid CONFIG_USARTn_SERIAL_CONSOLE Setting"
+#endif
+
+#undef CONFIG_UART0_SERIAL_CONSOLE
+#undef CONFIG_UART1_SERIAL_CONSOLE
+#undef CONFIG_UART2_SERIAL_CONSOLE
+#undef CONFIG_UART9_SERIAL_CONSOLE
+#undef HAVE_CONSOLE
+#endif
+
+#if defined(HAVE_CONSOLE)
+
+/* Select USART parameters for the selected console */
+
+#  if defined(CONFIG_UART0_SERIAL_CONSOLE)
+#    define RA_CONSOLE_BASE     R_SCI0_BASE
+#    define RA_CONSOLE_BAUD     CONFIG_UART0_BAUD
+#    define RA_CONSOLE_BITS     CONFIG_UART0_BITS
+#    define RA_CONSOLE_PARITY   CONFIG_UART0_PARITY
+#    define RA_CONSOLE_2STOP    CONFIG_UART0_2STOP
+#  elif defined(CONFIG_UART1_SERIAL_CONSOLE)
+#    define RA_CONSOLE_BASE     R_SCI1_BASE
+#    define RA_CONSOLE_BAUD     CONFIG_UART1_BAUD
+#    define RA_CONSOLE_BITS     CONFIG_UART1_BITS
+#    define RA_CONSOLE_PARITY   CONFIG_UART1_PARITY
+#    define RA_CONSOLE_2STOP    CONFIG_UART1_2STOP
+#  elif defined(CONFIG_UART2_SERIAL_CONSOLE)
+#    define RA_CONSOLE_BASE     R_SCI2_BASE
+#    define RA_CONSOLE_BAUD     CONFIG_UART1_BAUD
+#    define RA_CONSOLE_BITS     CONFIG_UART1_BITS
+#    define RA_CONSOLE_PARITY   CONFIG_UART1_PARITY
+#    define RA_CONSOLE_2STOP    CONFIG_UART1_2STOP
+#  elif defined(CONFIG_UART9_SERIAL_CONSOLE)
+#    define RA_CONSOLE_BASE     R_SCI9_BASE
+#    define RA_CONSOLE_BAUD     CONFIG_UART9_BAUD
+#    define RA_CONSOLE_BITS     CONFIG_UART9_BITS
+#    define RA_CONSOLE_PARITY   CONFIG_UART9_PARITY
+#    define RA_CONSOLE_2STOP    CONFIG_UART9_2STOP
+#  else
+#    error "No CONFIG_UARTn_SERIAL_CONSOLE Setting"
+#  endif
+#  endif
+
 /* Configuration ************************************************************/
 #define BSP_PRV_PRCR_KEY                        (0xA500U)
 
@@ -85,17 +151,17 @@ void arm_lowputc(char ch)
   for (; ; )
     {
 
-      while ((getreg8(R_SCI2_SSR) & R_SCI2_SSR_TEND) == 0);
+      while ((getreg8(RA_CONSOLE_BASE+ R_SCI_SSR_OFFSET) & R_SCI_SSR_TEND) == 0);
 
       // /* Disable interrupts so that the test and the transmission are
       //  * atomic.
       //  */
       flags = spin_lock_irqsave(NULL);
-      if ((getreg8(R_SCI2_SSR) & R_SCI2_SSR_TEND)  == R_SCI2_SSR_TEND)
+      if ((getreg8(RA_CONSOLE_BASE + R_SCI_SSR_OFFSET) & R_SCI_SSR_TEND)  == R_SCI_SSR_TEND)
         {
           /* Send the character */
 
-          putreg8((uint32_t)ch, R_SCI2_TDR);
+          putreg8((uint32_t)ch, RA_CONSOLE_BASE + R_SCI_TDR_OFFSET);
 
           spin_unlock_irqrestore(NULL, flags);
           return;
@@ -148,8 +214,21 @@ void ra_lowsetup(void)
   putreg8(0, R_PMISC_PWPR);
   putreg8(regval, R_PMISC_PWPR);
   regval = (0x4 & R_PFS_PSEL_MASK) << R_PFS_PSEL_SHIFT | R_PFS_PMR;
-  modifyreg32(R_PFS(3,2),0 , regval);
-  modifyreg32(R_PFS(3,1),0 , regval);
+
+#if defined(CONFIG_RA_SCI0_UART)
+  ra_configgpio(GPIO_SCI0_RX);
+  ra_configgpio(GPIO_SCI0_TX);
+#elif defined(CONFIG_RA_SCI1_UART)
+  ra_configgpio(GPIO_SCI1_RX);
+  ra_configgpio(GPIO_SCI1_TX);
+#elif defined(CONFIG_RA_SCI2_UART)
+  ra_configgpio(GPIO_SCI2_RX);
+  ra_configgpio(GPIO_SCI2_TX);
+#elif defined(CONFIG_RA_SCI9_UART)
+  ra_configgpio(GPIO_SCI9_RX);
+  ra_configgpio(GPIO_SCI9_TX);
+#endif
+
   regval = R_PMISC_PWPR_B0WI;
   putreg8(0, R_PMISC_PWPR);
   putreg8(regval, R_PMISC_PWPR);
@@ -157,13 +236,14 @@ void ra_lowsetup(void)
   putreg16((BSP_PRV_PRCR_KEY | R_SYSTEM_PRCR_PRC1), R_SYSTEM_PRCR);
   modifyreg32(R_MSTP_MSTPCRB, R_MSTP_MSTPCRB_MSTPB29, 0);
   putreg16(BSP_PRV_PRCR_KEY, R_SYSTEM_PRCR);
+
   regval = 0;
-  putreg8(regval, R_SCI2_SCR);
+  putreg8(regval, RA_CONSOLE_BASE + R_SCI_SCR_OFFSET);
 
   regval  = 8;
-  putreg8(regval, R_SCI2_BRR);
+  putreg8(regval, RA_CONSOLE_BASE + R_SCI_BRR_OFFSET);
 
 
-  regval = (R_SCI2_SCR_TE | R_SCI2_SCR_RE);
-  putreg8(regval, R_SCI2_SCR);
+  regval = (R_SCI_SCR_TE | R_SCI_SCR_RE);
+  putreg8(regval, RA_CONSOLE_BASE + R_SCI_SCR_OFFSET);
 }

@@ -52,6 +52,7 @@
 #include "hardware/ra_system.h"
 #include "ra_lowputc.h"
 #include "ra_icu.h"
+#include "ra_gpio.h"
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -60,22 +61,22 @@
 
 /* Is there a serial console?  It could be on UART0-1 or USART0-3 */
 
-#if defined(CONFIG_UART0_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI0)
+#if defined(CONFIG_UART0_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI0_UART)
 #undef CONFIG_UART1_SERIAL_CONSOLE
 #undef CONFIG_UART2_SERIAL_CONSOLE
 #undef CONFIG_UART9_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
-#elif defined(CONFIG_UART1_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI1)
+#elif defined(CONFIG_UART1_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI1_UART)
 #undef CONFIG_UART0_SERIAL_CONSOLE
 #undef CONFIG_UART2_SERIAL_CONSOLE
 #undef CONFIG_UART9_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
-#elif defined(CONFIG_UART2_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI2)
+#elif defined(CONFIG_UART2_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI2_UART)
 #undef CONFIG_UART0_SERIAL_CONSOLE
 #undef CONFIG_UART1_SERIAL_CONSOLE
 #undef CONFIG_UART9_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
-#elif defined(CONFIG_USART9_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI9)
+#elif defined(CONFIG_UART9_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI9_UART)
 #undef CONFIG_UART0_SERIAL_CONSOLE
 #undef CONFIG_UART1_SERIAL_CONSOLE
 #undef CONFIG_UART2_SERIAL_CONSOLE
@@ -106,7 +107,7 @@
 #define CONSOLE_DEV g_uart2port /* UART2 is console */
 #define TTYS0_DEV g_uart2port   /* UART2 is ttyS0 */
 #define UART2_ASSIGNED 1
-#elif defined(CONFIG_USART9_SERIAL_CONSOLE)
+#elif defined(CONFIG_UART9_SERIAL_CONSOLE)
 #define CONSOLE_DEV g_uart9port /* UART9 is console */
 #define TTYS0_DEV g_uart9port   /* UART9 is ttyS0 */
 #define UART9_ASSIGNED 1
@@ -180,19 +181,6 @@ struct up_dev_s
   bool stopbits2;           /* true: Configure with 2 stop bits instead of 1 */
 };
 
-static struct up_dev_s g_uart0priv =
-    {
-        .usartbase = R_SCI2_BASE,
-        .baud = 115200,
-        .rxirq = SCI2_RXI,
-        .txirq = SCI2_TXI,
-        .teirq = SCI2_TEI,
-        .erirq = SCI2_ERI,
-        .parity = 0,
-        .bits = 0,
-        .stopbits2 = 0,
-};
-
 static const struct uart_ops_s g_uart_ops =
     {
         .setup = up_setup,
@@ -209,10 +197,93 @@ static const struct uart_ops_s g_uart_ops =
         .txempty = up_txempty,
 };
 
-/* I/O buffers */
 
+/* I/O buffers */
+#if defined(CONFIG_RA_SCI0_UART)
+static char g_uart0rxbuffer[CONFIG_UART0_RXBUFSIZE];
+static char g_uart0txbuffer[CONFIG_UART0_TXBUFSIZE];
+#elif defined(CONFIG_RA_SCI1_UART)
+static char g_uart1rxbuffer[CONFIG_UART1_RXBUFSIZE];
+static char g_uart1txbuffer[CONFIG_UART1_TXBUFSIZE];
+#elif defined(CONFIG_RA_SCI2_UART)
 static char g_uart2rxbuffer[CONFIG_UART2_RXBUFSIZE];
 static char g_uart2txbuffer[CONFIG_UART2_TXBUFSIZE];
+#elif defined(CONFIG_RA_SCI9_UART)
+static char g_uart9rxbuffer[CONFIG_UART9_RXBUFSIZE];
+static char g_uart9txbuffer[CONFIG_UART9_TXBUFSIZE];
+#endif
+
+#if defined(CONFIG_RA_SCI0_UART)
+static struct up_dev_s g_uart0priv =
+    {
+        .usartbase = R_SCI0_BASE,
+        .rxirq = SCI0_RXI,
+        .txirq = SCI0_TXI,
+        .teirq = SCI0_TEI,
+        .erirq = SCI0_ERI,
+        .baud = CONFIG_UART0_BAUD,
+        .parity = CONFIG_UART0_PARITY,
+        .bits = CONFIG_UART0_BITS,
+        .stopbits2 = CONFIG_UART0_2STOP,
+};
+
+static uart_dev_t g_uart0port =
+    {
+        .recv =
+            {
+                .size = CONFIG_UART0_RXBUFSIZE,
+                .buffer = g_uart0rxbuffer,
+            },
+        .xmit =
+            {
+                .size = CONFIG_UART0_TXBUFSIZE,
+                .buffer = g_uart0txbuffer,
+            },
+        .ops = &g_uart_ops,
+        .priv = &g_uart0priv,
+};
+#elif defined(CONFIG_RA_SCI1_UART)
+static struct up_dev_s g_uart1priv =
+    {
+        .usartbase = R_SCI1_BASE,
+        .rxirq = SCI1_RXI,
+        .txirq = SCI1_TXI,
+        .teirq = SCI1_TEI,
+        .erirq = SCI1_ERI,
+        .baud = CONFIG_UART1_BAUD,
+        .parity = CONFIG_UART1_PARITY,
+        .bits = CONFIG_UART1_BITS,
+        .stopbits2 = CONFIG_UART1_2STOP,
+};
+
+static uart_dev_t g_uart1port =
+    {
+        .recv =
+            {
+                .size = CONFIG_UART1_RXBUFSIZE,
+                .buffer = g_uart1rxbuffer,
+            },
+        .xmit =
+            {
+                .size = CONFIG_UART1_TXBUFSIZE,
+                .buffer = g_uart1txbuffer,
+            },
+        .ops = &g_uart_ops,
+        .priv = &g_uart1priv,
+};
+#elif defined(CONFIG_RA_SCI2_UART)
+static struct up_dev_s g_uart2priv =
+    {
+        .usartbase = R_SCI2_BASE,
+        .rxirq = SCI2_RXI,
+        .txirq = SCI2_TXI,
+        .teirq = SCI2_TEI,
+        .erirq = SCI2_ERI,
+        .baud = CONFIG_UART2_BAUD,
+        .parity = CONFIG_UART2_PARITY,
+        .bits = CONFIG_UART2_BITS,
+        .stopbits2 = CONFIG_UART2_2STOP,
+};
 
 static uart_dev_t g_uart2port =
     {
@@ -227,9 +298,38 @@ static uart_dev_t g_uart2port =
                 .buffer = g_uart2txbuffer,
             },
         .ops = &g_uart_ops,
-        .priv = &g_uart0priv,
+        .priv = &g_uart2priv,
+};
+#elif defined(CONFIG_RA_SCI9_UART)
+static struct up_dev_s g_uart9priv =
+    {
+        .usartbase = R_SCI9_BASE,
+        .rxirq = SCI9_RXI,
+        .txirq = SCI9_TXI,
+        .teirq = SCI9_TEI,
+        .erirq = SCI9_ERI,
+        .baud = CONFIG_UART9_BAUD,
+        .parity = CONFIG_UART9_PARITY,
+        .bits = CONFIG_UART9_BITS,
+        .stopbits2 = CONFIG_UART9_2STOP,
 };
 
+static uart_dev_t g_uart9port =
+    {
+        .recv =
+            {
+                .size = CONFIG_UART9_RXBUFSIZE,
+                .buffer = g_uart9rxbuffer,
+            },
+        .xmit =
+            {
+                .size = CONFIG_UART9_TXBUFSIZE,
+                .buffer = g_uart9txbuffer,
+            },
+        .ops = &g_uart_ops,
+        .priv = &g_uart9priv,
+};
+#endif
 /****************************************************************************
  * Private Functions
  ****************************************************************************/
@@ -269,11 +369,19 @@ static int up_setup(struct uart_dev_s *dev)
   struct up_dev_s *priv = (struct up_dev_s *)dev->priv;
   uint8_t regval;
 
-  /* Note: The logic here depends on the fact that that the USART module
-   * was enabled and the pins were configured in sam_lowsetup().
-   */
-
-  /* The shutdown method will put the UART in a known, disabled state */
+#if defined(CONFIG_RA_SCI0_UART)
+  ra_configgpio(GPIO_SCI0_RX);
+  ra_configgpio(GPIO_SCI0_TX);
+#elif defined(CONFIG_RA_SCI1_UART)
+  ra_configgpio(GPIO_SCI1_RX);
+  ra_configgpio(GPIO_SCI1_TX);
+#elif defined(CONFIG_RA_SCI2_UART)
+  ra_configgpio(GPIO_SCI2_RX);
+  ra_configgpio(GPIO_SCI2_TX);
+#elif defined(CONFIG_RA_SCI9_UART)
+  ra_configgpio(GPIO_SCI9_RX);
+  ra_configgpio(GPIO_SCI9_TX);
+#endif
 
   // up_disableallints(priv, &imr);
   up_shutdown(dev);
@@ -281,15 +389,56 @@ static int up_setup(struct uart_dev_s *dev)
   putreg16((BSP_PRV_PRCR_KEY | R_SYSTEM_PRCR_PRC1), R_SYSTEM_PRCR);
   modifyreg32(R_MSTP_MSTPCRB, R_MSTP_MSTPCRB_MSTPB29, 0);
   putreg16(BSP_PRV_PRCR_KEY, R_SYSTEM_PRCR);
-  
+
   regval = 0;
-  up_serialout_u8(priv, R_SCI2_SCR_OFFSET, regval);
+  up_serialout_u8(priv, R_SCI_SCR_OFFSET, regval);
+
+/*
+  UART character length requires change in two registers - SCMR and SMR
+  SCMR.CHR1 SMR.CHR
+  0 0: Transmit/receive in 9-bit data length
+  0 1: Transmit/receive in 9-bit data length
+  1 0: Transmit/receive in 8-bit data length (initial value)
+  1 1: Transmit/receive in 7-bit data length.
+*/
+
+  regval = up_serialin_u8(priv, R_SCI_SCMR_OFFSET);
+
+  if (priv->bits == 9)
+  {
+    regval &= ~R_SCI_SCMR_CHR1; 
+  }
+
+  up_serialout_u8(priv, R_SCI_SCMR_OFFSET, regval);
+
+  regval = 0;
+  if (priv->parity > 0)
+  {
+    regval |= R_SCI_SMR_PE;
+    if (priv->parity == 1)
+    {
+      regval |= R_SCI_SMR_PM;
+    }
+  }
+
+  if (priv->stopbits2 == 1)
+  {
+    regval |= R_SCI_SMR_STOP;
+  }
+
+  if (priv->bits == 7 || priv->bits == 9)
+  {
+    regval |= R_SCI_SMR_CHR;
+  }
+
+  up_serialout_u8(priv, R_SCI_SMR_OFFSET, regval);
+
 
   regval = 8;
-  up_serialout_u8(priv, R_SCI2_BRR_OFFSET, regval);
+  up_serialout_u8(priv, R_SCI_BRR_OFFSET, regval);
 
-  regval = (R_SCI2_SCR_TIE | R_SCI2_SCR_RIE | R_SCI2_SCR_TE | R_SCI2_SCR_RE);
-  up_serialout_u8(priv, R_SCI2_SCR_OFFSET, regval);
+  regval = (R_SCI_SCR_TIE | R_SCI_SCR_RIE | R_SCI_SCR_TE | R_SCI_SCR_RE);
+  up_serialout_u8(priv, R_SCI_SCR_OFFSET, regval);
 
   return OK;
 }
@@ -596,7 +745,7 @@ static int up_receive(struct uart_dev_s *dev, unsigned int *status)
   *status = priv->sr;
   priv->sr = 0;
   /* Then return the actual received byte */
-  return (int)(up_serialin_u8(priv, R_SCI2_RDR_OFFSET) & 0xff);
+  return (int)(up_serialin_u8(priv, R_SCI_RDR_OFFSET) & 0xff);
 }
 
 static void up_rxint(struct uart_dev_s *dev, bool enable)
@@ -606,12 +755,12 @@ static void up_rxint(struct uart_dev_s *dev, bool enable)
 static bool up_rxavailable(struct uart_dev_s *dev)
 {
   struct up_dev_s *priv = (struct up_dev_s *)dev->priv;
-  return ((up_serialin_u8(priv, R_SCI2_SSR_OFFSET) & R_SCI2_SSR_RDRF) == R_SCI2_SSR_RDRF);
+  return ((up_serialin_u8(priv, R_SCI_SSR_OFFSET) & R_SCI_SSR_RDRF) == R_SCI_SSR_RDRF);
 }
 static void up_send(struct uart_dev_s *dev, int ch)
 {
   struct up_dev_s *priv = (struct up_dev_s *)dev->priv;
-  up_serialout_u8(priv, R_SCI2_TDR_OFFSET, (uint8_t)ch);
+  up_serialout_u8(priv, R_SCI_TDR_OFFSET, (uint8_t)ch);
 }
 static void up_txint(struct uart_dev_s *dev, bool enable)
 {
@@ -650,13 +799,13 @@ static void up_txint(struct uart_dev_s *dev, bool enable)
 static bool up_txready(struct uart_dev_s *dev)
 {
   struct up_dev_s *priv = (struct up_dev_s *)dev->priv;
-  bool ret = ((up_serialin_u8(priv, R_SCI2_SSR_OFFSET) & R_SCI2_SSR_TDRE) == R_SCI2_SSR_TDRE);
+  bool ret = ((up_serialin_u8(priv, R_SCI_SSR_OFFSET) & R_SCI_SSR_TDRE) == R_SCI_SSR_TDRE);
   return ret;
 }
 static bool up_txempty(struct uart_dev_s *dev)
 {
   struct up_dev_s *priv = (struct up_dev_s *)dev->priv;
-  bool ret = ((up_serialin_u8(priv, R_SCI2_SSR_OFFSET) & R_SCI2_SSR_TDRE) == R_SCI2_SSR_TDRE);
+  bool ret = ((up_serialin_u8(priv, R_SCI_SSR_OFFSET) & R_SCI_SSR_TDRE) == R_SCI_SSR_TDRE);
   return ret;
 }
 

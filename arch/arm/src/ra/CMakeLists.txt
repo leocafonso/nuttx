@@ -26,6 +26,7 @@ set(SRCS
     ra_irq.c
     ra_lowputc.c
     ra_icu.c
+    ra_gpio.c
     )
 
 target_sources(arch PRIVATE ${SRCS})

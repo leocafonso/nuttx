@@ -71,28 +71,28 @@
 #  define RA_IRQ_IELSR31      (RA_IRQ_FIRST + 31)  /* 31:  Event selected in the ICU.IELSR31 register */
 #  define RA_IRQ_NEXTINT      (32)
 
-#if (CONFIG_RA_SCI0)
+#if (CONFIG_RA_SCI0_UART)
 #define SCI0_RXI   (RA_IRQ_FIRST + __COUNTER__)  // Receive data full
 #define SCI0_TXI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit data empty
 #define SCI0_TEI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit end
 #define SCI0_ERI   (RA_IRQ_FIRST + __COUNTER__)  // Receive error
 #endif
 
-#if (CONFIG_RA_SCI1)
+#if (CONFIG_RA_SCI1_UART)
 #define SCI1_RXI   (RA_IRQ_FIRST + __COUNTER__)  // Receive data full
 #define SCI1_TXI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit data empty
 #define SCI1_TEI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit end
 #define SCI1_ERI   (RA_IRQ_FIRST + __COUNTER__)  // Receive error
 #endif
 
-#if (CONFIG_RA_SCI2)
+#if (CONFIG_RA_SCI2_UART)
 #define SCI2_RXI   (RA_IRQ_FIRST + __COUNTER__)  // Receive data full
 #define SCI2_TXI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit data empty
 #define SCI2_TEI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit end
 #define SCI2_ERI   (RA_IRQ_FIRST + __COUNTER__)  // Receive error
 #endif
 
-#if (CONFIG_RA_SCI9)
+#if (CONFIG_RA_SCI9_UART)
 #define SCI9_RXI   (RA_IRQ_FIRST + __COUNTER__)  // Receive data full
 #define SCI9_TXI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit data empty
 #define SCI9_TEI   (RA_IRQ_FIRST + __COUNTER__)  // Transmit end

@@ -54,7 +54,7 @@ config RA_SCI1_UART
 	bool "UART 1"
 	default n
 	depends on RA_HAVE_SCI1_UART
-	select UART0_SERIALDRIVER
+	select UART1_SERIALDRIVER
 	select ARCH_HAVE_SERIAL_TERMIOS
 
 config RA_SCI2_UART
