@@ -61,53 +61,53 @@
 
 /* Is there a serial console?  It could be on UART0-1 or USART0-3 */
 
-#if defined(CONFIG_UART0_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI0_UART)
-#undef CONFIG_UART1_SERIAL_CONSOLE
-#undef CONFIG_UART2_SERIAL_CONSOLE
-#undef CONFIG_UART9_SERIAL_CONSOLE
+#if defined(CONFIG_SCI0_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI0_UART)
+#undef CONFIG_SCI1_SERIAL_CONSOLE
+#undef CONFIG_SCI2_SERIAL_CONSOLE
+#undef CONFIG_SCI9_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
-#elif defined(CONFIG_UART1_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI1_UART)
-#undef CONFIG_UART0_SERIAL_CONSOLE
-#undef CONFIG_UART2_SERIAL_CONSOLE
-#undef CONFIG_UART9_SERIAL_CONSOLE
+#elif defined(CONFIG_SCI1_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI1_UART)
+#undef CONFIG_SCI0_SERIAL_CONSOLE
+#undef CONFIG_SCI2_SERIAL_CONSOLE
+#undef CONFIG_SCI9_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
-#elif defined(CONFIG_UART2_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI2_UART)
-#undef CONFIG_UART0_SERIAL_CONSOLE
-#undef CONFIG_UART1_SERIAL_CONSOLE
-#undef CONFIG_UART9_SERIAL_CONSOLE
+#elif defined(CONFIG_SCI2_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI2_UART)
+#undef CONFIG_SCI0_SERIAL_CONSOLE
+#undef CONFIG_SCI1_SERIAL_CONSOLE
+#undef CONFIG_SCI9_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
-#elif defined(CONFIG_UART9_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI9_UART)
-#undef CONFIG_UART0_SERIAL_CONSOLE
-#undef CONFIG_UART1_SERIAL_CONSOLE
-#undef CONFIG_UART2_SERIAL_CONSOLE
+#elif defined(CONFIG_SCI9_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI9_UART)
+#undef CONFIG_SCI0_SERIAL_CONSOLE
+#undef CONFIG_SCI1_SERIAL_CONSOLE
+#undef CONFIG_SCI2_SERIAL_CONSOLE
 #define HAVE_CONSOLE 1
 #else
 #ifndef CONFIG_NO_SERIAL_CONSOLE
 #warning "No valid CONFIG_USARTn_SERIAL_CONSOLE Setting"
 #endif
 
-#undef CONFIG_UART0_SERIAL_CONSOLE
-#undef CONFIG_UART1_SERIAL_CONSOLE
-#undef CONFIG_UART2_SERIAL_CONSOLE
-#undef CONFIG_UART9_SERIAL_CONSOLE
+#undef CONFIG_SCI0_SERIAL_CONSOLE
+#undef CONFIG_SCI1_SERIAL_CONSOLE
+#undef CONFIG_SCI2_SERIAL_CONSOLE
+#undef CONFIG_SCI9_SERIAL_CONSOLE
 #undef HAVE_CONSOLE
 #endif
 
 /* First pick the console and ttys0. */
 
-#if defined(CONFIG_UART0_SERIAL_CONSOLE)
+#if defined(CONFIG_SCI0_SERIAL_CONSOLE)
 #define CONSOLE_DEV g_uart0port /* UART0 is console */
 #define TTYS0_DEV g_uart0port   /* UART0 is ttyS0 */
 #define UART0_ASSIGNED 1
-#elif defined(CONFIG_UART1_SERIAL_CONSOLE)
+#elif defined(CONFIG_SCI1_SERIAL_CONSOLE)
 #define CONSOLE_DEV g_uart1port /* UART1 is console */
 #define TTYS0_DEV g_uart1port   /* UART1 is ttyS0 */
 #define UART1_ASSIGNED 1
-#elif defined(CONFIG_UART2_SERIAL_CONSOLE)
+#elif defined(CONFIG_SCI2_SERIAL_CONSOLE)
 #define CONSOLE_DEV g_uart2port /* UART2 is console */
 #define TTYS0_DEV g_uart2port   /* UART2 is ttyS0 */
 #define UART2_ASSIGNED 1
-#elif defined(CONFIG_UART9_SERIAL_CONSOLE)
+#elif defined(CONFIG_SCI9_SERIAL_CONSOLE)
 #define CONSOLE_DEV g_uart9port /* UART9 is console */
 #define TTYS0_DEV g_uart9port   /* UART9 is ttyS0 */
 #define UART9_ASSIGNED 1
@@ -200,17 +200,17 @@ static const struct uart_ops_s g_uart_ops =
 
 /* I/O buffers */
 #if defined(CONFIG_RA_SCI0_UART)
-static char g_uart0rxbuffer[CONFIG_UART0_RXBUFSIZE];
-static char g_uart0txbuffer[CONFIG_UART0_TXBUFSIZE];
+static char g_uart0rxbuffer[CONFIG_SCI0_RXBUFSIZE];
+static char g_uart0txbuffer[CONFIG_SCI0_TXBUFSIZE];
 #elif defined(CONFIG_RA_SCI1_UART)
-static char g_uart1rxbuffer[CONFIG_UART1_RXBUFSIZE];
-static char g_uart1txbuffer[CONFIG_UART1_TXBUFSIZE];
+static char g_uart1rxbuffer[CONFIG_SCI1_RXBUFSIZE];
+static char g_uart1txbuffer[CONFIG_SCI1_TXBUFSIZE];
 #elif defined(CONFIG_RA_SCI2_UART)
-static char g_uart2rxbuffer[CONFIG_UART2_RXBUFSIZE];
-static char g_uart2txbuffer[CONFIG_UART2_TXBUFSIZE];
+static char g_uart2rxbuffer[CONFIG_SCI2_RXBUFSIZE];
+static char g_uart2txbuffer[CONFIG_SCI2_TXBUFSIZE];
 #elif defined(CONFIG_RA_SCI9_UART)
-static char g_uart9rxbuffer[CONFIG_UART9_RXBUFSIZE];
-static char g_uart9txbuffer[CONFIG_UART9_TXBUFSIZE];
+static char g_uart9rxbuffer[CONFIG_SCI9_RXBUFSIZE];
+static char g_uart9txbuffer[CONFIG_SCI9_TXBUFSIZE];
 #endif
 
 #if defined(CONFIG_RA_SCI0_UART)
@@ -221,22 +221,22 @@ static struct up_dev_s g_uart0priv =
         .txirq = SCI0_TXI,
         .teirq = SCI0_TEI,
         .erirq = SCI0_ERI,
-        .baud = CONFIG_UART0_BAUD,
-        .parity = CONFIG_UART0_PARITY,
-        .bits = CONFIG_UART0_BITS,
-        .stopbits2 = CONFIG_UART0_2STOP,
+        .baud = CONFIG_SCI0_BAUD,
+        .parity = CONFIG_SCI0_PARITY,
+        .bits = CONFIG_SCI0_BITS,
+        .stopbits2 = CONFIG_SCI0_2STOP,
 };
 
 static uart_dev_t g_uart0port =
     {
         .recv =
             {
-                .size = CONFIG_UART0_RXBUFSIZE,
+                .size = CONFIG_SCI0_RXBUFSIZE,
                 .buffer = g_uart0rxbuffer,
             },
         .xmit =
             {
-                .size = CONFIG_UART0_TXBUFSIZE,
+                .size = CONFIG_SCI0_TXBUFSIZE,
                 .buffer = g_uart0txbuffer,
             },
         .ops = &g_uart_ops,
@@ -250,22 +250,22 @@ static struct up_dev_s g_uart1priv =
         .txirq = SCI1_TXI,
         .teirq = SCI1_TEI,
         .erirq = SCI1_ERI,
-        .baud = CONFIG_UART1_BAUD,
-        .parity = CONFIG_UART1_PARITY,
-        .bits = CONFIG_UART1_BITS,
-        .stopbits2 = CONFIG_UART1_2STOP,
+        .baud = CONFIG_SCI1_BAUD,
+        .parity = CONFIG_SCI1_PARITY,
+        .bits = CONFIG_SCI1_BITS,
+        .stopbits2 = CONFIG_SCI1_2STOP,
 };
 
 static uart_dev_t g_uart1port =
     {
         .recv =
             {
-                .size = CONFIG_UART1_RXBUFSIZE,
+                .size = CONFIG_SCI1_RXBUFSIZE,
                 .buffer = g_uart1rxbuffer,
             },
         .xmit =
             {
-                .size = CONFIG_UART1_TXBUFSIZE,
+                .size = CONFIG_SCI1_TXBUFSIZE,
                 .buffer = g_uart1txbuffer,
             },
         .ops = &g_uart_ops,
@@ -279,22 +279,22 @@ static struct up_dev_s g_uart2priv =
         .txirq = SCI2_TXI,
         .teirq = SCI2_TEI,
         .erirq = SCI2_ERI,
-        .baud = CONFIG_UART2_BAUD,
-        .parity = CONFIG_UART2_PARITY,
-        .bits = CONFIG_UART2_BITS,
-        .stopbits2 = CONFIG_UART2_2STOP,
+        .baud = CONFIG_SCI2_BAUD,
+        .parity = CONFIG_SCI2_PARITY,
+        .bits = CONFIG_SCI2_BITS,
+        .stopbits2 = CONFIG_SCI2_2STOP,
 };
 
 static uart_dev_t g_uart2port =
     {
         .recv =
             {
-                .size = CONFIG_UART2_RXBUFSIZE,
+                .size = CONFIG_SCI2_RXBUFSIZE,
                 .buffer = g_uart2rxbuffer,
             },
         .xmit =
             {
-                .size = CONFIG_UART2_TXBUFSIZE,
+                .size = CONFIG_SCI2_TXBUFSIZE,
                 .buffer = g_uart2txbuffer,
             },
         .ops = &g_uart_ops,
@@ -308,22 +308,22 @@ static struct up_dev_s g_uart9priv =
         .txirq = SCI9_TXI,
         .teirq = SCI9_TEI,
         .erirq = SCI9_ERI,
-        .baud = CONFIG_UART9_BAUD,
-        .parity = CONFIG_UART9_PARITY,
-        .bits = CONFIG_UART9_BITS,
-        .stopbits2 = CONFIG_UART9_2STOP,
+        .baud = CONFIG_SCI9_BAUD,
+        .parity = CONFIG_SCI9_PARITY,
+        .bits = CONFIG_SCI9_BITS,
+        .stopbits2 = CONFIG_SCI9_2STOP,
 };
 
 static uart_dev_t g_uart9port =
     {
         .recv =
             {
-                .size = CONFIG_UART9_RXBUFSIZE,
+                .size = CONFIG_SCI9_RXBUFSIZE,
                 .buffer = g_uart9rxbuffer,
             },
         .xmit =
             {
-                .size = CONFIG_UART9_TXBUFSIZE,
+                .size = CONFIG_SCI9_TXBUFSIZE,
                 .buffer = g_uart9txbuffer,
             },
         .ops = &g_uart_ops,
