@@ -45,24 +45,34 @@
  *   USBCLK(Hz)               : 0 
  */
 
-/* HOCO - 24 MHz RC factory-trimmed
- * LOCO - 32 KHz RC
+/* HOCO - 32 MHz RC factory-trimmed
  */
 
-#define RA_HOCO_FREQUENCY     32000000ul
-#define RA_LOCO_FREQUENCY     32768ul
-#define RA_MOCO_FREQUENCY     8000000ul
 
-#define RA_HOCOEN     1
 
-/* Clocks divisor are  1/2^n where n can go from 0 to 6*/
+/* Clock selection HOCO, MOCO, LOCO, PLL*/
 
-#define RA_FCK_DIV       R_SYSTEM_SCKDIVCR_FCK_DIV_1
+#define RA_CKSEL  R_SYSTEM_SCKSCR_CKSEL_HOCO
+
+#define RA_HOCOEN     !R_OFS1_HOCOEN /* Inverted logic to enable */
+#define RA_HOCO_FREQUENCY  R_OFS1_HOCOFRQ1_32MHZ
+
+
+
 #define RA_ICK_DIV       R_SYSTEM_SCKDIVCR_ICK_DIV_1
+#define RA_ICLK_FREQUENCY  32000000
+#define RA_FCK_DIV       R_SYSTEM_SCKDIVCR_FCK_DIV_1
+#define RA_FCK_FREQUENCY  32000000
 #define RA_PCKA_DIV      R_SYSTEM_SCKDIVCR_PCKA_DIV_1
+#define RA_PCKA_FREQUENCY  32000000
 #define RA_PCKB_DIV      R_SYSTEM_SCKDIVCR_PCKB_DIV_1
+#define RA_PCKB_FREQUENCY  32000000
 #define RA_PCKC_DIV      R_SYSTEM_SCKDIVCR_PCKC_DIV_1
+#define RA_PCKC_FREQUENCY  32000000
 #define RA_PCKD_DIV      R_SYSTEM_SCKDIVCR_PCKD_DIV_1
+#define RA_PCKD_FREQUENCY  32000000
+
+
 
 /* Alternate function pin selections ****************************************/
 
@@ -74,6 +84,13 @@
 
 #define GPIO_SCI9_RX   GPIO_RXD9_MISO9_SCL9_1  /* P110 */
 #define GPIO_SCI9_TX   GPIO_TXD9_MOSI9_SDA9_1  /* P109 */
+
+/* ID_CODE ****************************************/
+
+#define IDCODE1   0xFFFFFFFF  
+#define IDCODE2   0xFFFFFFFF  
+#define IDCODE3   0xFFFFFFFF  
+#define IDCODE4   0xFFFFFFFF  
 
 
 #endif /* __BOARDS_ARM_RA_ARDUINO_UNO_R4_INCLUDE_BOARD_H */

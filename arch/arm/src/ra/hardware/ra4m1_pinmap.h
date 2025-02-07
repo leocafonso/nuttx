@@ -89,24 +89,24 @@
 #define GPIO_RXD0_MISO0_SCL0_3              (gpio_pinset_t){ R_PFS(4,10), (PFS_PSEL_SCI | R_PFS_PMR)}
 #define GPIO_TXD0_MOSI0_SDA0_3              (gpio_pinset_t){ R_PFS(4,11), (PFS_PSEL_SCI | R_PFS_PMR)}
 
-#define GPIO_RXD1_MISO1_SCL1_1              (gpio_pinset_t){ R_PFS(2,12), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_TXD1_MOSI1_SDA1_1              (gpio_pinset_t){ R_PFS(2,13), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_RXD1_MISO1_SCL1_2              (gpio_pinset_t){ R_PFS(4,2), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_TXD1_MOSI1_SDA1_2              (gpio_pinset_t){ R_PFS(4,1), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_RXD1_MISO1_SCL1_3              (gpio_pinset_t){ R_PFS(5,2), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_TXD1_MOSI1_SDA1_3              (gpio_pinset_t){ R_PFS(5,1), (PFS_PSEL_SCI | R_PFS_PMR)}
+#define GPIO_RXD1_MISO1_SCL1_1              (gpio_pinset_t){ R_PFS(2,12), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_TXD1_MOSI1_SDA1_1              (gpio_pinset_t){ R_PFS(2,13), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_RXD1_MISO1_SCL1_2              (gpio_pinset_t){ R_PFS(4,2), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_TXD1_MOSI1_SDA1_2              (gpio_pinset_t){ R_PFS(4,1), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_RXD1_MISO1_SCL1_3              (gpio_pinset_t){ R_PFS(5,2), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_TXD1_MOSI1_SDA1_3              (gpio_pinset_t){ R_PFS(5,1), (PFS_PSEL_SCI1 | R_PFS_PMR)}
 
 #define GPIO_RXD2_MISO2_SCL2_1              (gpio_pinset_t){ R_PFS(3,1), (PFS_PSEL_SCI | R_PFS_PMR)}
 #define GPIO_TXD2_MOSI2_SDA2_1              (gpio_pinset_t){ R_PFS(3,2), (PFS_PSEL_SCI | R_PFS_PMR)}
 
-#define GPIO_RXD9_MISO9_SCL9_1              (gpio_pinset_t){ R_PFS(1,10), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_TXD9_MOSI9_SDA9_1              (gpio_pinset_t){ R_PFS(1,9), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_RXD9_MISO9_SCL9_2              (gpio_pinset_t){ R_PFS(2,2), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_TXD9_MOSI9_SDA9_2              (gpio_pinset_t){ R_PFS(2,3), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_RXD9_MISO9_SCL9_3              (gpio_pinset_t){ R_PFS(4,8), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_TXD9_MOSI9_SDA9_3              (gpio_pinset_t){ R_PFS(4,9), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_RXD9_MISO9_SCL9_4              (gpio_pinset_t){ R_PFS(6,1), (PFS_PSEL_SCI | R_PFS_PMR)}
-#define GPIO_TXD9_MOSI9_SDA9_4              (gpio_pinset_t){ R_PFS(6,2), (PFS_PSEL_SCI | R_PFS_PMR)}
+#define GPIO_RXD9_MISO9_SCL9_1              (gpio_pinset_t){ R_PFS(1,10), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_TXD9_MOSI9_SDA9_1              (gpio_pinset_t){ R_PFS(1,9), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_RXD9_MISO9_SCL9_2              (gpio_pinset_t){ R_PFS(2,2), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_TXD9_MOSI9_SDA9_2              (gpio_pinset_t){ R_PFS(2,3), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_RXD9_MISO9_SCL9_3              (gpio_pinset_t){ R_PFS(4,8), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_TXD9_MOSI9_SDA9_3              (gpio_pinset_t){ R_PFS(4,9), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_RXD9_MISO9_SCL9_4              (gpio_pinset_t){ R_PFS(6,1), (PFS_PSEL_SCI1 | R_PFS_PMR)}
+#define GPIO_TXD9_MOSI9_SDA9_4              (gpio_pinset_t){ R_PFS(6,2), (PFS_PSEL_SCI1 | R_PFS_PMR)}
 
 /****************************************************************************
  * Public Types

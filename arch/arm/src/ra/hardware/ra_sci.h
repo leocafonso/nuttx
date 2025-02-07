@@ -171,6 +171,7 @@
 // #  define R_SCI9_LSR              (R_SCI9_BASE + R_SCI_LSR_OFFSET)
 #  define R_SCI9_CDR              (R_SCI9_BASE + R_SCI_CDR_OFFSET)
 #  define R_SCI9_SPTR             (R_SCI9_BASE + R_SCI_SPTR_OFFSET)
+
 /* Register Bitfield Definitions ********************************************/
 
 /* Status register */

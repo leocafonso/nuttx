@@ -38,7 +38,7 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
-#define SYSTICK_CLOCK  (RA_HOCO_FREQUENCY)
+#define SYSTICK_CLOCK  (RA_ICLK_FREQUENCY)
 
 #define SYSTICK_RELOAD ((SYSTICK_CLOCK / CLK_TCK) - 1)
 

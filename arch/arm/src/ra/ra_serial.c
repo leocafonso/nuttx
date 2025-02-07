@@ -50,6 +50,7 @@
 #include "hardware/ra_sci.h"
 #include "hardware/ra_mstp.h"
 #include "hardware/ra_system.h"
+#include "hardware/ra_mstp.h"
 #include "ra_lowputc.h"
 #include "ra_icu.h"
 #include "ra_gpio.h"
@@ -170,6 +171,7 @@ static bool up_txempty(struct uart_dev_s *dev);
 struct up_dev_s
 {
   const uint32_t usartbase; /* Base address of USART registers */
+  uint32_t mstp;            /* Module Stop Control Register */
   uint32_t baud;            /* Configured baud */
   uint32_t sr;              /* Saved status bits */
   uint8_t rxirq;            /* IRQ associated with this USART */
@@ -197,7 +199,6 @@ static const struct uart_ops_s g_uart_ops =
         .txempty = up_txempty,
 };
 
-
 /* I/O buffers */
 #if defined(CONFIG_RA_SCI0_UART)
 static char g_uart0rxbuffer[CONFIG_SCI0_RXBUFSIZE];
@@ -217,6 +218,7 @@ static char g_uart9txbuffer[CONFIG_SCI9_TXBUFSIZE];
 static struct up_dev_s g_uart0priv =
     {
         .usartbase = R_SCI0_BASE,
+        .mstp = R_MSTP_MSTPCRB_SCI0,
         .rxirq = SCI0_RXI,
         .txirq = SCI0_TXI,
         .teirq = SCI0_TEI,
@@ -246,6 +248,7 @@ static uart_dev_t g_uart0port =
 static struct up_dev_s g_uart1priv =
     {
         .usartbase = R_SCI1_BASE,
+        .mstp = R_MSTP_MSTPCRB_SCI2,
         .rxirq = SCI1_RXI,
         .txirq = SCI1_TXI,
         .teirq = SCI1_TEI,
@@ -275,6 +278,7 @@ static uart_dev_t g_uart1port =
 static struct up_dev_s g_uart2priv =
     {
         .usartbase = R_SCI2_BASE,
+        .mstp = R_MSTP_MSTPCRB_SCI2,
         .rxirq = SCI2_RXI,
         .txirq = SCI2_TXI,
         .teirq = SCI2_TEI,
@@ -304,6 +308,7 @@ static uart_dev_t g_uart2port =
 static struct up_dev_s g_uart9priv =
     {
         .usartbase = R_SCI9_BASE,
+        .mstp = R_MSTP_MSTPCRB_SCI9,
         .rxirq = SCI9_RXI,
         .txirq = SCI9_TXI,
         .teirq = SCI9_TEI,
@@ -330,6 +335,7 @@ static uart_dev_t g_uart9port =
         .priv = &g_uart9priv,
 };
 #endif
+
 /****************************************************************************
  * Private Functions
  ****************************************************************************/
@@ -353,60 +359,71 @@ static inline uint32_t up_serialin_u32(struct up_dev_s *priv, int offset)
  ****************************************************************************/
 
 static inline void up_serialout_u32(struct up_dev_s *priv, int offset,
-                                uint32_t value)
+                                    uint32_t value)
 {
-    putreg32(value, priv->usartbase + offset);
+  putreg32(value, priv->usartbase + offset);
 }
 
 static inline void up_serialout_u8(struct up_dev_s *priv, int offset,
-                                uint8_t value)
+                                   uint8_t value)
 {
-    putreg8(value, priv->usartbase + offset);
+  putreg8(value, priv->usartbase + offset);
 }
 
-static int up_setup(struct uart_dev_s *dev)
+static void up_sci_config(struct up_dev_s *priv)
 {
-  struct up_dev_s *priv = (struct up_dev_s *)dev->priv;
-  uint8_t regval;
+  uint64_t brr = 0;
+  uint32_t brr_reg = 0, best_brr = 0, actual_baudrate = 0;
+  uint8_t div_baud[4] = {12, 16, 32, 64}; 
+  int32_t error = 0, min_error = INT32_MAX;
+  uint8_t best_n = 0, best_i = 0; // To store the best values of n and i
+  uint8_t regval = 0;
 
-#if defined(CONFIG_RA_SCI0_UART)
-  ra_configgpio(GPIO_SCI0_RX);
-  ra_configgpio(GPIO_SCI0_TX);
-#elif defined(CONFIG_RA_SCI1_UART)
-  ra_configgpio(GPIO_SCI1_RX);
-  ra_configgpio(GPIO_SCI1_TX);
-#elif defined(CONFIG_RA_SCI2_UART)
-  ra_configgpio(GPIO_SCI2_RX);
-  ra_configgpio(GPIO_SCI2_TX);
-#elif defined(CONFIG_RA_SCI9_UART)
-  ra_configgpio(GPIO_SCI9_RX);
-  ra_configgpio(GPIO_SCI9_TX);
-#endif
+  for (uint8_t i = 0; i < 4; i++)
+  {
+    for (uint8_t n = 0; n < 4; n++)
+    {
+      uint32_t div_n = (n == 0) ? 1 : (1U << (2 * n - 1)); // `div_n = 1` for `n == 0`
+      uint32_t multiplier = (n == 0) ? 2UL : 1UL;          // Apply `2UL` only when `n == 0`
 
-  // up_disableallints(priv, &imr);
-  up_shutdown(dev);
+      brr = (((uint64_t)RA_PCKA_FREQUENCY * 100UL * multiplier) / (div_baud[i] * div_n * priv->baud)) - 100;
+      brr_reg = ((brr + 50) / 100);
 
-  putreg16((BSP_PRV_PRCR_KEY | R_SYSTEM_PRCR_PRC1), R_SYSTEM_PRCR);
-  modifyreg32(R_MSTP_MSTPCRB, R_MSTP_MSTPCRB_MSTPB29, 0);
-  putreg16(BSP_PRV_PRCR_KEY, R_SYSTEM_PRCR);
+      if (brr_reg > 255)
+        continue;
+
+      actual_baudrate = ((uint32_t)RA_PCKA_FREQUENCY * multiplier) / (div_baud[i] * div_n * (brr_reg + 1));
+
+      error = ((int32_t)(actual_baudrate - priv->baud) * 100000) / (int32_t)priv->baud;
+
+      // Store the best values if we find a new minimum error
+      if (abs(error) < abs(min_error))
+      {
+        min_error = error;
+        best_n = n;
+        best_i = i;
+        best_brr = brr_reg;
+      }
+    }
+  }
 
   regval = 0;
   up_serialout_u8(priv, R_SCI_SCR_OFFSET, regval);
 
-/*
-  UART character length requires change in two registers - SCMR and SMR
-  SCMR.CHR1 SMR.CHR
-  0 0: Transmit/receive in 9-bit data length
-  0 1: Transmit/receive in 9-bit data length
-  1 0: Transmit/receive in 8-bit data length (initial value)
-  1 1: Transmit/receive in 7-bit data length.
-*/
+  /*
+    UART character length requires change in two registers - SCMR and SMR
+    SCMR.CHR1 SMR.CHR
+    0 0: Transmit/receive in 9-bit data length
+    0 1: Transmit/receive in 9-bit data length
+    1 0: Transmit/receive in 8-bit data length (initial value)
+    1 1: Transmit/receive in 7-bit data length.
+  */
 
   regval = up_serialin_u8(priv, R_SCI_SCMR_OFFSET);
 
   if (priv->bits == 9)
   {
-    regval &= ~R_SCI_SCMR_CHR1; 
+    regval &= ~R_SCI_SCMR_CHR1;
   }
 
   up_serialout_u8(priv, R_SCI_SCMR_OFFSET, regval);
@@ -431,14 +448,59 @@ static int up_setup(struct uart_dev_s *dev)
     regval |= R_SCI_SMR_CHR;
   }
 
+  regval |= (best_n << R_SCI_SMR_CKS_SHIFT);
   up_serialout_u8(priv, R_SCI_SMR_OFFSET, regval);
+  switch (best_i)
+  {
+  case 0:
+    regval = R_SCI_SEMR_ABCSE;
+    break;
+  case 1:
+    regval = R_SCI_SEMR_BGDM | R_SCI_SEMR_ABCS;
+    break;
+  case 2:
+    regval = R_SCI_SEMR_BGDM;
+    break;
+  case 3:
+    regval = 0;
+    break;
+  }
+  up_serialout_u8(priv, R_SCI_SEMR_OFFSET, regval);
 
+  regval = best_brr;
 
-  regval = 8;
   up_serialout_u8(priv, R_SCI_BRR_OFFSET, regval);
 
   regval = (R_SCI_SCR_TIE | R_SCI_SCR_RIE | R_SCI_SCR_TE | R_SCI_SCR_RE);
   up_serialout_u8(priv, R_SCI_SCR_OFFSET, regval);
+}
+
+static int up_setup(struct uart_dev_s *dev)
+{
+  struct up_dev_s *priv = (struct up_dev_s *)dev->priv;
+
+#if defined(CONFIG_RA_SCI0_UART)
+  ra_configgpio(GPIO_SCI0_RX);
+  ra_configgpio(GPIO_SCI0_TX);
+#elif defined(CONFIG_RA_SCI1_UART)
+  ra_configgpio(GPIO_SCI1_RX);
+  ra_configgpio(GPIO_SCI1_TX);
+#elif defined(CONFIG_RA_SCI2_UART)
+  ra_configgpio(GPIO_SCI2_RX);
+  ra_configgpio(GPIO_SCI2_TX);
+#elif defined(CONFIG_RA_SCI9_UART)
+  ra_configgpio(GPIO_SCI9_RX);
+  ra_configgpio(GPIO_SCI9_TX);
+#endif
+
+  // up_disableallints(priv, &imr);
+  up_shutdown(dev);
+
+  putreg16((BSP_PRV_PRCR_KEY | R_SYSTEM_PRCR_PRC1), R_SYSTEM_PRCR);
+  modifyreg32(R_MSTP_MSTPCRB, priv->mstp, 0);
+  putreg16(BSP_PRV_PRCR_KEY, R_SYSTEM_PRCR);
+
+  up_sci_config(priv);
 
   return OK;
 }

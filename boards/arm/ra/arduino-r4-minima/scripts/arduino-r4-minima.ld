@@ -26,6 +26,7 @@ MEMORY
 {
   flash (rx)   : ORIGIN = 0x00000000, LENGTH = 256K
   sram (rwx)  : ORIGIN = 0x20000000, LENGTH = 32K
+  idcode (rx)  : ORIGIN = 0x01010018, LENGTH = 0x20
 }
 
 OUTPUT_ARCH(arm)
@@ -71,6 +72,13 @@ SECTIONS
         *(.ARM.exidx*)
         __exidx_end = ABSOLUTE(.);
     } >flash
+
+    .id_code :
+    {
+        __ID_Code_Start = .;
+        KEEP(*(.id_code*))
+        __ID_Code_End = .;
+    } > idcode
 
     .data :
     {

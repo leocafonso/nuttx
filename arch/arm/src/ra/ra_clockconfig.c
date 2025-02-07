@@ -33,138 +33,63 @@
 #include "ra_clockconfig.h"
 #include "hardware/ra_flash.h"
 #include "hardware/ra_system.h"
+#include "hardware/ra_option_setting.h"
 
-#define HOCO_FREQ RA_HOCO_FREQUENCY
-
-#if HOCO_FREQ == 24000000ul
-#define OFS1_HOCO_FREQ 0
-#elif HOCO_FREQ == 32000000ul
-#define OFS1_HOCO_FREQ 2
-#elif HOCO_FREQ == 48000000ul
-#define OFS1_HOCO_FREQ 4
-#elif HOCO_FREQ == 64000000ul
-#define OFS1_HOCO_FREQ 5
-#else
-#error "Unsupported HOCO frequency"
-#endif
-
-struct ofs0_reg
-{
-    uint32_t RSVD1 : 1;
-    uint32_t IWDTSTRT : 1;
-    uint32_t IWDTTOPS : 2;
-    uint32_t IWDTCKS : 4;
-    uint32_t IWDTRPES : 2;
-    uint32_t IWDTRPSS : 2;
-    uint32_t IWDTRSTIRQS : 1;
-    uint32_t RSVD2 : 1;
-    uint32_t IWDTSTPCTL : 1;
-    uint32_t RSVD3 : 2;
-    uint32_t WDTSTRT : 1;
-    uint32_t WDTTOPS : 2;
-    uint32_t WDTCKS : 4;
-    uint32_t WDTRPES : 2;
-    uint32_t WDTRPSS : 2;
-    uint32_t WDTRSTIRQS : 1;
-    uint32_t RSVD4 : 1;
-    uint32_t WDTSTPCTL : 1;
-    uint32_t RSVD5 : 1;
+const uint32_t option_settings[] __attribute__((section(".rom_registers"))) __attribute__((__used__)) =
+    {
+        /* Option Function Select Register 0 */
+        (
+            R_OFS0_RESERVED_31 |
+            R_OFS0_WDTSTPCTL |
+            R_OFS0_RESERVED_29 |
+            R_OFS0_WDTRSTIRQS |
+            R_OFS0_WDTRPSS_MASK |
+            R_OFS0_WDTRPES_MASK |
+            R_OFS0_WDTCKS_MASK |
+            R_OFS0_WDTTOPS_MASK |
+            R_OFS0_WDTSTRT |
+            R_OFS0_RESERVED_16_15_MASK |
+            R_OFS0_IWDTSTPCTL |
+            R_OFS0_RESERVED_13 |
+            R_OFS0_IWDTRSTIRQS |
+            R_OFS0_IWDTRPSS_MASK |
+            R_OFS0_IWDTRPES_MASK |
+            R_OFS0_IWDTCKS_MASK |
+            R_OFS0_IWDTTOPS_MASK |
+            R_OFS0_IWDTSTRT |
+            R_OFS0_RESERVED_0),
+        /* Option Function Select Register 1 */
+        (
+            R_OFS1_RESERVED_16_15_MASK |
+            RA_HOCO_FREQUENCY |
+            R_OFS1_RESERVED_11_9_MASK |
+            RA_HOCOEN |
+            R_OFS1_RESERVED_7_6_MASK |
+            R_OFS1_VDSEL1_MASK |
+            R_OFS1_LVDAS |
+            R_OFS1_RESERVED_1_0_MASK),
+        (uint32_t)0x00fffffc, /* Security MPU Program Counter Start Address Register (SECMPUPCS0) */
+        (uint32_t)0x00ffffff, /* Security MPU Program Counter End Address Register (SECMPUPCE0)  */
+        (uint32_t)0x00fffffc, /* Security MPU Program Counter Start Address Register (SECMPUPCS1) */
+        (uint32_t)0x00ffffff, /* Security MPU Program Counter End Address Register (SECMPUPCE1)  */
+        (uint32_t)0x00fffffc, /* Security MPU Region 0 Start Address Register (SECMPUS0) */
+        (uint32_t)0x00ffffff, /* Security MPU Region 0 END Address Register (SECMPUE0) */
+        (uint32_t)0x200ffffc, /* Security MPU Region 0 Start Address Register (SECMPUS1) */
+        (uint32_t)0x200fffff, /* Security MPU Region 0 END Address Register (SECMPUE1) */
+        (uint32_t)0x407ffffc, /* Security MPU Region 0 Start Address Register (SECMPUS2) */
+        (uint32_t)0x407fffff, /* Security MPU Region 0 END Address Register (SECMPUE2) */
+        (uint32_t)0x40dffffc, /* Security MPU Region 0 Start Address Register (SECMPUS3) */
+        (uint32_t)0x40dfffff, /* Security MPU Region 0 END Address Register (SECMPUE3) */
+        (uint32_t)0xffffffff, /* Security MPU Access Control Register (SECMPUAC) */
 };
 
-struct ofs1_reg
-{
-    uint32_t RSVD1 : 2;
-    uint32_t LVDAS : 1;
-    uint32_t VDSEL1 : 3;
-    uint32_t RSVD2 : 2;
-    uint32_t HOCOEN : 1;
-    uint32_t RSVD3 : 3;
-    uint32_t HOCOFRQ1 : 3;
-    uint32_t RSVD4 : 17;
-};
-
-struct mpu_regs
-{
-    uint32_t SECMPUPCSO;
-    uint32_t SECMPUPCEO;
-    uint32_t SECMPUPCS1;
-    uint32_t SECMPUPCE1;
-    uint32_t SECMPUS0;
-    uint32_t SECMPUE0;
-    uint32_t SECMPUS1;
-    uint32_t SECMPUE1;
-    uint32_t SECMPUS2;
-    uint32_t SECMPUE2;
-    uint32_t SECMPUS3;
-    uint32_t SECMPUE3;
-    uint32_t SECMPUAC;
-};
-
-struct opt_set_mem
-{
-    struct ofs0_reg ofs0;
-    struct ofs1_reg ofs1;
-    struct mpu_regs mpu;
-};
-
-const struct opt_set_mem ops __attribute__((section(".rom_registers"))) __attribute__((__used__)) = {
-    .ofs0 = {
-        /*
-         * Initial settings for watchdog timers. Set all fields to 1,
-         * disabling watchdog functionality as config options have not
-         * yet been implemented.
-         */
-        .RSVD1 = 0x1,
-        .IWDTSTRT = 0x1, /* Disable independent watchdog timer
-                          */
-        .IWDTTOPS = 0x3,
-        .IWDTCKS = 0xf,
-        .IWDTRPES = 0x3,
-        .IWDTRPSS = 0x3,
-        .IWDTRSTIRQS = 0x1,
-        .RSVD2 = 0x1,
-        .IWDTSTPCTL = 0x1,
-        .RSVD3 = 0x3,
-        .WDTSTRT = 0x1, /* Stop watchdog timer following reset */
-        .WDTTOPS = 0x3,
-        .WDTCKS = 0xf,
-        .WDTRPES = 0x3,
-        .WDTRPSS = 0x3,
-        .WDTRSTIRQS = 0x1,
-        .RSVD4 = 0x1,
-        .WDTSTPCTL = 0x1,
-        .RSVD5 = 0x1,
-    },
-    .ofs1 = {
-        .RSVD1 = 0x3,
-        .LVDAS = 0x1, /* Disable voltage monitor 0 following reset */
-        .VDSEL1 = 0x3,
-        .RSVD2 = 0x3,
-        .HOCOEN = !RA_HOCOEN,
-        .RSVD3 = 0x7,
-        .HOCOFRQ1 = OFS1_HOCO_FREQ,
-        .RSVD4 = 0x1ffff,
-    },
-    .mpu = {
-        /*
-         * Initial settings for MPU. Set all areas to maximum values
-         * essentially disabling MPU functionality as config options
-         * have not yet been implemented.
-         */
-        .SECMPUPCSO = 0x00fffffc,
-        .SECMPUPCEO = 0x00ffffff,
-        .SECMPUPCS1 = 0x00fffffc,
-        .SECMPUPCE1 = 0x00ffffff,
-        .SECMPUS0 = 0x00fffffc,
-        .SECMPUE0 = 0x00ffffff,
-        .SECMPUS1 = 0x200ffffc,
-        .SECMPUE1 = 0x200fffff,
-        .SECMPUS2 = 0x407ffffc,
-        .SECMPUE2 = 0x407fffff,
-        .SECMPUS3 = 0x40dffffc,
-        .SECMPUE3 = 0x40dfffff,
-        .SECMPUAC = 0xffffffff,
-    }};
+/** ID code definitions defined here. */
+static const uint32_t g_bsp_id_codes[] __attribute__((section(".id_code"))) __attribute__((__used__)) =
+    {
+        IDCODE1,
+        IDCODE2,
+        IDCODE3,
+        IDCODE4};
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -218,7 +143,7 @@ void ra_clockconfig(void)
     /* Disable FCache. */
     modifyreg16(R_FCACHE_FCACHEE, R_FCACHE_FCACHEE_FCACHEEN, 0);
 
-    modifyreg8(R_SYSTEM_SCKSCR, R_SYSTEM_SCKSCR_CKSEL_CLEAR, R_SYSTEM_SCKSCR_CKSEL_HOCO);
+    modifyreg8(R_SYSTEM_SCKSCR, R_SYSTEM_SCKSCR_CKSEL_MASK, RA_CKSEL);
 
     /* lock VBTCR1 register. */
     putreg16(0, R_SYSTEM_PRCR);
@@ -226,9 +151,8 @@ void ra_clockconfig(void)
     /* PCLKA = 32Mhz */
 
     modifyreg32(R_SYSTEM_SCKDIVCR,
-                (R_SYSTEM_SCKDIVCR_FCK_DIV_CLEAR  | R_SYSTEM_SCKDIVCR_ICK_DIV_CLEAR  | R_SYSTEM_SCKDIVCR_PCKA_DIV_CLEAR  |
-                 R_SYSTEM_SCKDIVCR_PCKB_DIV_CLEAR | R_SYSTEM_SCKDIVCR_PCKC_DIV_CLEAR | R_SYSTEM_SCKDIVCR_PCKD_DIV_CLEAR  ),
-                (RA_FCK_DIV                       | RA_ICK_DIV                       | RA_PCKA_DIV                       |
-                 RA_PCKB_DIV                      | RA_PCKC_DIV                      | RA_PCKD_DIV ));
-                 
+                (R_SYSTEM_SCKDIVCR_FCK_MASK | R_SYSTEM_SCKDIVCR_ICK_MASK | R_SYSTEM_SCKDIVCR_PCKA_MASK|
+                 R_SYSTEM_SCKDIVCR_PCKB_MASK | R_SYSTEM_SCKDIVCR_PCKC_MASK | R_SYSTEM_SCKDIVCR_PCKD_MASK),
+                (RA_FCK_DIV | RA_ICK_DIV | RA_PCKA_DIV |
+                 RA_PCKB_DIV | RA_PCKC_DIV | RA_PCKD_DIV));
 }

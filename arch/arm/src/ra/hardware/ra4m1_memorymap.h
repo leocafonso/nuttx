@@ -139,6 +139,7 @@
  #define R_AGTX7_BASE        0x40084700UL
  #define R_AGTX8_BASE        0x40084800UL
  #define R_AGTX9_BASE        0x40084900UL
+ #define R_OFS_BASE          0x00000400UL
 
 /** @} */ /* End of group Device_Peripheral_peripheralAddr */
 
