@@ -53,16 +53,33 @@
 
 /* Register Addresses *******************************************************/
 
-#define R_PORT0 (0)
-#define R_PORT1 (1)
-#define R_PORT2 (2)
-#define R_PORT3 (3)
-#define R_PORT4 (4)
-#define R_PORT5 (5)
-#define R_PORT6 (6)
-#define R_PORT7 (7)
-#define R_PORT8 (8)
-#define R_PORT9 (9)
+#define PORT0 (0)
+#define PORT1 (1)
+#define PORT2 (2)
+#define PORT3 (3)
+#define PORT4 (4)
+#define PORT5 (5)
+#define PORT6 (6)
+#define PORT7 (7)
+#define PORT8 (8)
+#define PORT9 (9)
+
+#define PIN0 (0)
+#define PIN1 (1)
+#define PIN2 (2)
+#define PIN3 (3)
+#define PIN4 (4)
+#define PIN5 (5)
+#define PIN6 (6)
+#define PIN7 (7)
+#define PIN8 (8)
+#define PIN9 (9)
+#define PIN10 (10)
+#define PIN11 (11)
+#define PIN12 (12)
+#define PIN13 (13)
+#define PIN14 (14)
+#define PIN15 (15)
 
 /* Relative PORT Registers */
 
