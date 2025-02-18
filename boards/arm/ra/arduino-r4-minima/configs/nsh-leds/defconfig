@@ -5,6 +5,9 @@
 # You can then do "make savedefconfig" to generate a new defconfig file that includes your
 # modifications.
 #
+# CONFIG_ARCH_LEDS is not set
+# CONFIG_ARCH_RAMFUNCS is not set
+# CONFIG_READLINE_ECHO is not set
 CONFIG_ARCH="arm"
 CONFIG_ARCH_BOARD="arduino-r4-minima"
 CONFIG_ARCH_BOARD_ARDUINO_R4_MINIMA=y

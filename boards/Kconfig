@@ -37,7 +37,7 @@ config ARCH_BOARD_ARDUINO_DUE
 
 config ARCH_BOARD_ARDUINO_R4_MINIMA
 	bool "Arduino R4 Minima"
-	depends on ARCH_CHIP_RA4M1
+	depends on ARCH_CHIP_RA
 	select ARCH_HAVE_LEDS
 	---help---
 		This options selects the Arduino R4 Minima board featuring the Renesas

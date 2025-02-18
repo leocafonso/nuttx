@@ -82,7 +82,14 @@ void ra_configgpio(gpio_pinset_t cfgset)
 
 void ra_gpiowrite(gpio_pinset_t pinset, bool value)
 {
-  putreg16((uint16_t)(value << pinset.pin), R_PORT_PODR(pinset.port));
+  if (value)
+    {
+      putreg16((1 << pinset.pin), R_PORT_POSR(pinset.port));
+    }
+  else
+    {
+      putreg16((1 << pinset.pin), R_PORT_PORR(pinset.port));
+    }
 }
 
 /****************************************************************************

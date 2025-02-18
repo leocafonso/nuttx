@@ -48,8 +48,9 @@
 
 uint32_t board_userled_initialize(void)
 {
-  /* Configure LED1-2 GPIOs for output */
+  /* Configure LED GPIOs for output */
 
+  ra_configgpio(GPIO_L_LED);
   ra_configgpio(GPIO_RX_LED);
   ra_configgpio(GPIO_TX_LED);
   return BOARD_NLEDS;
@@ -63,7 +64,12 @@ void board_userled(int led, bool ledon)
 {
   gpio_pinset_t ledcfg;
 
-  if (led == BOARD_LED_RX)
+  if (led == BOARD_LED_L)
+    {
+      ledcfg = GPIO_L_LED;
+      ledon = ledon;
+    }
+  else if (led == BOARD_LED_RX)
     {
       ledcfg = GPIO_RX_LED;
       ledon = !ledon;
@@ -89,11 +95,14 @@ void board_userled_all(uint32_t ledset)
 {
   bool ledon;
 
+  ledon = ((ledset & BOARD_LED_L_BIT) != 0);
+  ra_gpiowrite(GPIO_L_LED, ledon);
+
   ledon = ((ledset & BOARD_LED_RX_BIT) != 0);
-  ra_gpiowrite(GPIO_RX_LED, ledon);
+  ra_gpiowrite(GPIO_RX_LED, !ledon);
 
   ledon = ((ledset & BOARD_LED_TX_BIT) != 0);
-  ra_gpiowrite(GPIO_TX_LED, ledon);
+  ra_gpiowrite(GPIO_TX_LED, !ledon);
 }
 
 #endif /* !CONFIG_ARCH_LEDS */

@@ -64,7 +64,7 @@
 #define R_PFS_OUPUT               R_PFS_PDR
 #define R_PFS_INPUT               ~(R_PFS_PDR)
 
-#define R_PFS_LOW_DRIVE           ~(R_PFS_DSCR)
+#define R_PFS_LOW_DRIVE           ~(R_PFS_DSCR | 0xFFFFFFFF)
 #define R_PFS_MIDDLE_DRIVE        R_PFS_DSCR
 
 /* PMISC - Miscellaneous Port Control Register */

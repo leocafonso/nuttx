@@ -77,19 +77,22 @@
 #define GPIO_SCI9_RX   GPIO_RXD9_MISO9_SCL9_1  /* P110 */
 #define GPIO_SCI9_TX   GPIO_TXD9_MOSI9_SDA9_1  /* P109 */
 
-#define GPIO_TX_LED   (gpio_pinset_t){ PORT0,PIN12, (R_PFS_OUPUT | R_PFS_LOW_DRIVE)}  /* P012 */
-#define GPIO_RX_LED   (gpio_pinset_t){ PORT0,PIN13, (R_PFS_OUPUT | R_PFS_LOW_DRIVE)}  /* P013 */
+#define GPIO_L_LED    (gpio_pinset_t){ PORT1,PIN11, (R_PFS_OUPUT | R_PFS_LOW_DRIVE)}               /* P111 */
+#define GPIO_TX_LED   (gpio_pinset_t){ PORT0,PIN12, (R_PFS_OUPUT | R_PFS_LOW_DRIVE | R_PFS_PODR)}  /* P012 */
+#define GPIO_RX_LED   (gpio_pinset_t){ PORT0,PIN13, (R_PFS_OUPUT | R_PFS_LOW_DRIVE | R_PFS_PODR)}  /* P013 */
 
 #define LED_DRIVER_PATH "/dev/userleds"
 
 /* LED index values for use with board_userled() */
 
-#define BOARD_LED_RX      0
-#define BOARD_LED_TX      1
-#define BOARD_NLEDS       2
+#define BOARD_LED_L       0
+#define BOARD_LED_RX      1
+#define BOARD_LED_TX      2
+#define BOARD_NLEDS       3
 
 /* LED bits for use with board_userled_all() */
 
+#define BOARD_LED_L_BIT   (1 << BOARD_LED_L)
 #define BOARD_LED_RX_BIT  (1 << BOARD_LED_RX)
 #define BOARD_LED_TX_BIT  (1 << BOARD_LED_TX)
 
