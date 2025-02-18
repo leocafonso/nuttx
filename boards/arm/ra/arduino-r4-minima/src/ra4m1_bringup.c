@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/src/sam_bringup.c
+ * boards/arm/ra/arduino-r4-minima/src/ra4m1_bringup.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -39,29 +39,41 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
+#undef HAVE_LEDS
 
+#if !defined(CONFIG_ARCH_LEDS) && defined(CONFIG_USERLED_LOWER)
+#  define HAVE_LEDS 1
+#endif
 
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Name: sam_bringup
+ * Name: ra4m1_bringup
  *
  * Description:
  *   Perform architecture-specific initialization
  *
- *   CONFIG_BOARD_LATE_INITIALIZE=y :
- *     Called from board_late_initialize().
- *
- *   CONFIG_BOARD_LATE_INITIALIZE=y && CONFIG_BOARDCTL=y :
- *     Called from the NSH library
  *
  ****************************************************************************/
 
 int ra4m1_bringup(void)
 {
   int ret;
+
+#ifdef HAVE_LEDS
+  board_userled_initialize();
+
+  /* Register the LED driver */
+
+  ret = userled_lower_initialize(LED_DRIVER_PATH);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: userled_lower_initialize() failed: %d\n", ret);
+      return ret;
+    }
+#endif
 
   UNUSED(ret);
   return OK;

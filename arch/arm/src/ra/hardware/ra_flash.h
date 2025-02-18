@@ -45,5 +45,4 @@
 #define R_FCACHE_FLWT_FLWT                (3 <<  0) /* 01: These bits represent the ratio of the CPU clock period to the Flash memory access time. */
 #define R_FCACHE_FLWT_FLWT_MASK           (0x07)
 
-
 #endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_FLASH_H */

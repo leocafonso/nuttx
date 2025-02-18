@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/sam34/hardware/sam_uart.h
+ * arch/arm/src/ra/hardware/ra_icu.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -39,16 +39,43 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
-#define R_ICU_IRQCR_SIZE                  15 /* Do not use the 13 */
-#define R_ICU_IRQCR_OFFSET                0x0000
+/* Register Offsets *********************************************************/
+
+#define R_ICU_IRQCR_OFFSET                0x0000  /* IRQ Control Register (8-bits) */
+#define R_ICU_NMISR_OFFSET                0x0140  /* Non-Maskable Interrupt Status Register (16-bits) */
+#define R_ICU_NMIER_OFFSET                0x0120  /* Non-Maskable Interrupt Enable Register (16-bits) */
+#define R_ICU_NMICLR_OFFSET               0x0130  /* Non-Maskable Interrupt Status Clear Register (16-bits) */
+#define R_ICU_NMICR_OFFSET                0x0100  /* NMI Pin Interrupt Control Register (8-bits) */
+#define R_ICU_IELSR_OFFSET                0x0300  /* ICU Event Link Setting Register (32-bits) */
+#define R_ICU_DELSR_OFFSET                0x0280  /* DMAC Event Link Setting Register (32-bits) */
+#define R_ICU_SELSR0_OFFSET               0x0200  /* SYS Event Link Setting Register (16-bits) */
+#define R_ICU_WUPEN_OFFSET                0x01a0  /* Wake Up Interrupt Enable Register (32-bits) */
+
+/* Register Addresses *******************************************************/
+
 #define R_ICU_IRQCR(p)                    (R_ICU_BASE + R_ICU_IRQCR_OFFSET + (p)*0x0001)
-#define R_ICU_IRQCR_FLTEN                 (1 <<  7) /* 80: IRQ Digital Filter Enable */
-#define R_ICU_IRQCR_FCLKSEL               (2 <<  4) /* 10: IRQ Digital Filter Sampling Clock Select */
-#define R_ICU_IRQCR_FCLKSEL_MASK               (0x03)
-#define R_ICU_IRQCR_IRQMD                 (2 <<  0) /* 01: IRQ Detection Sense Select */
-#define R_ICU_IRQCR_IRQMD_MASK                 (0x03)
-#define R_ICU_NMISR_OFFSET                0x0140
 #define R_ICU_NMISR                       (R_ICU_BASE + R_ICU_NMISR_OFFSET)
+#define R_ICU_NMIER                       (R_ICU_BASE + R_ICU_NMIER_OFFSET)
+#define R_ICU_NMICLR                      (R_ICU_BASE + R_ICU_NMICLR_OFFSET)
+#define R_ICU_NMICR                       (R_ICU_BASE + R_ICU_NMICR_OFFSET)
+#define R_ICU_IELSR(p)                    (R_ICU_BASE + R_ICU_IELSR_OFFSET + (p)*0x0004)
+#define R_ICU_DELSR(p)                    (R_ICU_BASE + R_ICU_DELSR_OFFSET + (p)*0x0004)
+#define R_ICU_SELSR0                      (R_ICU_BASE + R_ICU_SELSR0_OFFSET)
+#define R_ICU_WUPEN                       (R_ICU_BASE + R_ICU_WUPEN_OFFSET)
+
+/* Register Bitfield Definitions ********************************************/
+
+/* IRQ Control Register (8-bits) */
+
+#define R_ICU_IRQCR_SIZE                  15
+#define R_ICU_IRQCR_FLTEN                 (1 <<  7) /* 80: IRQ Digital Filter Enable */
+#define R_ICU_IRQCR_FCLKSEL_SHIFT         (4)       /* 10: IRQ Digital Filter Sampling Clock Select */
+#define R_ICU_IRQCR_FCLKSEL_MASK          (0x03)
+#define R_ICU_IRQCR_IRQMD                 (0)       /* 01: IRQ Detection Sense Select */
+#define R_ICU_IRQCR_IRQMD_MASK            (0x03)
+
+/* Non-Maskable Interrupt Status Register (16-bits) */
+
 #define R_ICU_NMISR_SPEST                 (1 << 12) /* 1000: CPU Stack pointer monitor Interrupt Status Flag */
 #define R_ICU_NMISR_BUSMST                (1 << 11) /* 800: MPU Bus Master Error Interrupt Status Flag */
 #define R_ICU_NMISR_BUSSST                (1 << 10) /* 400: MPU Bus Slave Error Interrupt Status Flag */
@@ -61,8 +88,9 @@
 #define R_ICU_NMISR_LVD1ST                (1 <<  2) /* 04: Voltage-Monitoring 1 Interrupt Status Flag */
 #define R_ICU_NMISR_WDTST                 (1 <<  1) /* 02: WDT Underflow/Refresh Error Status Flag */
 #define R_ICU_NMISR_IWDTST                (1 <<  0) /* 01: IWDT Underflow/Refresh Error Status Flag */
-#define R_ICU_NMIER_OFFSET                0x0120
-#define R_ICU_NMIER                       (R_ICU_BASE + R_ICU_NMIER_OFFSET)
+
+/* Non-Maskable Interrupt Enable Register (16-bits) */
+
 #define R_ICU_NMIER_SPEEN                 (1 << 12) /* 1000: CPU Stack pointer monitor Interrupt Enable */
 #define R_ICU_NMIER_BUSMEN                (1 << 11) /* 800: MPU Bus Master Error Interrupt Enable */
 #define R_ICU_NMIER_BUSSEN                (1 << 10) /* 400: MPU Bus Slave Error Interrupt Enable */
@@ -75,8 +103,9 @@
 #define R_ICU_NMIER_LVD1EN                (1 <<  2) /* 04: Voltage-Monitoring 1 Interrupt Enable */
 #define R_ICU_NMIER_WDTEN                 (1 <<  1) /* 02: WDT Underflow/Refresh Error Interrupt Enable */
 #define R_ICU_NMIER_IWDTEN                (1 <<  0) /* 01: IWDT Underflow/Refresh Error Interrupt Enable */
-#define R_ICU_NMICLR_OFFSET               0x0130
-#define R_ICU_NMICLR                      (R_ICU_BASE + R_ICU_NMICLR_OFFSET)
+
+/* Non-Maskable Interrupt Status Clear Register (16-bits) */
+
 #define R_ICU_NMICLR_SPECLR               (1 << 12) /* 1000: CPU Stack Pointer Monitor Interrupt Clear */
 #define R_ICU_NMICLR_BUSMCLR              (1 << 11) /* 800: Bus Master Error Clear */
 #define R_ICU_NMICLR_BUSSCLR              (1 << 10) /* 400: Bus Slave Error Clear */
@@ -89,30 +118,35 @@
 #define R_ICU_NMICLR_LVD1CLR              (1 <<  2) /* 04: LVD1 Clear */
 #define R_ICU_NMICLR_WDTCLR               (1 <<  1) /* 02: WDT Clear */
 #define R_ICU_NMICLR_IWDTCLR              (1 <<  0) /* 01: IWDT Clear */
-#define R_ICU_NMICR_OFFSET                0x0100
-#define R_ICU_NMICR                       (R_ICU_BASE + R_ICU_NMICR_OFFSET)
+
+/* NMI Pin Interrupt Control Register (8-bits) */
+
 #define R_ICU_NMICR_NFLTEN                (1 <<  7) /* 80: NMI Digital Filter Enable */
-#define R_ICU_NMICR_NFCLKSEL              (2 <<  4) /* 10: NMI Digital Filter Sampling Clock Select */
-#define R_ICU_NMICR_NFCLKSEL_MASK              (0x03)
+#define R_ICU_NMICR_NFCLKSEL_SHIFT        (4)       /* 10: NMI Digital Filter Sampling Clock Select */
+#define R_ICU_NMICR_NFCLKSEL_MASK         (0x03)
 #define R_ICU_NMICR_NMIMD                 (1 <<  0) /* 01: NMI Detection Set */
+
+/* ICU Event Link Setting Register (32-bits) */
+
 #define R_ICU_IELSR_SIZE                  32
-#define R_ICU_IELSR_OFFSET                0x0300
-#define R_ICU_IELSR(p)                    (R_ICU_BASE + R_ICU_IELSR_OFFSET + (p)*0x0004)
 #define R_ICU_IELSR_DTCE                  (1 << 24) /* 1000000: DTC Activation Enable */
 #define R_ICU_IELSR_IR                    (1 << 16) /* 10000: Interrupt Status Flag */
-#define R_ICU_IELSR_IELS                  (8 <<  0) /* 01: ICU Event selection to NVIC Set the number for the event signal to be linked . */
-#define R_ICU_IELSR_IELS_MASK                  (0xff)
+#define R_ICU_IELSR_IELS_SHIFT            (0)       /* 01: ICU Event selection to NVIC Set the number for the event signal to be linked . */
+#define R_ICU_IELSR_IELS_MASK             (0xff)
+
+/* DMAC Event Link Setting Register (32-bits) */
+
 #define R_ICU_DELSR_SIZE                  4
-#define R_ICU_DELSR_OFFSET                0x0280
-#define R_ICU_DELSR(p)                    (R_ICU_BASE + R_ICU_DELSR_OFFSET + (p)*0x0004)
-#define R_ICU_DELSR_DELS                  (8 <<  0) /* 01: Event selection to DMAC Start request */
-#define R_ICU_DELSR_DELS_MASK                  (0xff)
-#define R_ICU_SELSR0_OFFSET               0x0200
-#define R_ICU_SELSR0                      (R_ICU_BASE + R_ICU_SELSR0_OFFSET)
-#define R_ICU_SELSR0_SELS                 (8 <<  0) /* 01: SYS Event Link Select */
-#define R_ICU_SELSR0_SELS_MASK                 (0xff)
-#define R_ICU_WUPEN_OFFSET                0x01a0
-#define R_ICU_WUPEN                       (R_ICU_BASE + R_ICU_WUPEN_OFFSET)
+#define R_ICU_DELSR_DELS_SHIFT            (0)     /* 01: Event selection to DMAC Start request */
+#define R_ICU_DELSR_DELS_MASK             (0xff)
+
+/* SYS Event Link Setting Register (16-bits) */
+
+#define R_ICU_SELSR0_SELS_SHIFT           (0)     /* 01: SYS Event Link Select */
+#define R_ICU_SELSR0_SELS_MASK            (0xff)
+
+/* Wake Up Interrupt Enable Register (32-bits) */
+
 #define R_ICU_WUPEN_IIC0WUPEN             (1 << 31) /* 80000000: IIC0 address match interrupt S/W standby returns enable */
 #define R_ICU_WUPEN_AGT1CBWUPEN           (1 << 30) /* 40000000: AGT1 compare match B interrupt S/W standby returns enable */
 #define R_ICU_WUPEN_AGT1CAWUPEN           (1 << 29) /* 20000000: AGT1 compare match A interrupt S/W standby returns enable */

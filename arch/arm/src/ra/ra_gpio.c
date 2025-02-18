@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/ra4m1_gpio.c
+ * arch/arm/src/ra/ra_gpio.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -45,7 +45,6 @@
  * Private Functions
  ****************************************************************************/
 
-
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
@@ -60,7 +59,17 @@
 
 void ra_configgpio(gpio_pinset_t cfgset)
 {
-  putreg32(cfgset.cfg, cfgset.offset);
+  uint8_t regval;
+
+  regval = R_PMISC_PWPR_PFSWE;
+  putreg8(0, R_PMISC_PWPR);
+  putreg8(regval, R_PMISC_PWPR);
+
+  putreg32(cfgset.cfg, R_PFS(cfgset.port, cfgset.pin));
+
+  regval = R_PMISC_PWPR_B0WI;
+  putreg8(0, R_PMISC_PWPR);
+  putreg8(regval, R_PMISC_PWPR);
 }
 
 /****************************************************************************
@@ -73,7 +82,7 @@ void ra_configgpio(gpio_pinset_t cfgset)
 
 void ra_gpiowrite(gpio_pinset_t pinset, bool value)
 {
-
+  putreg16((uint16_t)(value << pinset.pin), R_PORT_PODR(pinset.port));
 }
 
 /****************************************************************************
@@ -86,5 +95,6 @@ void ra_gpiowrite(gpio_pinset_t pinset, bool value)
 
 bool ra_gpioread(gpio_pinset_t pinset)
 {
-  return 0;
+  return (getreg16(R_PORT_PIDR(pinset.port)) &
+    (uint16_t)(0x01 << pinset.pin));
 }

@@ -18,8 +18,9 @@
 #
 # ##############################################################################
 
-set(SRCS ra4m1_boot.c ra4m1_bringup.c ra4m1_appinit.c)
+set(SRCS ra4m1_boot.c ra4m1_bringup.c ra4m1_appinit.c ra4m1_userleds.c)
 
 target_sources(board PRIVATE ${SRCS})
 
-set_property(GLOBAL PROPERTY LD_SCRIPT "${NUTTX_BOARD_DIR}/scripts/arduino-r4-minima.ld")
+set_property(GLOBAL PROPERTY LD_SCRIPT
+                             "${NUTTX_BOARD_DIR}/scripts/arduino-r4-minima.ld")

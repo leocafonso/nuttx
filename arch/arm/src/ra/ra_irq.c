@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/stm32f0l0g0/stm32_irq.c
+ * arch/arm/src/ra/ra_irq.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -42,16 +42,17 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
+
 /* Get a 32-bit version of the default priority */
 
-#define DEFPRIORITY32 \
-  (NVIC_SYSH_PRIORITY_DEFAULT << 24 | \
-   NVIC_SYSH_PRIORITY_DEFAULT << 16 | \
-   NVIC_SYSH_PRIORITY_DEFAULT << 8  | \
-   NVIC_SYSH_PRIORITY_DEFAULT)
+#define DEFPRIORITY32                  \
+  (NVIC_SYSH_PRIORITY_DEFAULT << 24 |  \
+    NVIC_SYSH_PRIORITY_DEFAULT << 16 | \
+    NVIC_SYSH_PRIORITY_DEFAULT << 8  | \
+    NVIC_SYSH_PRIORITY_DEFAULT)
 
-#define NVIC_ENA_OFFSET    (0)
-#define NVIC_CLRENA_OFFSET (NVIC_IRQ0_31_CLEAR - NVIC_IRQ0_31_ENABLE)
+#define NVIC_ENA_OFFSET     (0)
+#define NVIC_CLRENA_OFFSET  (NVIC_IRQ0_31_CLEAR - NVIC_IRQ0_31_ENABLE)
 
 /****************************************************************************
  * Private Functions
@@ -64,6 +65,7 @@
  *   Dump some interesting NVIC registers
  *
  ****************************************************************************/
+
 /****************************************************************************
  * Name: ra_prioritize_syscall
  *
@@ -73,19 +75,17 @@
  *
  ****************************************************************************/
 
-#ifdef CONFIG_ARMV7M_USEBASEPRI
 static inline void ra_prioritize_syscall(int priority)
 {
   uint32_t regval;
 
   /* SVCALL is system handler 11 */
 
-  regval  = getreg32(NVIC_SYSH8_11_PRIORITY);
-  regval &= ~NVIC_SYSH_PRIORITY_PR11_MASK;
-  regval |= (priority << NVIC_SYSH_PRIORITY_PR11_SHIFT);
+  regval    = getreg32(NVIC_SYSH8_11_PRIORITY);
+  regval    &= ~NVIC_SYSH_PRIORITY_PR11_MASK;
+  regval    |= (priority << NVIC_SYSH_PRIORITY_PR11_SHIFT);
   putreg32(regval, NVIC_SYSH8_11_PRIORITY);
 }
-#endif
 
 #if defined(CONFIG_DEBUG_IRQ_INFO)
 static void ra_dumpnvic(const char *msg, int irq)
@@ -95,49 +95,34 @@ static void ra_dumpnvic(const char *msg, int irq)
   flags = enter_critical_section();
 
   irqinfo("NVIC (%s, irq=%d):\n", msg, irq);
-  irqinfo("  INTCTRL:    %08x VECTAB:  %08x\n",
-          getreg32(NVIC_INTCTRL), getreg32(NVIC_VECTAB));
-#if 0
-  irqinfo("  SYSH ENABLE MEMFAULT: %08x BUSFAULT: %08x USGFAULT: %08x "
-          "SYSTICK: %08x\n",
-          getreg32(NVIC_SYSHCON_MEMFAULTENA),
-          getreg32(NVIC_SYSHCON_BUSFAULTENA),
-          getreg32(NVIC_SYSHCON_USGFAULTENA),
-          getreg32(NVIC_SYSTICK_CTRL_ENABLE));
-#endif
-  irqinfo("  IRQ ENABLE: %08x %08x %08x\n",
-          getreg32(NVIC_IRQ0_31_ENABLE),
-          getreg32(NVIC_IRQ32_63_ENABLE),
+  irqinfo("  INTCTRL:    %08x VECTAB:  %08x\n", getreg32(
+            NVIC_INTCTRL), getreg32(NVIC_VECTAB));
+  irqinfo("  IRQ ENABLE: %08x %08x %08x\n", getreg32(
+            NVIC_IRQ0_31_ENABLE), getreg32(NVIC_IRQ32_63_ENABLE),
           getreg32(NVIC_IRQ64_95_ENABLE));
-  irqinfo("  SYSH_PRIO:  %08x %08x %08x\n",
-          getreg32(NVIC_SYSH4_7_PRIORITY),
-          getreg32(NVIC_SYSH8_11_PRIORITY),
+  irqinfo("  SYSH_PRIO:  %08x %08x %08x\n", getreg32(
+            NVIC_SYSH4_7_PRIORITY), getreg32(NVIC_SYSH8_11_PRIORITY),
           getreg32(NVIC_SYSH12_15_PRIORITY));
-  irqinfo("  IRQ PRIO:   %08x %08x %08x %08x\n",
-          getreg32(NVIC_IRQ0_3_PRIORITY),
-          getreg32(NVIC_IRQ4_7_PRIORITY),
-          getreg32(NVIC_IRQ8_11_PRIORITY),
-          getreg32(NVIC_IRQ12_15_PRIORITY));
+  irqinfo("  IRQ PRIO:   %08x %08x %08x %08x\n", getreg32(
+            NVIC_IRQ0_3_PRIORITY), getreg32(NVIC_IRQ4_7_PRIORITY),
+          getreg32(NVIC_IRQ8_11_PRIORITY), getreg32(NVIC_IRQ12_15_PRIORITY));
   irqinfo("              %08x %08x %08x %08x\n",
-          getreg32(NVIC_IRQ16_19_PRIORITY),
-          getreg32(NVIC_IRQ20_23_PRIORITY),
-          getreg32(NVIC_IRQ24_27_PRIORITY),
-          getreg32(NVIC_IRQ28_31_PRIORITY));
+          getreg32(NVIC_IRQ16_19_PRIORITY), getreg32(
+            NVIC_IRQ20_23_PRIORITY), getreg32(
+            NVIC_IRQ24_27_PRIORITY), getreg32(NVIC_IRQ28_31_PRIORITY));
   irqinfo("              %08x %08x %08x %08x\n",
-          getreg32(NVIC_IRQ32_35_PRIORITY),
-          getreg32(NVIC_IRQ36_39_PRIORITY),
-          getreg32(NVIC_IRQ40_43_PRIORITY),
-          getreg32(NVIC_IRQ44_47_PRIORITY));
+          getreg32(NVIC_IRQ32_35_PRIORITY), getreg32(
+            NVIC_IRQ36_39_PRIORITY), getreg32(
+            NVIC_IRQ40_43_PRIORITY), getreg32(NVIC_IRQ44_47_PRIORITY));
   irqinfo("              %08x %08x %08x %08x\n",
-          getreg32(NVIC_IRQ48_51_PRIORITY),
-          getreg32(NVIC_IRQ52_55_PRIORITY),
-          getreg32(NVIC_IRQ56_59_PRIORITY),
-          getreg32(NVIC_IRQ60_63_PRIORITY));
-  irqinfo("              %08x\n",
-          getreg32(NVIC_IRQ64_67_PRIORITY));
+          getreg32(NVIC_IRQ48_51_PRIORITY), getreg32(
+            NVIC_IRQ52_55_PRIORITY), getreg32(
+            NVIC_IRQ56_59_PRIORITY), getreg32(NVIC_IRQ60_63_PRIORITY));
+  irqinfo("              %08x\n", getreg32(NVIC_IRQ64_67_PRIORITY));
 
   leave_critical_section(flags);
 }
+
 #else
 #  define ra_dumpnvic(msg, irq)
 #endif
@@ -152,7 +137,7 @@ static void ra_dumpnvic(const char *msg, int irq)
  ****************************************************************************/
 
 static int ra_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
-                         uintptr_t offset)
+                      uintptr_t offset)
 {
   int n;
 
@@ -162,9 +147,9 @@ static int ra_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
 
   if (irq >= RA_IRQ_FIRST)
     {
-      n        = irq - RA_IRQ_FIRST;
-      *regaddr = NVIC_IRQ_ENABLE(n) + offset;
-      *bit     = (uint32_t)1 << (n & 0x1f);
+      n         = irq - RA_IRQ_FIRST;
+      *regaddr  = NVIC_IRQ_ENABLE(n) + offset;
+      *bit      = (uint32_t)1 << (n & 0x1f);
     }
 
   /* Handle processor exceptions.  Only a few can be disabled */
@@ -186,8 +171,8 @@ static int ra_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
         }
       else if (irq == RA_IRQ_SYSTICK)
         {
-          *regaddr = NVIC_SYSTICK_CTRL;
-          *bit = NVIC_SYSTICK_CTRL_ENABLE;
+          *regaddr  = NVIC_SYSTICK_CTRL;
+          *bit      = NVIC_SYSTICK_CTRL_ENABLE;
         }
       else
         {
@@ -208,10 +193,10 @@ static int ra_irqinfo(int irq, uintptr_t *regaddr, uint32_t *bit,
 
 void up_irqinitialize(void)
 {
-  uint32_t regaddr;
+  uint32_t  regaddr;
 
-  int num_priority_registers;
-  int i;
+  int       num_priority_registers;
+  int       i;
 
   /* Disable all interrupts */
 
@@ -221,7 +206,6 @@ void up_irqinitialize(void)
     }
 
   putreg32((uint32_t)_vectors, NVIC_VECTAB);
-
 
   /* Set all interrupts (and exceptions) to the default priority */
 
@@ -258,40 +242,38 @@ void up_irqinitialize(void)
   irq_attach(RA_IRQ_SVCALL, arm_svcall, NULL);
   irq_attach(RA_IRQ_HARDFAULT, arm_hardfault, NULL);
 
-#ifdef CONFIG_RA_SCI0_UART 
-  ra_attach_icu(ELC_EVENT_SCI0_RXI, SCI0_RXI);
-  ra_attach_icu(ELC_EVENT_SCI0_TXI, SCI0_TXI);
-  ra_attach_icu(ELC_EVENT_SCI0_TEI, SCI0_TEI);
-  ra_attach_icu(ELC_EVENT_SCI0_ERI, SCI0_ERI);
+#ifdef CONFIG_RA_SCI0_UART
+  ra_attach_icu(EVENT_SCI0_RXI, SCI0_RXI);
+  ra_attach_icu(EVENT_SCI0_TXI, SCI0_TXI);
+  ra_attach_icu(EVENT_SCI0_TEI, SCI0_TEI);
+  ra_attach_icu(EVENT_SCI0_ERI, SCI0_ERI);
 #endif
 #ifdef CONFIG_RA_SCI1_UART
-  ra_attach_icu(ELC_EVENT_SCI1_RXI, SCI1_RXI);
-  ra_attach_icu(ELC_EVENT_SCI1_TXI, SCI1_TXI);
-  ra_attach_icu(ELC_EVENT_SCI1_TEI, SCI1_TEI);
-  ra_attach_icu(ELC_EVENT_SCI1_ERI, SCI1_ERI);
+  ra_attach_icu(EVENT_SCI1_RXI, SCI1_RXI);
+  ra_attach_icu(EVENT_SCI1_TXI, SCI1_TXI);
+  ra_attach_icu(EVENT_SCI1_TEI, SCI1_TEI);
+  ra_attach_icu(EVENT_SCI1_ERI, SCI1_ERI);
 #endif
 #ifdef CONFIG_RA_SCI2_UART
-  ra_attach_icu(ELC_EVENT_SCI2_RXI, SCI2_RXI);
-  ra_attach_icu(ELC_EVENT_SCI2_TXI, SCI2_TXI);
-  ra_attach_icu(ELC_EVENT_SCI2_TEI, SCI2_TEI);
-  ra_attach_icu(ELC_EVENT_SCI2_ERI, SCI2_ERI);
+  ra_attach_icu(EVENT_SCI2_RXI, SCI2_RXI);
+  ra_attach_icu(EVENT_SCI2_TXI, SCI2_TXI);
+  ra_attach_icu(EVENT_SCI2_TEI, SCI2_TEI);
+  ra_attach_icu(EVENT_SCI2_ERI, SCI2_ERI);
 #endif
 #ifdef CONFIG_RA_SCI9_UART
-  ra_attach_icu(ELC_EVENT_SCI9_RXI, SCI9_RXI);
-  ra_attach_icu(ELC_EVENT_SCI9_TXI, SCI9_TXI);
-  ra_attach_icu(ELC_EVENT_SCI9_TEI, SCI9_TEI);
-  ra_attach_icu(ELC_EVENT_SCI9_ERI, SCI9_ERI);
+  ra_attach_icu(EVENT_SCI9_RXI, SCI9_RXI);
+  ra_attach_icu(EVENT_SCI9_TXI, SCI9_TXI);
+  ra_attach_icu(EVENT_SCI9_TEI, SCI9_TEI);
+  ra_attach_icu(EVENT_SCI9_ERI, SCI9_ERI);
 #endif
 
-  /* Set the priority of the SVCall interrupt */
-  #ifdef CONFIG_ARMV7M_USEBASEPRI
-    ra_prioritize_syscall(NVIC_SYSH_SVCALL_PRIORITY);
-  #endif
+  ra_prioritize_syscall(NVIC_SYSH_SVCALL_PRIORITY);
 
+  ra_dumpnvic("initial", RA_IRQ_FIRST + 32);
 
   /* And finally, enable interrupts */
-  up_irq_enable();
 
+  up_irq_enable();
 }
 
 /****************************************************************************
@@ -305,8 +287,8 @@ void up_irqinitialize(void)
 void up_disable_irq(int irq)
 {
   uintptr_t regaddr;
-  uint32_t regval;
-  uint32_t bit;
+  uint32_t  regval;
+  uint32_t  bit;
 
   if (ra_irqinfo(irq, &regaddr, &bit, NVIC_CLRENA_OFFSET) == 0)
     {
@@ -322,8 +304,8 @@ void up_disable_irq(int irq)
         }
       else
         {
-          regval  = getreg32(regaddr);
-          regval &= ~bit;
+          regval    = getreg32(regaddr);
+          regval    &= ~bit;
           putreg32(regval, regaddr);
         }
     }
@@ -340,8 +322,8 @@ void up_disable_irq(int irq)
 void up_enable_irq(int irq)
 {
   uintptr_t regaddr;
-  uint32_t regval;
-  uint32_t bit;
+  uint32_t  regval;
+  uint32_t  bit;
 
   if (ra_irqinfo(irq, &regaddr, &bit, NVIC_ENA_OFFSET) == 0)
     {
@@ -357,8 +339,8 @@ void up_enable_irq(int irq)
         }
       else
         {
-          regval  = getreg32(regaddr);
-          regval |= bit;
+          regval    = getreg32(regaddr);
+          regval    |= bit;
           putreg32(regval, regaddr);
         }
     }
@@ -390,12 +372,13 @@ void arm_ack_irq(int irq)
 #ifdef CONFIG_ARCH_IRQPRIO
 int up_prioritize_irq(int irq, int priority)
 {
-  uint32_t regaddr;
-  uint32_t regval;
-  int shift;
+  uint32_t  regaddr;
+  uint32_t  regval;
+  int       shift;
 
-  DEBUGASSERT(irq >= RA_IRQ_MEMFAULT && irq < NR_IRQS &&
-              (unsigned)priority <= NVIC_SYSH_PRIORITY_MIN);
+  DEBUGASSERT(
+    irq >= RA_IRQ_MEMFAULT && irq < NR_IRQS &&
+    (unsigned)priority <= NVIC_SYSH_PRIORITY_MIN);
 
   if (irq < RA_IRQ_FIRST)
     {
@@ -403,24 +386,25 @@ int up_prioritize_irq(int irq, int priority)
        * registers (0-3 are invalid)
        */
 
-      regaddr = NVIC_SYSH_PRIORITY(irq);
-      irq    -= 4;
+      regaddr   = NVIC_SYSH_PRIORITY(irq);
+      irq       -= 4;
     }
   else
     {
       /* NVIC_IRQ_PRIORITY() maps {0..} to one of many priority registers */
 
-      irq    -= RA_IRQ_FIRST;
-      regaddr = NVIC_IRQ_PRIORITY(irq);
+      irq       -= RA_IRQ_FIRST;
+      regaddr   = NVIC_IRQ_PRIORITY(irq);
     }
 
-  regval      = getreg32(regaddr);
-  shift       = ((irq & 3) << 3);
-  regval     &= ~(0xff << shift);
-  regval     |= (priority << shift);
+  regval    = getreg32(regaddr);
+  shift     = ((irq & 3) << 3);
+  regval    &= ~(0xff << shift);
+  regval    |= (priority << shift);
   putreg32(regval, regaddr);
 
   stm32_dumpnvic("prioritize", irq);
   return OK;
 }
+
 #endif

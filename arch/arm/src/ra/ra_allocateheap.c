@@ -1,5 +1,7 @@
 /****************************************************************************
- * arch/arm/src/ra/ra_gpio.h
+ * arch/arm/src/ra/ra_allocateheap.c
+ *
+ * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,84 +20,79 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA_GPIO_H
-#define __ARCH_ARM_SRC_RA_GPIO_H
-
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <nuttx/config.h>
 
-#include <stdint.h>
-#include <stdbool.h>
+#include <sys/types.h>
+#include <assert.h>
+#include <debug.h>
 
+#include <nuttx/arch.h>
+#include <nuttx/board.h>
+#include <nuttx/kmalloc.h>
+
+#include <arch/board/board.h>
+
+#include "mpu.h"
+#include "arm_internal.h"
 #include "chip.h"
-#include "hardware/ra_gpio.h"
-#include "hardware/ra_pinmap.h"
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
 /****************************************************************************
- * Public Function Prototypes
+ * Private Data
  ****************************************************************************/
 
-#ifndef __ASSEMBLY__
+/****************************************************************************
+ * Private Functions
+ ****************************************************************************/
 
-#undef EXTERN
-#if defined(__cplusplus)
-#define EXTERN extern "C"
-extern "C"
+/****************************************************************************
+ * Public Functions
+ ****************************************************************************/
+
+/****************************************************************************
+ * Name: up_allocate_heap
+ *
+ * Description:
+ *   This function will be called to dynamically set aside the heap region.
+ *
+ *   For the kernel build (CONFIG_BUILD_PROTECTED=y) with both kernel- and
+ *   user-space heaps (CONFIG_MM_KERNEL_HEAP=y), this function provides the
+ *   size of the unprotected, user-space heap.
+ *
+ *   If a protected kernel-space heap is provided, the kernel heap must be
+ *   allocated (and protected) by an analogous up_allocate_kheap().
+ *
+ *   The following memory map is assumed for the flat build:
+ *
+ *     .data region.  Size determined at link time.
+ *     .bss  region  Size determined at link time.
+ *     IDLE thread stack.  Size determined by CONFIG_IDLETHREAD_STACKSIZE.
+ *     Heap.  Extends to the end of SRAM.
+ *
+ *   The following memory map is assumed for the kernel build:
+ *
+ *     Kernel .data region.  Size determined at link time.
+ *     Kernel .bss  region  Size determined at link time.
+ *     Kernel IDLE thread stack.  Size determined by
+ *                           CONFIG_IDLETHREAD_STACKSIZE.
+ *     Padding for alignment
+ *     User .data region.  Size determined at link time.
+ *     User .bss region  Size determined at link time.
+ *     Kernel heap.  Size determined by CONFIG_MM_KERNEL_HEAPSIZE.
+ *     User heap.  Extends to the end of SRAM.
+ *
+ ****************************************************************************/
+
+void up_allocate_heap(void **heap_start, size_t *heap_size)
 {
-#else
-#define EXTERN extern
-#endif
-
-/* Must be big enough to hold the 32-bit encoding */
-
-typedef struct gpio_pinset
-{
-    uint32_t port;
-    uint32_t pin;
-    uint32_t cfg;
-}gpio_pinset_t;
-
-/****************************************************************************
- * Name: ra_configgpio
- *
- * Description:
- *   Configure a GPIO pin based on bit-encoded description of the pin.
- *
- ****************************************************************************/
-
-void ra_configgpio(gpio_pinset_t cfgset);
-
-/****************************************************************************
- * Name: ra_gpiowrite
- *
- * Description:
- *   Write one or zero to the selected GPIO pin
- *
- ****************************************************************************/
-
-void ra_gpiowrite(gpio_pinset_t pinset, bool value);
-
-/****************************************************************************
- * Name: ra_gpioread
- *
- * Description:
- *   Read one or zero from the selected GPIO pin
- *
- ****************************************************************************/
-
-bool ra_gpioread(gpio_pinset_t pinset);
-
-#undef EXTERN
-#if defined(__cplusplus)
+  board_autoled_on(LED_HEAPALLOCATE);
+  *heap_start = (void *)g_idle_topstack;
+  *heap_size  = CONFIG_RAM_END - g_idle_topstack;
 }
-#endif
-
-#endif /* __ASSEMBLY__ */
-#endif /* __ARCH_ARM_SRC_RA_GPIO_H */

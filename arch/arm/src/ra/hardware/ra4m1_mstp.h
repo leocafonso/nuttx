@@ -33,6 +33,9 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
+
+/* Register Offsets *********************************************************/
+
 #define R_MSTP_MSTPCRB_OFFSET             0x0000
 #define R_MSTP_MSTPCRC_OFFSET             0x0004
 #define R_MSTP_MSTPCRD_OFFSET             0x0008
@@ -42,9 +45,6 @@
 #define R_MSTP_MSTPCRB                    (R_MSTP_BASE + R_MSTP_MSTPCRB_OFFSET)
 #define R_MSTP_MSTPCRC                    (R_MSTP_BASE + R_MSTP_MSTPCRC_OFFSET)
 #define R_MSTP_MSTPCRD                    (R_MSTP_BASE + R_MSTP_MSTPCRD_OFFSET)
-
-/* Register Addresses *******************************************************/
-
 
 /* Register Bitfield Definitions ********************************************/
 
@@ -59,7 +59,6 @@
 #define R_MSTP_MSTPCRB_IIC1            (1 <<  8) /* 100: I2C Bus Interface 1 Module Stop */
 #define R_MSTP_MSTPCRB_CAN             (1 <<  2) /* 04: Controller Area Network Module Stop */
 
-
 #define R_MSTP_MSTPCRC_SCE5            (1 << 31) /* 80000000: SCE5 Module Stop */
 #define R_MSTP_MSTPCRC_ELC             (1 << 14) /* 4000: Event Link Controller Module Stop */
 #define R_MSTP_MSTPCRC_DOC             (1 << 13) /* 2000: Data Operation Circuit Module Stop */
@@ -68,7 +67,6 @@
 #define R_MSTP_MSTPCRC_CTSU            (1 <<  3) /* 08: Capacitive Touch Sensing Unit Module Stop */
 #define R_MSTP_MSTPCRC_CRC             (1 <<  1) /* 02: Cyclic Redundancy Check Calculator Module Stop */
 #define R_MSTP_MSTPCRC_CAC             (1 <<  0) /* 01: Clock Frequency Accuracy Measurement Circuit Module Stop */
-
 
 #define R_MSTP_MSTPCRD_OPAMP           (1 << 31) /* 80000000: Operational Amplifier Module Stop */
 #define R_MSTP_MSTPCRD_ACMPLP          (1 << 29) /* 20000000: Low-Power Analog Comparator Module Stop */
@@ -80,7 +78,6 @@
 #define R_MSTP_MSTPCRD_GPT_2           (1 <<  5) /* 20: General PWM Timer 323 to 320 Module Stop */
 #define R_MSTP_MSTPCRD_AGT0            (1 <<  3) /* 08: Asynchronous General Purpose Timer 0 Module Stop */
 #define R_MSTP_MSTPCRD_AGT1            (1 <<  2) /* 04: Asynchronous General Purpose Timer 1 Module Stop */
-
 
 /****************************************************************************
  * Public Types
@@ -95,4 +92,3 @@
  ****************************************************************************/
 
 #endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4_MSTP_H */
-

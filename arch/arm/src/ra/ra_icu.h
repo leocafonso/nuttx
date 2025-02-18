@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra/ra_lowputc.h
+ * arch/arm/src/ra/ra_icu.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -20,13 +20,18 @@
 
 #ifndef __ARCH_ARM_SRC_RA_ICU_H
 #define __ARCH_ARM_SRC_RA_ICU_H
+
+/****************************************************************************
+ * Included Files
+ ****************************************************************************/
+
 #include "hardware/ra_icu.h"
 
 /****************************************************************************
  * Public Data
  ****************************************************************************/
 
-void ra_attach_icu(elc_event_t event, uint8_t int_num);
+void ra_attach_icu(uint8_t event, uint8_t int_num);
 void ra_clear_ir(int irq);
 
 #endif

@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/sam34/hardware/sam_uart.h
+ * arch/arm/src/ra/hardware/ra_sci.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -64,7 +64,8 @@
 
 /* Register Addresses *******************************************************/
 
-/* SCI0  Registers*/
+/* SCI0  Registers */
+
 #  define R_SCI0_SMR              (R_SCI0_BASE + R_SCI_SMR_OFFSET)
 #  define R_SCI0_BRR              (R_SCI0_BASE + R_SCI_BRR_OFFSET)
 #  define R_SCI0_SCR              (R_SCI0_BASE + R_SCI_SCR_OFFSET)
@@ -91,7 +92,8 @@
 #  define R_SCI0_CDR              (R_SCI0_BASE + R_SCI_CDR_OFFSET)
 #  define R_SCI0_SPTR             (R_SCI0_BASE + R_SCI_SPTR_OFFSET)
 
-/* SCI1  Registers*/
+/* SCI1  Registers */
+
 #  define R_SCI1_SMR              (R_SCI1_BASE + R_SCI_SMR_OFFSET)
 #  define R_SCI1_BRR              (R_SCI1_BASE + R_SCI_BRR_OFFSET)
 #  define R_SCI1_SCR              (R_SCI1_BASE + R_SCI_SCR_OFFSET)
@@ -118,7 +120,8 @@
 #  define R_SCI1_CDR              (R_SCI1_BASE + R_SCI_CDR_OFFSET)
 #  define R_SCI1_SPTR             (R_SCI1_BASE + R_SCI_SPTR_OFFSET)
 
-/* SCI2  Registers (No FIFO)*/
+/* SCI2  Registers (No FIFO) */
+
 #  define R_SCI2_SMR              (R_SCI2_BASE + R_SCI_SMR_OFFSET)
 #  define R_SCI2_BRR              (R_SCI2_BASE + R_SCI_BRR_OFFSET)
 #  define R_SCI2_SCR              (R_SCI2_BASE + R_SCI_SCR_OFFSET)
@@ -134,18 +137,14 @@
 #  define R_SCI2_SISR             (R_SCI2_BASE + R_SCI_SISR_OFFSET)
 #  define R_SCI2_SPMR             (R_SCI2_BASE + R_SCI_SPMR_OFFSET)
 #  define R_SCI2_TDRHL            (R_SCI2_BASE + R_SCI_TDRHL_OFFSET)
-// #  define R_SCI2_FTDRHL           (R_SCI2_BASE + R_SCI_FTDRHL_OFFSET)
 #  define R_SCI2_RDRHL            (R_SCI2_BASE + R_SCI_RDRHL_OFFSET)
-// #  define R_SCI2_FRDRHL           (R_SCI2_BASE + R_SCI_FRDRHL_OFFSET)
 #  define R_SCI2_MDDR             (R_SCI2_BASE + R_SCI_MDDR_OFFSET)
 #  define R_SCI2_DCCR             (R_SCI2_BASE + R_SCI_DCCR_OFFSET)
-// #  define R_SCI2_FCR              (R_SCI2_BASE + R_SCI_FCR_OFFSET)
-// #  define R_SCI2_FDR              (R_SCI2_BASE + R_SCI_FDR_OFFSET)
-// #  define R_SCI2_LSR              (R_SCI2_BASE + R_SCI_LSR_OFFSET)
 #  define R_SCI2_CDR              (R_SCI2_BASE + R_SCI_CDR_OFFSET)
 #  define R_SCI2_SPTR             (R_SCI2_BASE + R_SCI_SPTR_OFFSET)
 
-/* SCI9  Registers (No FIFO)*/
+/* SCI9  Registers (No FIFO) */
+
 #  define R_SCI9_SMR              (R_SCI9_BASE + R_SCI_SMR_OFFSET)
 #  define R_SCI9_BRR              (R_SCI9_BASE + R_SCI_BRR_OFFSET)
 #  define R_SCI9_SCR              (R_SCI9_BASE + R_SCI_SCR_OFFSET)
@@ -161,14 +160,9 @@
 #  define R_SCI9_SISR             (R_SCI9_BASE + R_SCI_SISR_OFFSET)
 #  define R_SCI9_SPMR             (R_SCI9_BASE + R_SCI_SPMR_OFFSET)
 #  define R_SCI9_TDRHL            (R_SCI9_BASE + R_SCI_TDRHL_OFFSET)
-// #  define R_SCI9_FTDRHL           (R_SCI9_BASE + R_SCI_FTDRHL_OFFSET)
 #  define R_SCI9_RDRHL            (R_SCI9_BASE + R_SCI_RDRHL_OFFSET)
-// #  define R_SCI9_FRDRHL           (R_SCI9_BASE + R_SCI_FRDRHL_OFFSET)
 #  define R_SCI9_MDDR             (R_SCI9_BASE + R_SCI_MDDR_OFFSET)
 #  define R_SCI9_DCCR             (R_SCI9_BASE + R_SCI_DCCR_OFFSET)
-// #  define R_SCI9_FCR              (R_SCI9_BASE + R_SCI_FCR_OFFSET)
-// #  define R_SCI9_FDR              (R_SCI9_BASE + R_SCI_FDR_OFFSET)
-// #  define R_SCI9_LSR              (R_SCI9_BASE + R_SCI_LSR_OFFSET)
 #  define R_SCI9_CDR              (R_SCI9_BASE + R_SCI_CDR_OFFSET)
 #  define R_SCI9_SPTR             (R_SCI9_BASE + R_SCI_SPTR_OFFSET)
 
@@ -176,18 +170,18 @@
 
 /* Status register */
 
-#define R_SCI_SMR_CM                     (1 <<  7) /* Bit 7: Communication Mode */
-#define R_SCI_SMR_CHR                    (1 <<  6) /* Bit 6: Character Length (Valid only in asynchronous mode) */
-#define R_SCI_SMR_PE                     (1 <<  5) /* Bit 5: Parity Enable (Valid only in asynchronous mode) */
-#define R_SCI_SMR_PM                     (1 <<  4) /* Bit 4: Parity Mode (Valid only when the PE bit is 1) */
-#define R_SCI_SMR_STOP                   (1 <<  3) /* Bit 3: Stop Bit Length (Valid only in asynchronous mode) */
-#define R_SCI_SMR_MP                     (1 <<  2) /* Bit 2: Multi-Processor Mode (Valid only in asynchronous mode) */
-#define R_SCI_SMR_CKS_SHIFT              (0)       /* Bits 1-0:  Clock Select */
-#define R_SCI_SMR_CKS_MASK               (3 << R_SCI_SMR_CKS_SHIFT) 
-#  define R_SCI_SMR_CKS_DIV_0            (0 << R_SCI_SMR_CKS_SHIFT) /* PCLKA clock (n = 0) */
-#  define R_SCI_SMR_CKS_DIV_4            (1 << R_SCI_SMR_CKS_SHIFT) /* PCLKA/4 clock (n = 0) */
-#  define R_SCI_SMR_CKS_DIV_16           (2 << R_SCI_SMR_CKS_SHIFT) /* PCLKA/16 clock (n = 0) */
-#  define R_SCI_SMR_CKS_DIV_64           (3 << R_SCI_SMR_CKS_SHIFT) /* PCLKA/64 clock (n = 0) */
+#define R_SCI_SMR_CM                     (1 <<  7)                     /* Bit 7: Communication Mode */
+#define R_SCI_SMR_CHR                    (1 <<  6)                     /* Bit 6: Character Length (Valid only in asynchronous mode) */
+#define R_SCI_SMR_PE                     (1 <<  5)                     /* Bit 5: Parity Enable (Valid only in asynchronous mode) */
+#define R_SCI_SMR_PM                     (1 <<  4)                     /* Bit 4: Parity Mode (Valid only when the PE bit is 1) */
+#define R_SCI_SMR_STOP                   (1 <<  3)                     /* Bit 3: Stop Bit Length (Valid only in asynchronous mode) */
+#define R_SCI_SMR_MP                     (1 <<  2)                     /* Bit 2: Multi-Processor Mode (Valid only in asynchronous mode) */
+#define R_SCI_SMR_CKS_SHIFT              (0)                           /* Bits 1-0:  Clock Select */
+#define R_SCI_SMR_CKS_MASK               (3 << R_SCI_SMR_CKS_SHIFT)
+#  define R_SCI_SMR_CKS_DIV_0            (0 << R_SCI_SMR_CKS_SHIFT)    /* PCLKA clock (n = 0) */
+#  define R_SCI_SMR_CKS_DIV_4            (1 << R_SCI_SMR_CKS_SHIFT)    /* PCLKA/4 clock (n = 0) */
+#  define R_SCI_SMR_CKS_DIV_16           (2 << R_SCI_SMR_CKS_SHIFT)    /* PCLKA/16 clock (n = 0) */
+#  define R_SCI_SMR_CKS_DIV_64           (3 << R_SCI_SMR_CKS_SHIFT)    /* PCLKA/64 clock (n = 0) */
 
 /* Bit Rate Register  */
 
@@ -196,17 +190,17 @@
 
 /* Serial Control Register   */
 
-#define R_SCI_SCR_TIE                    (1 <<  7) /* Bit 7: Transmit Interrupt Enable */
-#define R_SCI_SCR_RIE                    (1 <<  6) /* Bit 6: Receive Interrupt Enable */
-#define R_SCI_SCR_TE                     (1 <<  5) /* Bit 5: Transmit Enable */
-#define R_SCI_SCR_RE                     (1 <<  4) /* Bit 4: Receive Enable */
-#define R_SCI_SCR_MPIE                   (1 <<  3) /* Bit 3: Multi-Processor Interrupt Enable (Valid in asynchronous mode when SMR.MP = 1) */
-#define R_SCI_SCR_TEIE                   (1 <<  2) /* Bit 2: Transmit End Interrupt Enable */
-#define R_SCI_SCR_CKE_SHIFT              (0)       /* Bits 1-0:  Clock Enable */
-#define R_SCI_SCR_CKE_MASK               (3 << R_SCI_SCR_CKE_SHIFT) 
-#  define R_SCI_SCR_CKE_MOD0             (0 << R_SCI_SCR_CKE_SHIFT) /* Asynchronous mode: On-chip baud rate generator and the SCKn pin is available for use as an I/O port, Clock synchronous mode:  Internal clock */
-#  define R_SCI_SCR_CKE_MOD1             (1 << R_SCI_SCR_CKE_SHIFT) /* Asynchronous mode: On-chip baud rate generator and a same bit rate clock outputed on the SCKn pin, Clock synchronous mode:  Internal clock */
-#  define R_SCI_SCR_CKE_MOD2             (2 << R_SCI_SCR_CKE_SHIFT) /* External clock*/
+#define R_SCI_SCR_TIE                    (1 <<  7)                     /* Bit 7: Transmit Interrupt Enable */
+#define R_SCI_SCR_RIE                    (1 <<  6)                     /* Bit 6: Receive Interrupt Enable */
+#define R_SCI_SCR_TE                     (1 <<  5)                     /* Bit 5: Transmit Enable */
+#define R_SCI_SCR_RE                     (1 <<  4)                     /* Bit 4: Receive Enable */
+#define R_SCI_SCR_MPIE                   (1 <<  3)                     /* Bit 3: Multi-Processor Interrupt Enable (Valid in asynchronous mode when SMR.MP = 1) */
+#define R_SCI_SCR_TEIE                   (1 <<  2)                     /* Bit 2: Transmit End Interrupt Enable */
+#define R_SCI_SCR_CKE_SHIFT              (0)                           /* Bits 1-0:  Clock Enable */
+#define R_SCI_SCR_CKE_MASK               (3 << R_SCI_SCR_CKE_SHIFT)
+#  define R_SCI_SCR_CKE_MOD0             (0 << R_SCI_SCR_CKE_SHIFT)    /* Asynchronous mode: On-chip baud rate generator and the SCKn pin is available for use as an I/O port, Clock synchronous mode:  Internal clock */
+#  define R_SCI_SCR_CKE_MOD1             (1 << R_SCI_SCR_CKE_SHIFT)    /* Asynchronous mode: On-chip baud rate generator and a same bit rate clock outputted on the SCKn pin, Clock synchronous mode:  Internal clock */
+#  define R_SCI_SCR_CKE_MOD2             (2 << R_SCI_SCR_CKE_SHIFT)    /* External clock*/
 
 /* Transmit Data Register  */
 
@@ -248,7 +242,7 @@
 
 /* Noise Filter Setting Register  */
 
-#define R_SCI_SNFR_NFCS_SHIFT                 (0) /* Bits 3-0:  Noise Filter Clock Select */
+#define R_SCI_SNFR_NFCS_SHIFT                 (0)                          /* Bits 3-0:  Noise Filter Clock Select */
 #define R_SCI_SNFR_NFCS_MASK                  (7)
 #  define R_SCI_SNFR_NFCS_DIV1_ASYNC          (0 << R_SCI_SNFR_NFCS_SHIFT) /* Asynchronous mode: : The clock signal divided by 1 is used with the noise filter */
 #  define R_SCI_SNFR_NFCS_DIV1_IIC            (1 << R_SCI_SNFR_NFCS_SHIFT) /* simple IIC mode:  The clock signal divided by 1 is used with the noise filter */
@@ -258,7 +252,7 @@
 
 /* I2C Mode Register 1 */
 
-#define R_SCI_SIMR1_IICDL_SHIFT           (3) /* Bits 7-3:  SDA Delay Output Select Cycles below are of the clock signal from the on-chip baud rate generator. */
+#define R_SCI_SIMR1_IICDL_SHIFT           (3)       /* Bits 7-3:  SDA Delay Output Select Cycles below are of the clock signal from the on-chip baud rate generator. */
 #define R_SCI_SIMR1_IICDL_MASK            (0x1f)
 #define R_SCI_SIMR1_IICM                  (1 <<  0) /* Bit 0: Simple I2C Mode Select */
 
@@ -269,23 +263,22 @@
 #define R_SCI_SIMR2_IICINTM              (1 <<  0) /* Bit 0: I2C Interrupt Mode Select */
 
 /* I2C Mode Register 3 */
-
-#define R_SCI_SIMR3_IICSCLS_SHIFT        (6) /* Bit 7-6: SCL Output Select */
+#define R_SCI_SIMR3_IICSCLS_SHIFT        (6)                                 /* Bit 7-6: SCL Output Select */
 #define R_SCI_SIMR3_IICSCLS_MASK         (3)
-#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_0  (0 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SCL Output Select : Serial data output*/
-#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_1  (1 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SCL Output Select : Generate a start, restart, or stop condition*/
-#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_2  (2 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SCL Output Select : Output low level on the SCLn pin*/
-#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_3  (3 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SCL Output Select : Drive SCLn pin to high-impedance state*/
-#define R_SCI_SIMR3_IICSDAS_SHIFT        (4) /* Bit 5-4: SDA Output Select */
+#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_0  (0 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SCL Output Select : Serial data output*/
+#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_1  (1 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SCL Output Select : Generate a start, restart, or stop condition*/
+#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_2  (2 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SCL Output Select : Output low level on the SCLn pin*/
+#  define R_SCI_SIMR3_IICSCLS_SCL_OUT_3  (3 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SCL Output Select : Drive SCLn pin to high-impedance state*/
+#define R_SCI_SIMR3_IICSDAS_SHIFT        (4)                                 /* Bit 5-4: SDA Output Select */
 #define R_SCI_SIMR3_IICSDAS_MASK         (3)
-#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_0  (0 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SDA Output Select : Serial data output*/
-#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_1  (1 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SDA Output Select : Generate a start, restart, or stop condition*/
-#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_2  (2 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SDA Output Select : Output low level on the SDAn pin*/
-#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_3  (3 << R_SCI_SIMR3_IICSCLS_SHIFT) /* SDA Output Select : Drive SDAn pin to high-impedance state*/
-#define R_SCI_SIMR3_IICSTIF              (1 <<  3) /* Bit 3: Issuing of Start, Restart, or Stop Condition Completed Flag (When 0 is written to IICSTIF, it is cleared to 0.) */
-#define R_SCI_SIMR3_IICSTPREQ            (1 <<  2) /* Bit 2: Stop Condition Generation */
-#define R_SCI_SIMR3_IICRSTAREQ           (1 <<  1) /* Bit 1: Restart Condition Generation */
-#define R_SCI_SIMR3_IICSTAREQ            (1 <<  0) /* Bit 0: Start Condition Generation */
+#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_0  (0 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SDA Output Select : Serial data output*/
+#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_1  (1 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SDA Output Select : Generate a start, restart, or stop condition*/
+#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_2  (2 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SDA Output Select : Output low level on the SDAn pin*/
+#  define R_SCI_SIMR3_IICSDAS_SDA_OUT_3  (3 << R_SCI_SIMR3_IICSCLS_SHIFT)    /* SDA Output Select : Drive SDAn pin to high-impedance state*/
+#define R_SCI_SIMR3_IICSTIF              (1 <<  3)                           /* Bit 3: Issuing of Start, Restart, or Stop Condition Completed Flag (When 0 is written to IICSTIF, it is cleared to 0.) */
+#define R_SCI_SIMR3_IICSTPREQ            (1 <<  2)                           /* Bit 2: Stop Condition Generation */
+#define R_SCI_SIMR3_IICRSTAREQ           (1 <<  1)                           /* Bit 1: Restart Condition Generation */
+#define R_SCI_SIMR3_IICSTAREQ            (1 <<  0)                           /* Bit 0: Start Condition Generation */
 
 /* I2C Status Register */
 
@@ -308,7 +301,7 @@
 /* Transmit FIFO Data Register HL */
 
 #define R_SCI_FTDRHL_MPBT                (1 <<  9) /* Bit 9: Multi-processor transfer bit flag (Valid only in asynchronous mode and SMR.MP=1 and FIFO selected) */
-#define R_SCI_FTDRHL_TDAT_SHIFT          (0) /* Bit 8-0: Serial transmit data (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode, and FIFO selected) */
+#define R_SCI_FTDRHL_TDAT_SHIFT          (0)       /* Bit 8-0: Serial transmit data (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode, and FIFO selected) */
 #define R_SCI_FTDRHL_TDAT_MASK           (0x1ff)
 
 /* Receive 9-bit Data Register  */
@@ -324,7 +317,7 @@
 #define R_SCI_FRDRHL_PER                 (1 << 11) /* Bit 11: Parity error flag */
 #define R_SCI_FRDRHL_DR                  (1 << 10) /* Bit 10: Receive data ready flag (It is same as SSR.DR) */
 #define R_SCI_FRDRHL_MPB                 (1 <<  9) /* Bit 9: Multi-processor bit flag (Valid only in asynchronous mode with SMR.MP=1 and FIFO selected) It can read multi-processor bit corresponded to serial receive data(RDATA[8:0]) */
-#define R_SCI_FRDRHL_RDAT_SHIFT          (0) /* Bit 8-0: Serial receive data (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode, and FIFO selected) */
+#define R_SCI_FRDRHL_RDAT_SHIFT          (0)       /* Bit 8-0: Serial receive data (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode, and FIFO selected) */
 #define R_SCI_FRDRHL_RDAT_MASK           (0x1ff)
 
 /* Data Compare Match Control Register */
@@ -337,16 +330,16 @@
 
 /* FIFO Control Register  */
 
-#define R_SCI_FCR_RSTRG_SHIFT            (12) /* Bit 15-12: RTS Output Active Trigger Number Select (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
+#define R_SCI_FCR_RSTRG_SHIFT            (12)         /* Bit 15-12: RTS Output Active Trigger Number Select (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
 #define R_SCI_FCR_RSTRG_MASK             (0x0f)
-#define R_SCI_FCR_RTRG_SHIFT             (8) /* Bit 11-8: Receive FIFO data trigger number (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
+#define R_SCI_FCR_RTRG_SHIFT             (8)          /* Bit 11-8: Receive FIFO data trigger number (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
 #define R_SCI_FCR_RTRG_MASK              (0x0f)
-#define R_SCI_FCR_TTRG_SHIFT             (4) /* Bit 7-4: Transmit FIFO data trigger number (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
+#define R_SCI_FCR_TTRG_SHIFT             (4)          /* Bit 7-4: Transmit FIFO data trigger number (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
 #define R_SCI_FCR_TTRG_MASK              (0x0f)
-#define R_SCI_FCR_DRES                   (1 <<  3) /* Bit 3: Receive data ready error select bit (When detecting a reception data ready, the interrupt request is selected.) */
-#define R_SCI_FCR_TFRST                  (1 <<  2) /* Bit 2: Transmit FIFO Data Register Reset (Valid only in FCR.FM=1) */
-#define R_SCI_FCR_RFRST                  (1 <<  1) /* Bit 1: Receive FIFO Data Register Reset (Valid only in FCR.FM=1) */
-#define R_SCI_FCR_FM                     (1 <<  0) /* Bit 0: FIFO Mode Select (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
+#define R_SCI_FCR_DRES                   (1 <<  3)    /* Bit 3: Receive data ready error select bit (When detecting a reception data ready, the interrupt request is selected.) */
+#define R_SCI_FCR_TFRST                  (1 <<  2)    /* Bit 2: Transmit FIFO Data Register Reset (Valid only in FCR.FM=1) */
+#define R_SCI_FCR_RFRST                  (1 <<  1)    /* Bit 1: Receive FIFO Data Register Reset (Valid only in FCR.FM=1) */
+#define R_SCI_FCR_FM                     (1 <<  0)    /* Bit 0: FIFO Mode Select (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode) */
 
 /* FIFO Data Count Register  */
 
@@ -357,11 +350,11 @@
 
 /* Line Status Register */
 
-#define R_SCI_LSR_PNUM_SHIFT             (8) /* Bit 12-8: Parity Error Count Indicates the quantity of data with a parity error among the receive data stored in the receive FIFO data register (FRDRH and FRDRL). */
+#define R_SCI_LSR_PNUM_SHIFT             (8)        /* Bit 12-8: Parity Error Count Indicates the quantity of data with a parity error among the receive data stored in the receive FIFO data register (FRDRH and FRDRL). */
 #define R_SCI_LSR_PNUM_MASK              (0x1f)
-#define R_SCI_LSR_FNUM_SHIFT             (2) /* Bit 6-2: Framing Error Count Indicates the quantity of data with a framing error among the receive data stored in the receive FIFO data register (FRDRH and FRDRL). */
+#define R_SCI_LSR_FNUM_SHIFT             (2)        /* Bit 6-2: Framing Error Count Indicates the quantity of data with a framing error among the receive data stored in the receive FIFO data register (FRDRH and FRDRL). */
 #define R_SCI_LSR_FNUM_MASK              (0x1f)
-#define R_SCI_LSR_ORER                   (1 <<  0) /* Bit 0: Overrun Error Flag (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode, and FIFO selected) */
+#define R_SCI_LSR_ORER                   (1 <<  0)  /* Bit 0: Overrun Error Flag (Valid only in asynchronous mode(including multi-processor) or clock synchronous mode, and FIFO selected) */
 
 /* Compare Match Data Register  */
 
@@ -371,9 +364,8 @@
 /* Serial Port Register */
 
 #define R_SCI_SPTR_SPB2IO                (1 <<  2) /* 04: Serial port break I/O bit (It's selected whether the value of SPB2DT is output to TxD terminal.) */
-#define R_SCI_SPTR_SPB2DT                (1 <<  1) /* 02: Serial port break data select bit (The output level of TxD terminal is selected when SCR.TE = 0.) */
+#define R_SCI_SPTR_SPB2DT                (1 <<  1) /* 02: Serial port break data select bit (The output level of TxD terminal is selected when.) */
 #define R_SCI_SPTR_RXDMON                (1 <<  0) /* 01: Serial input data monitor bit (The state of the RXD terminal is shown.) */
-
 
 /****************************************************************************
  * Public Types

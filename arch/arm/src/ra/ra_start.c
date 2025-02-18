@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/stm32f0l0g0/stm32_start.c
+ * arch/arm/src/ra/ra_start.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -35,12 +35,11 @@
 #include "ra_clockconfig.h"
 #include "ra_lowputc.h"
 
-
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
 
-#define IDLE_STACK ((uint32_t)_ebss + CONFIG_IDLETHREAD_STACKSIZE)
+#define IDLE_STACK  ((uint32_t)_ebss + CONFIG_IDLETHREAD_STACKSIZE)
 
 /****************************************************************************
  * Public Data
@@ -61,7 +60,7 @@ const uintptr_t g_idle_topstack = IDLE_STACK;
  ****************************************************************************/
 
 #ifdef CONFIG_DEBUG_FEATURES
-#  define showprogress(c) arm_lowputc(c)
+#  define showprogress(c)  arm_lowputc(c)
 #else
 #  define showprogress(c)
 #endif
@@ -80,12 +79,10 @@ const uintptr_t g_idle_topstack = IDLE_STACK;
 
 void __start(void)
 {
-  const uint32_t *src;
-  uint32_t *dest;
+  const uint32_t    *src;
+  uint32_t          *dest;
 
   /* Configure the uart so that we can get debug output as soon as possible */
-
-
 
   /* Clear .bss.  We'll do this inline (vs. calling memset) just to be
    * certain that there are no issues with the state of global variables.
@@ -96,16 +93,15 @@ void __start(void)
       *dest++ = 0;
     }
 
-
   /* Move the initialized data section from his temporary holding spot in
    * FLASH into the correct place in SRAM.  The correct place in SRAM is
    * give by _sdata and _edata.  The temporary location is in FLASH at the
    * end of all of the other read-only data (.text, .rodata) at _eronly.
    */
 
-  for (src = (const uint32_t *)_eronly,
-       dest = (uint32_t *)_sdata; dest < (uint32_t *)_edata;
-      )
+  for (src = (const uint32_t *)_eronly, dest = (uint32_t *)_sdata;
+       dest < (uint32_t *)_edata;
+       )
     {
       *dest++ = *src++;
     }
@@ -120,7 +116,6 @@ void __start(void)
 #endif
   showprogress('B');
 
-
   /* Perform early serial initialization */
 #ifdef USE_EARLYSERIALINIT
   arm_earlyserialinit();
@@ -134,13 +129,11 @@ void __start(void)
    */
 
 #ifdef CONFIG_BUILD_PROTECTED
-  // stm32_userspace();
   showprogress('D');
 #endif
 
   /* Initialize onboard resources */
 
-  // stm32_boardinitialize();
   showprogress('E');
 
   /* Then start NuttX */
@@ -152,5 +145,7 @@ void __start(void)
 
   /* Shouldn't get here */
 
-  for (; ; );
+  for (; ; )
+    {
+    }
 }

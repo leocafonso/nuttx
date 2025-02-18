@@ -31,5 +31,4 @@
  * Public Function Prototypes
  ****************************************************************************/
 
-
 #endif /* __ARCH_ARM_SRC_RA_START_H */

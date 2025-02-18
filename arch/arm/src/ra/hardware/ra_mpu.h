@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/hardware/ra4m1_mpu.h
+ * arch/arm/src/ra/hardware/ra_mpu.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with

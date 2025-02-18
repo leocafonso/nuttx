@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/ra4m1/hardware/ra4m1_system.h
+ * arch/arm/src/ra/hardware/ra_system.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -17,7 +17,6 @@
  * under the License.
  *
  ****************************************************************************/
-
 #ifndef __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_SYSTEM_H
 #define __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_SYSTEM_H
 
@@ -154,7 +153,6 @@
 #  define R_SYSTEM_RSTSR1                (R_SYSTEM_BASE + R_SYSTEM_RSTSR1_OFFSET)
 #  define R_SYSTEM_BKRACR                (R_SYSTEM_BASE + R_SYSTEM_BKRACR_OFFSET)
 
-
 /* Register Bitfield Definitions ********************************************/
 
 /* VBATT Control Register 1 (8-bits) */
@@ -252,60 +250,60 @@
 
 /* System Clock Division Control Register (32-bits) */
 
-#define R_SYSTEM_SCKDIVCR_FCK_SHIFT             (28) /* Bits 30-28: Flash IF Clock (FCLK) Select */
+#define R_SYSTEM_SCKDIVCR_FCK_SHIFT             (28)                                    /* Bits 30-28: Flash IF Clock (FCLK) Select */
 #define R_SYSTEM_SCKDIVCR_FCK_MASK              (0x07 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)
-#  define R_SYSTEM_SCKDIVCR_FCK_DIV_1           (0 << R_SYSTEM_SCKDIVCR_FCK_SHIFT) /* CLK/1 */
-#  define R_SYSTEM_SCKDIVCR_FCK_DIV_2           (1 << R_SYSTEM_SCKDIVCR_FCK_SHIFT) /* CLK/2 */
-#  define R_SYSTEM_SCKDIVCR_FCK_DIV_4           (2 << R_SYSTEM_SCKDIVCR_FCK_SHIFT) /* CLK/4 */
-#  define R_SYSTEM_SCKDIVCR_FCK_DIV_8           (3 << R_SYSTEM_SCKDIVCR_FCK_SHIFT) /* CLK/8 */
-#  define R_SYSTEM_SCKDIVCR_FCK_DIV_16          (4 << R_SYSTEM_SCKDIVCR_FCK_SHIFT) /* CLK/16 */
-#  define R_SYSTEM_SCKDIVCR_FCK_DIV_32          (5 << R_SYSTEM_SCKDIVCR_FCK_SHIFT) /* CLK/32 */
-#  define R_SYSTEM_SCKDIVCR_FCK_DIV_64          (6 << R_SYSTEM_SCKDIVCR_FCK_SHIFT) /* CLK/64 */
-#define R_SYSTEM_SCKDIVCR_ICK_SHIFT             (24) /* Bits 26-24: System Clock (ICLK) Select */
+#  define R_SYSTEM_SCKDIVCR_FCK_DIV_1           (0 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)      /* CLK/1 */
+#  define R_SYSTEM_SCKDIVCR_FCK_DIV_2           (1 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)      /* CLK/2 */
+#  define R_SYSTEM_SCKDIVCR_FCK_DIV_4           (2 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)      /* CLK/4 */
+#  define R_SYSTEM_SCKDIVCR_FCK_DIV_8           (3 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)      /* CLK/8 */
+#  define R_SYSTEM_SCKDIVCR_FCK_DIV_16          (4 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)      /* CLK/16 */
+#  define R_SYSTEM_SCKDIVCR_FCK_DIV_32          (5 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)      /* CLK/32 */
+#  define R_SYSTEM_SCKDIVCR_FCK_DIV_64          (6 << R_SYSTEM_SCKDIVCR_FCK_SHIFT)      /* CLK/64 */
+#define R_SYSTEM_SCKDIVCR_ICK_SHIFT             (24)                                    /* Bits 26-24: System Clock (ICLK) Select */
 #define R_SYSTEM_SCKDIVCR_ICK_MASK              (0x07 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)
-#  define R_SYSTEM_SCKDIVCR_ICK_DIV_1           (0 << R_SYSTEM_SCKDIVCR_ICK_SHIFT) /* CLK/1 */
-#  define R_SYSTEM_SCKDIVCR_ICK_DIV_2           (1 << R_SYSTEM_SCKDIVCR_ICK_SHIFT) /* CLK/2 */
-#  define R_SYSTEM_SCKDIVCR_ICK_DIV_4           (2 << R_SYSTEM_SCKDIVCR_ICK_SHIFT) /* CLK/4 */
-#  define R_SYSTEM_SCKDIVCR_ICK_DIV_8           (3 << R_SYSTEM_SCKDIVCR_ICK_SHIFT) /* CLK/8 */
-#  define R_SYSTEM_SCKDIVCR_ICK_DIV_16          (4 << R_SYSTEM_SCKDIVCR_ICK_SHIFT) /* CLK/16 */
-#  define R_SYSTEM_SCKDIVCR_ICK_DIV_32          (5 << R_SYSTEM_SCKDIVCR_ICK_SHIFT) /* CLK/32 */
-#  define R_SYSTEM_SCKDIVCR_ICK_DIV_64          (6 << R_SYSTEM_SCKDIVCR_ICK_SHIFT) /* CLK/64 */
-#define R_SYSTEM_SCKDIVCR_PCKA_SHIFT            (12) /* Bits 14-10: Peripheral Module Clock A (PCLKA) Select */
+#  define R_SYSTEM_SCKDIVCR_ICK_DIV_1           (0 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)      /* CLK/1 */
+#  define R_SYSTEM_SCKDIVCR_ICK_DIV_2           (1 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)      /* CLK/2 */
+#  define R_SYSTEM_SCKDIVCR_ICK_DIV_4           (2 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)      /* CLK/4 */
+#  define R_SYSTEM_SCKDIVCR_ICK_DIV_8           (3 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)      /* CLK/8 */
+#  define R_SYSTEM_SCKDIVCR_ICK_DIV_16          (4 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)      /* CLK/16 */
+#  define R_SYSTEM_SCKDIVCR_ICK_DIV_32          (5 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)      /* CLK/32 */
+#  define R_SYSTEM_SCKDIVCR_ICK_DIV_64          (6 << R_SYSTEM_SCKDIVCR_ICK_SHIFT)      /* CLK/64 */
+#define R_SYSTEM_SCKDIVCR_PCKA_SHIFT            (12)                                    /* Bits 14-10: Peripheral Module Clock A (PCLKA) Select */
 #define R_SYSTEM_SCKDIVCR_PCKA_MASK             (0x07 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)
-#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT) /* CLK/1 */
-#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT) /* CLK/2 */
-#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT) /* CLK/4 */
-#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT) /* CLK/8 */
-#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT) /* CLK/16 */
-#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT) /* CLK/32 */
-#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT) /* CLK/64 */
-#define R_SYSTEM_SCKDIVCR_PCKB_SHIFT            (8) /* Bits 10-8: Peripheral Module Clock B (PCLKB) Select */
+#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)    /* CLK/1 */
+#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)    /* CLK/2 */
+#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)    /* CLK/4 */
+#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)    /* CLK/8 */
+#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)    /* CLK/16 */
+#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)    /* CLK/32 */
+#  define R_SYSTEM_SCKDIVCR_PCKA_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKA_SHIFT)    /* CLK/64 */
+#define R_SYSTEM_SCKDIVCR_PCKB_SHIFT            (8)                                     /* Bits 10-8: Peripheral Module Clock B (PCLKB) Select */
 #define R_SYSTEM_SCKDIVCR_PCKB_MASK             (0x07 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)
-#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT) /* CLK/1 */
-#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT) /* CLK/2 */
-#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT) /* CLK/4 */
-#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT) /* CLK/8 */
-#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT) /* CLK/16 */
-#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT) /* CLK/32 */
-#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT) /* CLK/64 */
-#define R_SYSTEM_SCKDIVCR_PCKC_SHIFT            (4) /* Bits 6-4: Peripheral Module Clock C (PCLKC) Select */
+#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)    /* CLK/1 */
+#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)    /* CLK/2 */
+#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)    /* CLK/4 */
+#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)    /* CLK/8 */
+#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)    /* CLK/16 */
+#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)    /* CLK/32 */
+#  define R_SYSTEM_SCKDIVCR_PCKB_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKB_SHIFT)    /* CLK/64 */
+#define R_SYSTEM_SCKDIVCR_PCKC_SHIFT            (4)                                     /* Bits 6-4: Peripheral Module Clock C (PCLKC) Select */
 #define R_SYSTEM_SCKDIVCR_PCKC_MASK             (0x07 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)
-#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT) /* CLK/1 */
-#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT) /* CLK/2 */
-#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT) /* CLK/4 */
-#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT) /* CLK/8 */
-#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT) /* CLK/16 */
-#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT) /* CLK/32 */
-#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT) /* CLK/64 */
-#define R_SYSTEM_SCKDIVCR_PCKD_SHIFT            (0) /* Bits 2-0: Peripheral Module Clock D (PCLKD) Select */
+#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)    /* CLK/1 */
+#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)    /* CLK/2 */
+#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)    /* CLK/4 */
+#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)    /* CLK/8 */
+#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)    /* CLK/16 */
+#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)    /* CLK/32 */
+#  define R_SYSTEM_SCKDIVCR_PCKC_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKC_SHIFT)    /* CLK/64 */
+#define R_SYSTEM_SCKDIVCR_PCKD_SHIFT            (0)                                     /* Bits 2-0: Peripheral Module Clock D (PCLKD) Select */
 #define R_SYSTEM_SCKDIVCR_PCKD_MASK             (0x07 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)
-#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT) /* CLK/1 */
-#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT) /* CLK/2 */
-#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT) /* CLK/4 */
-#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT) /* CLK/8 */
-#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT) /* CLK/16 */
-#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT) /* CLK/32 */
-#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT) /* CLK/64 */
+#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_1           (0 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)    /* CLK/1 */
+#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_2           (1 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)    /* CLK/2 */
+#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_4           (2 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)    /* CLK/4 */
+#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_8           (3 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)    /* CLK/8 */
+#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_16          (4 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)    /* CLK/16 */
+#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_32          (5 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)    /* CLK/32 */
+#  define R_SYSTEM_SCKDIVCR_PCKD_DIV_64          (6 << R_SYSTEM_SCKDIVCR_PCKD_SHIFT)    /* CLK/64 */
 
 /* System Clock Source Control Register (8-bits) */
 
@@ -363,9 +361,9 @@
 /* TO DO */
 
 #define R_SYSTEM_CKOCR_CKOEN              (1 <<  7) /* 80: Clock out enable */
-#define R_SYSTEM_CKOCR_CKODIV_SHIFT       (4) /* 10: Clock out input frequency Division Select */
+#define R_SYSTEM_CKOCR_CKODIV_SHIFT       (4)       /* 10: Clock out input frequency Division Select */
 #define R_SYSTEM_CKOCR_CKODIV_MASK        (0x07)
-#define R_SYSTEM_CKOCR_CKOSEL_SHIFT       (0) /* 01: Clock out source select */
+#define R_SYSTEM_CKOCR_CKOSEL_SHIFT       (0)       /* 01: Clock out source select */
 #define R_SYSTEM_CKOCR_CKOSEL_MASK        (0x07)
 
 /* TO DO */
@@ -385,7 +383,7 @@
 
 /* TO DO */
 
-#define R_SYSTEM_SLCDSCKCR_LCDSCKEN       (1 <<  7) /* 80: LCD Source Clock Out Enable */
+#define R_SYSTEM_SLCDSCKCR_LCDSCKEN       (1 <<  7)  /* 80: LCD Source Clock Out Enable */
 #define R_SYSTEM_SLCDSCKCR_LCDSCKSEL_SHIFT       (0) /* 01: LCD Source Clock (LCDSRCCLK) Select */
 #define R_SYSTEM_SLCDSCKCR_LCDSCKSEL_MASK      (0x07)
 
@@ -419,30 +417,42 @@
 #define R_SYSTEM_MOMCR_MODRV1             (1 <<  3) /* 08: Main Clock Oscillator Drive Capability 1 Switching */
 
 /* TO DO */
+
 #define R_SYSTEM_SOMCR_SODRV_SHIFT             (0) /* 01: Sub-Clock Oscillator Drive Capability Switching */
 #define R_SYSTEM_SOMCR_SODRV_MASK              (0x03)
 
 /* TO DO */
+
 #define R_SYSTEM_LOCOUTCR_LOCOUTRM_SHIFT       (0) /* 01: LOCO User Trimming 1000_0000 : -128 1000_0001 : -127 1000_0010 : -126 . . . 1111_1111 : -1 0000_0000 : Center Code 0000_0001 : +1 . . . 0111_1101 : +125 0111_1110 : +126 0111_1111 : +127 These bits are added to original LOCO trimming bits */
 #define R_SYSTEM_LOCOUTCR_LOCOUTRM_MASK        (0xff)
+
 /* TO DO */
+
 #define R_SYSTEM_SBYCR_SSBY               (1 << 15) /* 8000: Software Standby */
+
 /* TO DO */
+
 #define R_SYSTEM_MSTPCRA_MSTPA22          (1 << 22) /* 400000: DMA Controller/Data Transfer Controller Module Stop */
 #define R_SYSTEM_MSTPCRA_MSTPA6           (1 <<  6) /* 40: ECCRAM Module Stop */
 #define R_SYSTEM_MSTPCRA_MSTPA0           (1 <<  0) /* 01: RAM0 Module Stop */
+
 /* TO DO */
+
 #define R_SYSTEM_SNZCR_SNZE               (1 <<  7) /* 80: Snooze Mode Enable */
 #define R_SYSTEM_SNZCR_SNZDTCEN           (1 <<  1) /* 02: DTC Enable in Snooze Mode */
 #define R_SYSTEM_SNZCR_RXDREQEN           (1 <<  0) /* 01: RXD0 Snooze Request Enable NOTE: Do not set to 1 other than in asynchronous mode. */
+
 /* TO DO */
+
 #define R_SYSTEM_SNZEDCR_SCI0UMTED        (1 <<  7) /* 80: SCI0 Address Mismatch Snooze End Enable */
 #define R_SYSTEM_SNZEDCR_AD0UMTED         (1 <<  4) /* 10: ADC140 Compare Mismatch Snooze End Enable */
 #define R_SYSTEM_SNZEDCR_AD0MATED         (1 <<  3) /* 08: ADC140 Compare Match Snooze End Enable */
 #define R_SYSTEM_SNZEDCR_DTCNZRED         (1 <<  2) /* 04: Not Last DTC Transmission Completion Snooze End Enable */
 #define R_SYSTEM_SNZEDCR_DTCZRED          (1 <<  1) /* 02: Last DTC Transmission Completion Snooze End Enable */
 #define R_SYSTEM_SNZEDCR_AGTUNFED         (1 <<  0) /* 01: AGT1 Underflow Snooze End Enable */
+
 /* TO DO */
+
 #define R_SYSTEM_SNZREQCR_SNZREQEN30      (1 << 30) /* 40000000: Snooze Request Enable 30 Enable AGT1 compare match B snooze request */
 #define R_SYSTEM_SNZREQCR_SNZREQEN29      (1 << 29) /* 20000000: Snooze Request Enable 29 Enable AGT1 compare match A snooze request */
 #define R_SYSTEM_SNZREQCR_SNZREQEN28      (1 << 28) /* 10000000: Snooze Request Enable 28 Enable AGT1 underflow snooze request */
@@ -465,55 +475,82 @@
 #define R_SYSTEM_SNZREQCR_SNZREQEN2       (1 <<  2) /* 04: Snooze Request Enable 2 Enable IRQ2 pin snooze request */
 #define R_SYSTEM_SNZREQCR_SNZREQEN1       (1 <<  1) /* 02: Snooze Request Enable 1 Enable IRQ1 pin snooze request */
 #define R_SYSTEM_SNZREQCR_SNZREQEN0       (1 <<  0) /* 01: Snooze Request Enable 0 Enable IRQ0 pin snooze request */
+
 /* TO DO */
+
 #define R_SYSTEM_FLSTOP_FLSTPF            (1 <<  4) /* 10: Flash Memory Operation Status Flag */
 #define R_SYSTEM_FLSTOP_FLSTOP            (1 <<  0) /* 01: Selecting ON/OFF of the Flash Memory Operation */
+
 /* TO DO */
+
 #define R_SYSTEM_OPCCR_OPCMTSF            (1 <<  4) /* 10: Operating Power Control Mode Transition Status Flag */
-#define R_SYSTEM_OPCCR_OPCM_SHIFT         (0) /* 01: Operating Power Control Mode Select */
+#define R_SYSTEM_OPCCR_OPCM_SHIFT         (0)       /* 01: Operating Power Control Mode Select */
 #define R_SYSTEM_OPCCR_OPCM_MASK          (0x03)
+
 /* TO DO */
+
 #define R_SYSTEM_SOPCCR_SOPCMTSF          (1 <<  4) /* 10: Sub Operating Power Control Mode Transition Status Flag */
 #define R_SYSTEM_SOPCCR_SOPCM             (1 <<  0) /* 01: Sub Operating Power Control Mode Select */
+
 /* TO DO */
+
 #define R_SYSTEM_SYOCDCR_DBGEN            (1 <<  7) /* 80: Debugger Enable bit */
+
 /* TO DO */
+
 #define R_SYSTEM_LVCMPCR_LVD2E            (1 <<  6) /* 40: Voltage Detection 2 Enable */
 #define R_SYSTEM_LVCMPCR_LVD1E            (1 <<  5) /* 20: Voltage Detection 1 Enable */
+
 /* TO DO */
+
 #define R_SYSTEM_LVDLVLR_LVD2LVL_SHIFT         (5) /* 20: Voltage Detection 2 Level Select (Standard voltage during drop in voltage) */
 #define R_SYSTEM_LVDLVLR_LVD2LVL_MASK          (0x07)
 #define R_SYSTEM_LVDLVLR_LVD1LVL_SHIFT         (0) /* 01: Voltage Detection 1 Level Select (Standard voltage during drop in voltage) */
 #define R_SYSTEM_LVDLVLR_LVD1LVL_MASK          (0x1f)
 #define R_SYSTEM_LVDCR0_SIZE              2
+
 /* TO DO */
+
 #define R_SYSTEM_LVDCR0_RN                (1 <<  7) /* 80: Voltage Monitor Reset Negate Select */
 #define R_SYSTEM_LVDCR0_RI                (1 <<  6) /* 40: Voltage Monitor Circuit Mode Select */
 #define R_SYSTEM_LVDCR0_CMPE              (1 <<  2) /* 04: Voltage Monitor Circuit Comparison Result Output Enable */
 #define R_SYSTEM_LVDCR0_RIE               (1 <<  0) /* 01: Voltage Monitor Interrupt/Reset Enable */
 #define R_SYSTEM_LVDCR1_SIZE              2
+
 /* TO DO */
+
 #define R_SYSTEM_LVDCR1_IRQSEL            (1 <<  2) /* 04: Voltage Monitor Interrupt Type Select */
-#define R_SYSTEM_LVDCR1_IDTSEL_SHIFT      (0) /* 01: Voltage Monitor Interrupt Generation Condition Select */
+#define R_SYSTEM_LVDCR1_IDTSEL_SHIFT      (0)       /* 01: Voltage Monitor Interrupt Generation Condition Select */
 #define R_SYSTEM_LVDCR1_IDTSEL_MASK       (0x03)
 #define R_SYSTEM_LVDSR_SIZE               2
+
 /* TO DO */
+
 #define R_SYSTEM_LVDSR_MON                (1 <<  1) /* 02: Voltage Monitor 1 Signal Monitor Flag */
 #define R_SYSTEM_LVDSR_DET                (1 <<  0) /* 01: Voltage Monitor Voltage Change Detection Flag NOTE: Only 0 can be written to this bit. After writing 0 to this bit, it takes 2 system clock cycles for the bit to be read as 0. */
+
 /* TO DO */
-#define R_SYSTEM_PRCR_PRKEY_SHIFT         (8) /* 100: PRC Key Code */
+
+#define R_SYSTEM_PRCR_PRKEY_SHIFT         (8)       /* 100: PRC Key Code */
 #define R_SYSTEM_PRCR_PRKEY_MASK          (0xff)
+#define R_SYSTEM_PRCR_PRKEY_VALUE         (0xA5)
 #define R_SYSTEM_PRCR_PRC3                (1 <<  3) /* 08: Protect Bit 3 */
 #define R_SYSTEM_PRCR_PRC1                (1 <<  1) /* 02: Protect Bit 1 */
 #define R_SYSTEM_PRCR_PRC0                (1 <<  0) /* 01: Protect Bit 0 */
+
 /* TO DO */
+
 #define R_SYSTEM_RSTSR0_LVD2RF            (1 <<  3) /* 08: Voltage Monitor 2 Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR0_LVD1RF            (1 <<  2) /* 04: Voltage Monitor 1 Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR0_LVD0RF            (1 <<  1) /* 02: Voltage Monitor 0 Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR0_PORF              (1 <<  0) /* 01: Power-On Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
+
 /* TO DO */
+
 #define R_SYSTEM_RSTSR2_CWSF              (1 <<  0) /* 01: Cold/Warm Start Determination Flag Note: Only 1 can be written to set the flag. */
+
 /* TO DO */
+
 #define R_SYSTEM_RSTSR1_SPERF             (1 << 12) /* 1000: SP Error Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR1_BUSMRF            (1 << 11) /* 800: Bus Master MPU Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR1_BUSSRF            (1 << 10) /* 400: Bus Slave MPU Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
@@ -522,10 +559,11 @@
 #define R_SYSTEM_RSTSR1_SWRF              (1 <<  2) /* 04: Software Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR1_WDTRF             (1 <<  1) /* 02: Watchdog Timer Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR1_IWDTRF            (1 <<  0) /* 01: Independent Watchdog Timer Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
+
 /* TO DO */
+
 #define R_SYSTEM_BKRACR_BKRACS_SHIFT            (0) /* 01: Backup Register Access Control Register */
 #define R_SYSTEM_BKRACR_BKRACS_MASK            (0x07)
-
 
 /****************************************************************************
  * Public Types

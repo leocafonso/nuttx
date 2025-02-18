@@ -64,7 +64,8 @@
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
-void ra_attach_icu(elc_event_t event, uint8_t int_num)
+
+void ra_attach_icu(uint8_t event, uint8_t int_num)
 {
   putreg32(event, R_ICU_IELSR(int_num - RA_IRQ_FIRST));
 }

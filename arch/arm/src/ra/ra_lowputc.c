@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/sam34/sam_lowputc.c
+ * arch/arm/src/ra/ra_lowputc.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -28,6 +28,7 @@
 
 #include <nuttx/irq.h>
 #include <nuttx/arch.h>
+#include <nuttx/spinlock.h>
 
 #include "arm_internal.h"
 #include "ra_lowputc.h"
@@ -37,33 +38,35 @@
 #include "hardware/ra_system.h"
 
 /* The board.h file may redefine pin configurations defined in ra_pinmap.h */
+
 #include <arch/board/board.h>
 
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
+
 /* Is there a serial console?  It could be on SCI0-1 or USART0-3 */
 
 #if defined(CONFIG_SCI0_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI0_UART)
 #undef CONFIG_SCI1_SERIAL_CONSOLE
 #undef CONFIG_SCI2_SERIAL_CONSOLE
 #undef CONFIG_SCI9_SERIAL_CONSOLE
-#define HAVE_CONSOLE 1
+#define HAVE_CONSOLE    1
 #elif defined(CONFIG_SCI1_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI1_UART)
 #undef CONFIG_SCI0_SERIAL_CONSOLE
 #undef CONFIG_SCI2_SERIAL_CONSOLE
 #undef CONFIG_SCI9_SERIAL_CONSOLE
-#define HAVE_CONSOLE 1
+#define HAVE_CONSOLE    1
 #elif defined(CONFIG_SCI2_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI2_UART)
 #undef CONFIG_SCI0_SERIAL_CONSOLE
 #undef CONFIG_SCI1_SERIAL_CONSOLE
 #undef CONFIG_SCI9_SERIAL_CONSOLE
-#define HAVE_CONSOLE 1
+#define HAVE_CONSOLE    1
 #elif defined(CONFIG_SCI9_SERIAL_CONSOLE) && defined(CONFIG_RA_SCI9_UART)
 #undef CONFIG_SCI0_SERIAL_CONSOLE
 #undef CONFIG_SCI1_SERIAL_CONSOLE
 #undef CONFIG_SCI2_SERIAL_CONSOLE
-#define HAVE_CONSOLE 1
+#define HAVE_CONSOLE    1
 #else
 #ifndef CONFIG_NO_SERIAL_CONSOLE
 #warning "No valid CONFIG_USARTn_SERIAL_CONSOLE Setting"
@@ -114,7 +117,6 @@
 #  endif
 
 /* Configuration ************************************************************/
-#define BSP_PRV_PRCR_KEY                        (0xA500U)
 
 /****************************************************************************
  * Private Types
@@ -131,6 +133,9 @@
 /****************************************************************************
  * Private Data
  ****************************************************************************/
+#ifdef HAVE_CONSOLE
+static spinlock_t g_ra_lowputc_lock = SP_UNLOCKED;
+#endif
 
 /****************************************************************************
  * Private Functions
@@ -154,24 +159,28 @@ void arm_lowputc(char ch)
   irqstate_t flags;
   for (; ; )
     {
+      while ((getreg8(RA_CONSOLE_BASE + R_SCI_SSR_OFFSET)
+        & R_SCI_SSR_TEND) == 0)
+        {
+        }
 
-      while ((getreg8(RA_CONSOLE_BASE+ R_SCI_SSR_OFFSET) & R_SCI_SSR_TEND) == 0);
+      /* Disable interrupts so that the test and the transmission are
+       * atomic.
+       */
 
-      // /* Disable interrupts so that the test and the transmission are
-      //  * atomic.
-      //  */
-      flags = spin_lock_irqsave(NULL);
-      if ((getreg8(RA_CONSOLE_BASE + R_SCI_SSR_OFFSET) & R_SCI_SSR_TEND)  == R_SCI_SSR_TEND)
+      flags = spin_lock_irqsave(&g_ra_lowputc_lock);
+      if ((getreg8(RA_CONSOLE_BASE + R_SCI_SSR_OFFSET)
+        & R_SCI_SSR_TEND)  == R_SCI_SSR_TEND)
         {
           /* Send the character */
 
           putreg8((uint32_t)ch, RA_CONSOLE_BASE + R_SCI_TDR_OFFSET);
 
-          spin_unlock_irqrestore(NULL, flags);
+          spin_unlock_irqrestore(&g_ra_lowputc_lock, flags);
           return;
         }
 
-      spin_unlock_irqrestore(NULL, flags);
+      spin_unlock_irqrestore(&g_ra_lowputc_lock, flags);
     }
 #endif
 }
@@ -184,21 +193,11 @@ void arm_lowputc(char ch)
  *
  ****************************************************************************/
 
-int up_putc(int ch)
+void up_putc(int ch)
 {
 #ifdef HAVE_CONSOLE
-  /* Check for LF */
-
-  if (ch == '\n')
-    {
-      /* Add CR */
-
-      arm_lowputc('\r');
-    }
-
   arm_lowputc(ch);
 #endif
-  return ch;
 }
 
 /****************************************************************************
@@ -214,10 +213,6 @@ int up_putc(int ch)
 void ra_lowsetup(void)
 {
   uint32_t regval;
-  regval = R_PMISC_PWPR_PFSWE;
-  putreg8(0, R_PMISC_PWPR);
-  putreg8(regval, R_PMISC_PWPR);
-  regval = (0x4 & R_PFS_PSEL_MASK) << R_PFS_PSEL_SHIFT | R_PFS_PMR;
 
 #if defined(CONFIG_RA_SCI0_UART)
   ra_configgpio(GPIO_SCI0_RX);
@@ -233,20 +228,15 @@ void ra_lowsetup(void)
   ra_configgpio(GPIO_SCI9_TX);
 #endif
 
-  regval = R_PMISC_PWPR_B0WI;
-  putreg8(0, R_PMISC_PWPR);
-  putreg8(regval, R_PMISC_PWPR);
-
-  putreg16((BSP_PRV_PRCR_KEY | R_SYSTEM_PRCR_PRC1), R_SYSTEM_PRCR);
+  putreg16((R_SYSTEM_PRCR_PRKEY_VALUE | R_SYSTEM_PRCR_PRC1), R_SYSTEM_PRCR);
   modifyreg32(R_MSTP_MSTPCRB, RA_CONSOLE_MTSP, 0);
-  putreg16(BSP_PRV_PRCR_KEY, R_SYSTEM_PRCR);
+  putreg16(R_SYSTEM_PRCR_PRKEY_VALUE, R_SYSTEM_PRCR);
 
   regval = 0;
   putreg8(regval, RA_CONSOLE_BASE + R_SCI_SCR_OFFSET);
 
-  regval  = 8;
+  regval = 8;
   putreg8(regval, RA_CONSOLE_BASE + R_SCI_BRR_OFFSET);
-
 
   regval = (R_SCI_SCR_TE | R_SCI_SCR_RE);
   putreg8(regval, RA_CONSOLE_BASE + R_SCI_SCR_OFFSET);

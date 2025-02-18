@@ -1,5 +1,7 @@
 /****************************************************************************
- * arch/arm/src/ra/ra_gpio.h
+ * boards/arm/ra/arduino-r4-minima/src/ra4m1_userleds.c
+ *
+ * SPDX-License-Identifier: Apache-2.0
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,9 +20,6 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA_GPIO_H
-#define __ARCH_ARM_SRC_RA_GPIO_H
-
 /****************************************************************************
  * Included Files
  ****************************************************************************/
@@ -29,73 +28,72 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <debug.h>
 
 #include "chip.h"
-#include "hardware/ra_gpio.h"
-#include "hardware/ra_pinmap.h"
+#include "ra_gpio.h"
+#include "arduino-r4-minima.h"
+
+#include <arch/board/board.h>
+
+#ifndef CONFIG_ARCH_LEDS
 
 /****************************************************************************
- * Pre-processor Definitions
+ * Public Functions
  ****************************************************************************/
 
 /****************************************************************************
- * Public Function Prototypes
+ * Name: board_userled_initialize
  ****************************************************************************/
 
-#ifndef __ASSEMBLY__
-
-#undef EXTERN
-#if defined(__cplusplus)
-#define EXTERN extern "C"
-extern "C"
+uint32_t board_userled_initialize(void)
 {
-#else
-#define EXTERN extern
-#endif
+  /* Configure LED1-2 GPIOs for output */
 
-/* Must be big enough to hold the 32-bit encoding */
-
-typedef struct gpio_pinset
-{
-    uint32_t port;
-    uint32_t pin;
-    uint32_t cfg;
-}gpio_pinset_t;
-
-/****************************************************************************
- * Name: ra_configgpio
- *
- * Description:
- *   Configure a GPIO pin based on bit-encoded description of the pin.
- *
- ****************************************************************************/
-
-void ra_configgpio(gpio_pinset_t cfgset);
-
-/****************************************************************************
- * Name: ra_gpiowrite
- *
- * Description:
- *   Write one or zero to the selected GPIO pin
- *
- ****************************************************************************/
-
-void ra_gpiowrite(gpio_pinset_t pinset, bool value);
-
-/****************************************************************************
- * Name: ra_gpioread
- *
- * Description:
- *   Read one or zero from the selected GPIO pin
- *
- ****************************************************************************/
-
-bool ra_gpioread(gpio_pinset_t pinset);
-
-#undef EXTERN
-#if defined(__cplusplus)
+  ra_configgpio(GPIO_RX_LED);
+  ra_configgpio(GPIO_TX_LED);
+  return BOARD_NLEDS;
 }
-#endif
 
-#endif /* __ASSEMBLY__ */
-#endif /* __ARCH_ARM_SRC_RA_GPIO_H */
+/****************************************************************************
+ * Name: board_userled
+ ****************************************************************************/
+
+void board_userled(int led, bool ledon)
+{
+  gpio_pinset_t ledcfg;
+
+  if (led == BOARD_LED_RX)
+    {
+      ledcfg = GPIO_RX_LED;
+      ledon = !ledon;
+    }
+  else if (led == BOARD_LED_TX)
+    {
+      ledcfg = GPIO_TX_LED;
+      ledon = !ledon;
+    }
+  else
+    {
+      return;
+    }
+
+  ra_gpiowrite(ledcfg, ledon);
+}
+
+/****************************************************************************
+ * Name: board_userled_all
+ ****************************************************************************/
+
+void board_userled_all(uint32_t ledset)
+{
+  bool ledon;
+
+  ledon = ((ledset & BOARD_LED_RX_BIT) != 0);
+  ra_gpiowrite(GPIO_RX_LED, ledon);
+
+  ledon = ((ledset & BOARD_LED_TX_BIT) != 0);
+  ra_gpiowrite(GPIO_TX_LED, ledon);
+}
+
+#endif /* !CONFIG_ARCH_LEDS */
