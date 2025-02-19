@@ -33,64 +33,65 @@
  ****************************************************************************/
 
 /* Register Offsets *********************************************************/
+
 #define R_SYSTEM_VBTCR1_OFFSET            0x041f  /* VBATT Control Register 1 (8-bits) */
 #define R_SYSTEM_VBTCR2_OFFSET            0x04b0  /* VBATT Control Register 2 (8-bits) */
 #define R_SYSTEM_VBTSR_OFFSET             0x04b1  /* VBATT Status Register (8-bits) */
-#define R_SYSTEM_VBTCMPCR_OFFSET          0x04b2
-#define R_SYSTEM_VBTLVDICR_OFFSET         0x04b4
-#define R_SYSTEM_VBTWCTLR_OFFSET          0x04b6
-#define R_SYSTEM_VBTWCH0OTSR_OFFSET       0x04b8
-#define R_SYSTEM_VBTWCH1OTSR_OFFSET       0x04b9
-#define R_SYSTEM_VBTWCH2OTSR_OFFSET       0x04ba
-#define R_SYSTEM_VBTICTLR_OFFSET          0x04bb
-#define R_SYSTEM_VBTOCTLR_OFFSET          0x04bc
-#define R_SYSTEM_VBTWTER_OFFSET           0x04bd
-#define R_SYSTEM_VBTWEGR_OFFSET           0x04be
-#define R_SYSTEM_VBTWFR_OFFSET            0x04bf
-#define R_SYSTEM_VBTBKR_OFFSET            0x0500
+#define R_SYSTEM_VBTCMPCR_OFFSET          0x04b2  /* VBATT Comparator Control Register (8-bits) */
+#define R_SYSTEM_VBTLVDICR_OFFSET         0x04b4  /* VBATT Pin Low Voltage Detect Interrupt Control Register (8-bits) */
+#define R_SYSTEM_VBTWCTLR_OFFSET          0x04b6  /* VBATT Wakeup Function Control Register (8-bits) */
+#define R_SYSTEM_VBTWCH0OTSR_OFFSET       0x04b8  /* VBATT Wakeup I/O 0 Output Trigger Select Register (8-bits) */
+#define R_SYSTEM_VBTWCH1OTSR_OFFSET       0x04b9  /* VBATT Wakeup I/O 1 Output Trigger Select Register (8-bits) */
+#define R_SYSTEM_VBTWCH2OTSR_OFFSET       0x04ba  /* VBATT Wakeup I/O 2 Output Trigger Select Register (8-bits) */
+#define R_SYSTEM_VBTICTLR_OFFSET          0x04bb  /* VBATT Input Control Register (8-bits) */
+#define R_SYSTEM_VBTOCTLR_OFFSET          0x04bc  /* VBATT Output Control Register (8-bits) */
+#define R_SYSTEM_VBTWTER_OFFSET           0x04bd  /* VBATT Wakeup Trigger Source Enable Register (8-bits) */
+#define R_SYSTEM_VBTWEGR_OFFSET           0x04be  /* VBATT Wakeup Trigger Source Edge Register (8-bits) */
+#define R_SYSTEM_VBTWFR_OFFSET            0x04bf  /* VBATT Wakeup Trigger Source Flag Register (8-bits) */
+#define R_SYSTEM_VBTBKR_OFFSET            0x0500  /* VBATT Backup Register (8-bits) */
 #define R_SYSTEM_SCKDIVCR_OFFSET          0x0020  /* System Clock Division Control Register (32-bits) */
 #define R_SYSTEM_SCKSCR_OFFSET            0x0026  /* System Clock Source Control Register (8-bits) */
-#define R_SYSTEM_PLLCR_OFFSET             0x002a
-#define R_SYSTEM_PLLCCR2_OFFSET           0x002b
-#define R_SYSTEM_MEMWAIT_OFFSET           0x0031
-#define R_SYSTEM_MOSCCR_OFFSET            0x0032
-#define R_SYSTEM_HOCOCR_OFFSET            0x0036
-#define R_SYSTEM_MOCOCR_OFFSET            0x0038
-#define R_SYSTEM_SOSCCR_OFFSET            0x0480
-#define R_SYSTEM_LOCOCR_OFFSET            0x0490
-#define R_SYSTEM_OSCSF_OFFSET             0x003c
-#define R_SYSTEM_CKOCR_OFFSET             0x003e
-#define R_SYSTEM_TRCKCR_OFFSET            0x003f
-#define R_SYSTEM_OSTDCR_OFFSET            0x0040
-#define R_SYSTEM_OSTDSR_OFFSET            0x0041
-#define R_SYSTEM_SLCDSCKCR_OFFSET         0x0050
-#define R_SYSTEM_MOCOUTCR_OFFSET          0x0061
-#define R_SYSTEM_HOCOUTCR_OFFSET          0x0062
-#define R_SYSTEM_MOSCWTCR_OFFSET          0x00a2
-#define R_SYSTEM_HOCOWTCR_OFFSET          0x00a5
-#define R_SYSTEM_USBCKCR_OFFSET           0x00d0
-#define R_SYSTEM_MOMCR_OFFSET             0x0413
-#define R_SYSTEM_SOMCR_OFFSET             0x0481
-#define R_SYSTEM_LOCOUTCR_OFFSET          0x0492
-#define R_SYSTEM_SBYCR_OFFSET             0x000c
-#define R_SYSTEM_MSTPCRA_OFFSET           0x001c
-#define R_SYSTEM_SNZCR_OFFSET             0x0092
-#define R_SYSTEM_SNZEDCR_OFFSET           0x0094
-#define R_SYSTEM_SNZREQCR_OFFSET          0x0098
-#define R_SYSTEM_FLSTOP_OFFSET            0x009e
-#define R_SYSTEM_OPCCR_OFFSET             0x00a0
-#define R_SYSTEM_SOPCCR_OFFSET            0x00aa
-#define R_SYSTEM_SYOCDCR_OFFSET           0x040e
-#define R_SYSTEM_LVCMPCR_OFFSET           0x0417
-#define R_SYSTEM_LVDLVLR_OFFSET           0x0418
-#define R_SYSTEM_LVDCR0_OFFSET            0x041a
-#define R_SYSTEM_LVDCR1_OFFSET            0x00e0
-#define R_SYSTEM_LVDSR_OFFSET             0x00e1
-#define R_SYSTEM_PRCR_OFFSET              0x03fe
-#define R_SYSTEM_RSTSR0_OFFSET            0x0410
-#define R_SYSTEM_RSTSR2_OFFSET            0x0411
-#define R_SYSTEM_RSTSR1_OFFSET            0x00c0
-#define R_SYSTEM_BKRACR_OFFSET            0x00c6
+#define R_SYSTEM_PLLCR_OFFSET             0x002a  /* PLL Control Register (8-bits) */
+#define R_SYSTEM_PLLCCR2_OFFSET           0x002b  /* PLL Clock Control Register 2 (8-bits) */
+#define R_SYSTEM_MEMWAIT_OFFSET           0x0031  /* Memory Wait Cycle Control Register (8-bits) */
+#define R_SYSTEM_MOSCCR_OFFSET            0x0032  /* Main Clock Oscillator Control Register (8-bits) */
+#define R_SYSTEM_HOCOCR_OFFSET            0x0036  /* High-Speed On-Chip Oscillator Control Register (8-bits) */
+#define R_SYSTEM_MOCOCR_OFFSET            0x0038  /* Middle-Speed On-Chip Oscillator Control Register (8-bits) */
+#define R_SYSTEM_SOSCCR_OFFSET            0x0480  /* Sub-Clock Oscillator Control Register (8-bits) */
+#define R_SYSTEM_LOCOCR_OFFSET            0x0490  /* Low-Speed On-Chip Oscillator Control Register (8-bits) */
+#define R_SYSTEM_OSCSF_OFFSET             0x003c  /* Oscillation Stabilization Flag Register (8-bits) */
+#define R_SYSTEM_CKOCR_OFFSET             0x003e  /* Clock Out Control Register (8-bits) */
+#define R_SYSTEM_TRCKCR_OFFSET            0x003f  /* Trace Clock Control Register (8-bits) */
+#define R_SYSTEM_OSTDCR_OFFSET            0x0040  /* Oscillation Stop Detection Control Register (8-bits) */
+#define R_SYSTEM_OSTDSR_OFFSET            0x0041  /* Oscillation Stop Detection Status Register (8-bits) */
+#define R_SYSTEM_SLCDSCKCR_OFFSET         0x0050  /* Segment LCD Source Clock Control Register (8-bits) */
+#define R_SYSTEM_MOCOUTCR_OFFSET          0x0061  /* MOCO User Trimming Control Register (8-bits) */
+#define R_SYSTEM_HOCOUTCR_OFFSET          0x0062  /* HOCO User Trimming Control Register (8-bits) */
+#define R_SYSTEM_MOSCWTCR_OFFSET          0x00a2  /* Main Clock Oscillator Wait Control Register (8-bits) */
+#define R_SYSTEM_HOCOWTCR_OFFSET          0x00a5  /* High-Speed On-Chip Oscillator Wait Control Register (8-bits) */
+#define R_SYSTEM_USBCKCR_OFFSET           0x00d0  /* USB Clock Control Register (8-bits) */
+#define R_SYSTEM_MOMCR_OFFSET             0x0413  /* Main Clock Oscillator Mode Oscillation Control Register (8-bits) */
+#define R_SYSTEM_SOMCR_OFFSET             0x0481  /* Sub-Clock Oscillator Mode Control Register (8-bits) */
+#define R_SYSTEM_LOCOUTCR_OFFSET          0x0492  /* LOCO User Trimming Control Register (8-bits) */
+#define R_SYSTEM_SBYCR_OFFSET             0x000c  /* Standby Control Register (16-bits) */
+#define R_SYSTEM_MSTPCRA_OFFSET           0x001c  /* Module Stop Control Register A (32-bits) */
+#define R_SYSTEM_SNZCR_OFFSET             0x0092  /* Snooze Control Register (8-bits) */
+#define R_SYSTEM_SNZEDCR_OFFSET           0x0094  /* Snooze End Control Register (8-bits) */
+#define R_SYSTEM_SNZREQCR_OFFSET          0x0098  /* Snooze Request Control Register (32-bits) */
+#define R_SYSTEM_FLSTOP_OFFSET            0x009e  /* Flash Operation Control Register (8-bits) */
+#define R_SYSTEM_OPCCR_OFFSET             0x00a0  /* Operating Power Control Register (8-bits) */
+#define R_SYSTEM_SOPCCR_OFFSET            0x00aa  /* Sub Operating Power Control Register (8-bits) */
+#define R_SYSTEM_SYOCDCR_OFFSET           0x040e  /* System Control OCD Control Register (8-bits) */
+#define R_SYSTEM_LVCMPCR_OFFSET           0x0417  /* Voltage Monitor Circuit Control Register (8-bits) */
+#define R_SYSTEM_LVDLVLR_OFFSET           0x0418  /* Voltage Detection Level Select Register (8-bits) */
+#define R_SYSTEM_LVDCR0_OFFSET            0x041a  /* Voltage Monitor Circuit Control Register 0 (8-bits) */
+#define R_SYSTEM_LVDCR1_OFFSET            0x00e0  /* Voltage Monitor Circuit Control Register 1 (8-bits) */
+#define R_SYSTEM_LVDSR_OFFSET             0x00e1  /* Voltage Monitor Circuit Status Register (8-bits) */
+#define R_SYSTEM_PRCR_OFFSET              0x03fe  /* Protect Register (16-bits) */
+#define R_SYSTEM_RSTSR0_OFFSET            0x0410  /* Reset Status Register 0 (8-bits) */
+#define R_SYSTEM_RSTSR2_OFFSET            0x0411  /* Reset Status Register 2 (8-bits) */
+#define R_SYSTEM_RSTSR1_OFFSET            0x00c0  /* Reset Status Register 1 (16-bits) */
+#define R_SYSTEM_BKRACR_OFFSET            0x00c6  /* Backup Register Access Control Register (8-bits) */
 
 /* Register Addresses *******************************************************/
 
@@ -165,53 +166,53 @@
 #define R_SYSTEM_VBTCR2_VBTLVDLVL_MASK    (3)
 #define R_SYSTEM_VBTCR2_VBTLVDEN          (1 <<  4) /* 10: VBATT Pin Low Voltage Detect Enable Bit */
 
-/* TO DO */
+/* VBATT Status Register (8-bits) */
 
 #define R_SYSTEM_VBTSR_VBTRVLD            (1 <<  4) /* 10: VBATT_R Valid */
 #define R_SYSTEM_VBTSR_VBTBLDF            (1 <<  1) /* 02: VBATT Battery Low voltage Detect Flag */
 #define R_SYSTEM_VBTSR_VBTRDF             (1 <<  0) /* 01: VBAT_R Reset Detect Flag */
 
-/* TO DO */
+/* VBATT Comparator Control Register (8-bits) */
 
 #define R_SYSTEM_VBTLVDICR_VBTLVDISEL     (1 <<  1) /* 02: Pin Low Voltage Detect Interrupt Select bit */
 #define R_SYSTEM_VBTLVDICR_VBTLVDIE       (1 <<  0) /* 01: VBATT Pin Low Voltage Detect Interrupt Enable bit */
 
-/* TO DO */
+/* VBATT Pin Low Voltage Detect Interrupt Control Register (8-bits) */
 
 #define R_SYSTEM_VBTCMPCR_VBTCMPE         (1 <<  0) /* 01: VBATT pin low voltage detect circuit output enable */
 
-/* TO DO */
+/* VBATT Wakeup Function Control Register (8-bits) */
 
 #define R_SYSTEM_VBTWCTLR_VWEN            (1 <<  0) /* 01: VBATT wakeup enable */
 
-/* TO DO */
+/* VBATT Wakeup I/O 0 Output Trigger Select Register (8-bits) */
 
 #define R_SYSTEM_VBTWCH0OTSR_CH0VRTCATE   (1 <<  4) /* 10: VBATWIO0 Output RTC Alarm Signal Enable */
 #define R_SYSTEM_VBTWCH0OTSR_CH0VRTCTE    (1 <<  3) /* 08: VBATWIO0 Output RTC Periodic Signal Enable */
 #define R_SYSTEM_VBTWCH0OTSR_CH0VCH2TE    (1 <<  2) /* 04: VBATWIO0 Output VBATWIO2 Trigger Enable */
 #define R_SYSTEM_VBTWCH0OTSR_CH0VCH1TE    (1 <<  1) /* 02: VBATWIO0 Output VBATWIO1 Trigger Enable */
 
-/* TO DO */
+/* VBATT Wakeup I/O 1 Output Trigger Select Register (8-bits) */
 
 #define R_SYSTEM_VBTWCH1OTSR_CH1VRTCATE   (1 <<  4) /* 10: VBATWIO1 Output RTC Alarm Signal Enable */
 #define R_SYSTEM_VBTWCH1OTSR_CH1VRTCTE    (1 <<  3) /* 08: VBATWIO1 Output RTC Periodic Signal Enable */
 #define R_SYSTEM_VBTWCH1OTSR_CH1VCH2TE    (1 <<  2) /* 04: VBATWIO1 Output VBATWIO2 Trigger Enable */
 #define R_SYSTEM_VBTWCH1OTSR_CH1VCH0TE    (1 <<  0) /* 01: VBATWIO1 Output VBATWIO0 Trigger Enable */
 
-/* TO DO */
+/* VBATT Wakeup I/O 2 Output Trigger Select Register (8-bits) */
 
 #define R_SYSTEM_VBTWCH2OTSR_CH2VRTCATE   (1 <<  4) /* 10: VBATWIO2 Output RTC Alarm Signal Enable */
 #define R_SYSTEM_VBTWCH2OTSR_CH2VRTCTE    (1 <<  3) /* 08: VBATWIO2 Output RTC Periodic Signal Enable */
 #define R_SYSTEM_VBTWCH2OTSR_CH2VCH1TE    (1 <<  1) /* 02: VBATWIO2 Output VBATWIO1 Trigger Enable */
 #define R_SYSTEM_VBTWCH2OTSR_CH2VCH0TE    (1 <<  0) /* 01: VBATWIO2 Output VBATWIO0 Trigger Enable */
 
-/* TO DO */
+/* VBATT Input Control Register (8-bits) */
 
 #define R_SYSTEM_VBTICTLR_VCH2INEN        (1 <<  2) /* 04: VBATT Wakeup I/O 2 Input Enable */
 #define R_SYSTEM_VBTICTLR_VCH1INEN        (1 <<  1) /* 02: VBATT Wakeup I/O 1 Input Enable */
 #define R_SYSTEM_VBTICTLR_VCH0INEN        (1 <<  0) /* 01: VBATT Wakeup I/O 0 Input Enable */
 
-/* TO DO */
+/* VBATT Output Control Register (8-bits) */
 
 #define R_SYSTEM_VBTOCTLR_VOUT2LSEL       (1 <<  5) /* 20: VBATT Wakeup I/O 2 Output Level Selection */
 #define R_SYSTEM_VBTOCTLR_VOUT1LSEL       (1 <<  4) /* 10: VBATT Wakeup I/O 1 Output Level Selection */
@@ -220,7 +221,7 @@
 #define R_SYSTEM_VBTOCTLR_VCH1OEN         (1 <<  1) /* 02: VBATT Wakeup I/O 1 Output Enable */
 #define R_SYSTEM_VBTOCTLR_VCH0OEN         (1 <<  0) /* 01: VBATT Wakeup I/O 0 Output Enable */
 
-/* TO DO */
+/* VBATT Wakeup Trigger Source Enable Register (8-bits) */
 
 #define R_SYSTEM_VBTWTER_VRTCAE           (1 <<  4) /* 10: RTC Alarm Signal Enable */
 #define R_SYSTEM_VBTWTER_VRTCIE           (1 <<  3) /* 08: RTC Periodic Signal Enable */
@@ -228,13 +229,13 @@
 #define R_SYSTEM_VBTWTER_VCH1E            (1 <<  1) /* 02: VBATWIO1 Pin Enable */
 #define R_SYSTEM_VBTWTER_VCH0E            (1 <<  0) /* 01: VBATWIO0 Pin Enable */
 
-/* TO DO */
+/* VBATT Wakeup Trigger Source Edge Register (8-bits) */
 
 #define R_SYSTEM_VBTWEGR_VCH2EG           (1 <<  2) /* 04: VBATWIO2 Wakeup Trigger Source Edge Select */
 #define R_SYSTEM_VBTWEGR_VCH1EG           (1 <<  1) /* 02: VBATWIO1 Wakeup Trigger Source Edge Select */
 #define R_SYSTEM_VBTWEGR_VCH0EG           (1 <<  0) /* 01: VBATWIO0 Wakeup Trigger Source Edge Select */
 
-/* TO DO */
+/* VBATT Wakeup Trigger Source Flag Register (8-bits) */
 
 #define R_SYSTEM_VBTWFR_VRTCAF            (1 <<  4) /* 10: VBATT RTC-Alarm Wakeup Trigger Flag */
 #define R_SYSTEM_VBTWFR_VRTCIF            (1 <<  3) /* 08: VBATT RTC-Interval Wakeup Trigger Flag */
@@ -242,7 +243,7 @@
 #define R_SYSTEM_VBTWFR_VCH1F             (1 <<  1) /* 02: VBATWIO1 Wakeup Trigger Flag */
 #define R_SYSTEM_VBTWFR_VCH0F             (1 <<  0) /* 01: VBATWIO0 Wakeup Trigger Flag */
 
-/* TO DO */
+/* VBATT Backup Register (8-bits) */
 
 #define R_SYSTEM_VBTBKR_SIZE              512
 #define R_SYSTEM_VBTBKR_VBTBKR            (8 <<  0) /* 01: VBTBKR is a 512-byte readable/writable register to store data powered by VBATT. The value of this register is retained even when VCC is not powered but VBATT is powered. VBTBKR is initialized by VBATT selected voltage power-on-reset. */
@@ -316,11 +317,11 @@
 # define R_SYSTEM_SCKSCR_CKSEL_SOSC       (4 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
 # define R_SYSTEM_SCKSCR_CKSEL_PLL        (5 << R_SYSTEM_SCKSCR_CKSEL_SHIFT)
 
-/* TO DO */
+/* PLL Control Register (8-bits) */
 
 #define R_SYSTEM_PLLCR_PLLSTP             (1 <<  0) /* 01: PLL Stop Control */
 
-/* TO DO */
+/* PLL Clock Control Register 2 (8-bits) */
 
 #define R_SYSTEM_PLLCCR2                  (R_SYSTEM_BASE + R_SYSTEM_PLLCCR2_OFFSET)
 #define R_SYSTEM_PLLCCR2_PLODIV_SHIFT     (6) /* 40: PLL Output Frequency Division Ratio Select */
@@ -328,37 +329,37 @@
 #define R_SYSTEM_PLLCCR2_PLLMUL_SHIFT     (0) /* 01: PLL Frequency Multiplication Factor Select */
 #define R_SYSTEM_PLLCCR2_PLLMUL_MASK      (0x1f)
 
-/* TO DO */
+/* Memory Wait Cycle Control Register (8-bits) */
 
 #define R_SYSTEM_MEMWAIT_MEMWAIT          (1 <<  0) /* 01: Memory Wait Cycle Select Note: Writing 0 to the MEMWAIT is prohibited when SCKDIVCR.ICK selects division by 1 and SCKSCR.CKSEL[2:0] bits select the system clock source that is faster than 32 MHz (ICLK > 32 MHz). */
 
-/* TO DO */
+/* Main Clock Oscillator Control Register (8-bits) */
 
 #define R_SYSTEM_MOSCCR_MOSTP             (1 <<  0) /* 01: Main Clock Oscillator Stop Note: MOMCR register must be set before setting MOSTP to 0. */
 
-/* TO DO */
+/* High-Speed On-Chip Oscillator Control Register (8-bits) */
 
 #define R_SYSTEM_HOCOCR_HCSTP             (1 <<  0) /* 01: HOCO Stop */
 
-/* TO DO */
+/* Middle-Speed On-Chip Oscillator Control Register (8-bits) */
 
 #define R_SYSTEM_MOCOCR_MCSTP             (1 <<  0) /* 01: MOCO Stop */
 
-/* TO DO */
+/* Sub-Clock Oscillator Control Register (8-bits) */
 
 #define R_SYSTEM_SOSCCR_SOSTP             (1 <<  0) /* 01: Sub-Clock Oscillator Stop */
 
-/* TO DO */
+/* Low-Speed On-Chip Oscillator Control Register (8-bits) */
 
 #define R_SYSTEM_LOCOCR_LCSTP             (1 <<  0) /* 01: LOCO Stop */
 
-/* TO DO */
+/* Oscillation Stabilization Flag Register (8-bits) */
 
 #define R_SYSTEM_OSCSF_PLLSF              (1 <<  5) /* 20: PLL Clock Oscillation Stabilization Flag */
 #define R_SYSTEM_OSCSF_MOSCSF             (1 <<  3) /* 08: Main Clock Oscillation Stabilization Flag */
 #define R_SYSTEM_OSCSF_HOCOSF             (1 <<  0) /* 01: HOCO Clock Oscillation Stabilization Flag NOTE: The HOCOSF bit value after a reset is 1 when the OFS1.HOCOEN bit is 0. It is 0 when the OFS1.HOCOEN bit is 1. */
 
-/* TO DO */
+/* Clock Out Control Register (8-bits) */
 
 #define R_SYSTEM_CKOCR_CKOEN              (1 <<  7) /* 80: Clock out enable */
 #define R_SYSTEM_CKOCR_CKODIV_SHIFT       (4)       /* 10: Clock out input frequency Division Select */
@@ -366,83 +367,83 @@
 #define R_SYSTEM_CKOCR_CKOSEL_SHIFT       (0)       /* 01: Clock out source select */
 #define R_SYSTEM_CKOCR_CKOSEL_MASK        (0x07)
 
-/* TO DO */
+/* Trace Clock Control Register (8-bits) */
 
 #define R_SYSTEM_TRCKCR_TRCKEN            (1 <<  7) /* 80: Trace Clock operating enable */
 #define R_SYSTEM_TRCKCR_TRCK              (4 <<  0) /* 01: Trace Clock operating frequency select */
 #define R_SYSTEM_TRCKCR_TRCK_MASK              (0x0f)
 
-/* TO DO */
+/* Oscillation Stop Detection Control Register (8-bits) */
 
 #define R_SYSTEM_OSTDCR_OSTDE             (1 <<  7) /* 80: Oscillation Stop Detection Function Enable */
 #define R_SYSTEM_OSTDCR_OSTDIE            (1 <<  0) /* 01: Oscillation Stop Detection Interrupt Enable */
 
-/* TO DO */
+/* Oscillation Stop Detection Status Register (8-bits) */
 
 #define R_SYSTEM_OSTDSR_OSTDF             (1 <<  0) /* 01: Oscillation Stop Detection Flag */
 
-/* TO DO */
+/* Segment LCD Source Clock Control Register (8-bits) */
 
 #define R_SYSTEM_SLCDSCKCR_LCDSCKEN       (1 <<  7)  /* 80: LCD Source Clock Out Enable */
 #define R_SYSTEM_SLCDSCKCR_LCDSCKSEL_SHIFT       (0) /* 01: LCD Source Clock (LCDSRCCLK) Select */
 #define R_SYSTEM_SLCDSCKCR_LCDSCKSEL_MASK      (0x07)
 
-/* TO DO */
+/* MOCO User Trimming Control Register (8-bits) */
 
 #define R_SYSTEM_MOCOUTCR_MOCOUTRM_SHIFT         (0) /* 01: MOCO User Trimming 1000_0000 : -128 1000_0001 : -127 1000_0010 : -126 . . . 1111_1111 : -1 0000_0000 : Center Code 0000_0001 : +1 . . . 0111_1101 : +125 0111_1110 : +126 0111_1111 : +127 These bits are added to original MOCO trimming bits */
 #define R_SYSTEM_MOCOUTCR_MOCOUTRM_MASK        (0xff)
 
-/* TO DO */
+/* HOCO User Trimming Control Register (8-bits) */
 
 #define R_SYSTEM_HOCOUTCR_HOCOUTRM_SHIFT         (0) /* 01: HOCO User Trimming 1000_0000 : -128 1000_0001 : -127 1000_0010 : -126 . . . 1111_1111 : -1 0000_0000 : Center Code 0000_0001 : +1 . . . 0111_1101 : +125 0111_1110 : +126 0111_1111 : +127 These bits are added to original HOCO trimming bits */
 #define R_SYSTEM_HOCOUTCR_HOCOUTRM_MASK        (0xff)
 
-/* TO DO */
+/* Main Clock Oscillator Wait Control Register (8-bits) */
 
 #define R_SYSTEM_MOSCWTCR_MSTS_SHIFT            (0) /* 01: Main clock oscillator wait time setting */
 #define R_SYSTEM_MOSCWTCR_MSTS_MASK            (0x0f)
 
-/* TO DO */
+/* High-Speed On-Chip Oscillator Wait Control Register (8-bits) */
 
 #define R_SYSTEM_HOCOWTCR_HSTS_SHIFT             (0) /* 01: HOCO wait time setting */
 #define R_SYSTEM_HOCOWTCR_HSTS_MASK            (0x07)
 
-/* TO DO */
+/* USB Clock Control Register (8-bits) */
 
 #define R_SYSTEM_USBCKCR_USBCLKSEL        (1 <<  0) /* 01: USB Clock Source Select */
 
-/* TO DO */
+/* Main Clock Oscillator Mode Oscillation Control Register (8-bits) */
 
 #define R_SYSTEM_MOMCR_MOSEL              (1 <<  6) /* 40: Main Clock Oscillator Switching */
 #define R_SYSTEM_MOMCR_MODRV1             (1 <<  3) /* 08: Main Clock Oscillator Drive Capability 1 Switching */
 
-/* TO DO */
+/* Sub-Clock Oscillator Mode Control Register (8-bits) */
 
 #define R_SYSTEM_SOMCR_SODRV_SHIFT             (0) /* 01: Sub-Clock Oscillator Drive Capability Switching */
 #define R_SYSTEM_SOMCR_SODRV_MASK              (0x03)
 
-/* TO DO */
+/* LOCO User Trimming Control Register (8-bits) */
 
 #define R_SYSTEM_LOCOUTCR_LOCOUTRM_SHIFT       (0) /* 01: LOCO User Trimming 1000_0000 : -128 1000_0001 : -127 1000_0010 : -126 . . . 1111_1111 : -1 0000_0000 : Center Code 0000_0001 : +1 . . . 0111_1101 : +125 0111_1110 : +126 0111_1111 : +127 These bits are added to original LOCO trimming bits */
 #define R_SYSTEM_LOCOUTCR_LOCOUTRM_MASK        (0xff)
 
-/* TO DO */
+/* Standby Control Register (16-bits) */
 
 #define R_SYSTEM_SBYCR_SSBY               (1 << 15) /* 8000: Software Standby */
 
-/* TO DO */
+/* Module Stop Control Register A (32-bits) */
 
 #define R_SYSTEM_MSTPCRA_MSTPA22          (1 << 22) /* 400000: DMA Controller/Data Transfer Controller Module Stop */
 #define R_SYSTEM_MSTPCRA_MSTPA6           (1 <<  6) /* 40: ECCRAM Module Stop */
 #define R_SYSTEM_MSTPCRA_MSTPA0           (1 <<  0) /* 01: RAM0 Module Stop */
 
-/* TO DO */
+/* Snooze Control Register (8-bits) */
 
 #define R_SYSTEM_SNZCR_SNZE               (1 <<  7) /* 80: Snooze Mode Enable */
 #define R_SYSTEM_SNZCR_SNZDTCEN           (1 <<  1) /* 02: DTC Enable in Snooze Mode */
 #define R_SYSTEM_SNZCR_RXDREQEN           (1 <<  0) /* 01: RXD0 Snooze Request Enable NOTE: Do not set to 1 other than in asynchronous mode. */
 
-/* TO DO */
+/* Snooze End Control Register (8-bits) */
 
 #define R_SYSTEM_SNZEDCR_SCI0UMTED        (1 <<  7) /* 80: SCI0 Address Mismatch Snooze End Enable */
 #define R_SYSTEM_SNZEDCR_AD0UMTED         (1 <<  4) /* 10: ADC140 Compare Mismatch Snooze End Enable */
@@ -451,7 +452,7 @@
 #define R_SYSTEM_SNZEDCR_DTCZRED          (1 <<  1) /* 02: Last DTC Transmission Completion Snooze End Enable */
 #define R_SYSTEM_SNZEDCR_AGTUNFED         (1 <<  0) /* 01: AGT1 Underflow Snooze End Enable */
 
-/* TO DO */
+/* Snooze Request Control Register (32-bits) */
 
 #define R_SYSTEM_SNZREQCR_SNZREQEN30      (1 << 30) /* 40000000: Snooze Request Enable 30 Enable AGT1 compare match B snooze request */
 #define R_SYSTEM_SNZREQCR_SNZREQEN29      (1 << 29) /* 20000000: Snooze Request Enable 29 Enable AGT1 compare match A snooze request */
@@ -476,32 +477,32 @@
 #define R_SYSTEM_SNZREQCR_SNZREQEN1       (1 <<  1) /* 02: Snooze Request Enable 1 Enable IRQ1 pin snooze request */
 #define R_SYSTEM_SNZREQCR_SNZREQEN0       (1 <<  0) /* 01: Snooze Request Enable 0 Enable IRQ0 pin snooze request */
 
-/* TO DO */
+/* Flash Operation Control Register (8-bits) */
 
 #define R_SYSTEM_FLSTOP_FLSTPF            (1 <<  4) /* 10: Flash Memory Operation Status Flag */
 #define R_SYSTEM_FLSTOP_FLSTOP            (1 <<  0) /* 01: Selecting ON/OFF of the Flash Memory Operation */
 
-/* TO DO */
+/* Operating Power Control Register (8-bits) */
 
 #define R_SYSTEM_OPCCR_OPCMTSF            (1 <<  4) /* 10: Operating Power Control Mode Transition Status Flag */
 #define R_SYSTEM_OPCCR_OPCM_SHIFT         (0)       /* 01: Operating Power Control Mode Select */
 #define R_SYSTEM_OPCCR_OPCM_MASK          (0x03)
 
-/* TO DO */
+/* Sub Operating Power Control Register (8-bits) */
 
 #define R_SYSTEM_SOPCCR_SOPCMTSF          (1 <<  4) /* 10: Sub Operating Power Control Mode Transition Status Flag */
 #define R_SYSTEM_SOPCCR_SOPCM             (1 <<  0) /* 01: Sub Operating Power Control Mode Select */
 
-/* TO DO */
+/* System Control OCD Control Register (8-bits) */
 
 #define R_SYSTEM_SYOCDCR_DBGEN            (1 <<  7) /* 80: Debugger Enable bit */
 
-/* TO DO */
+/* Voltage Monitor Circuit Control Register (8-bits) */
 
 #define R_SYSTEM_LVCMPCR_LVD2E            (1 <<  6) /* 40: Voltage Detection 2 Enable */
 #define R_SYSTEM_LVCMPCR_LVD1E            (1 <<  5) /* 20: Voltage Detection 1 Enable */
 
-/* TO DO */
+/* Voltage Detection Level Select Register (8-bits) */
 
 #define R_SYSTEM_LVDLVLR_LVD2LVL_SHIFT         (5) /* 20: Voltage Detection 2 Level Select (Standard voltage during drop in voltage) */
 #define R_SYSTEM_LVDLVLR_LVD2LVL_MASK          (0x07)
@@ -509,7 +510,7 @@
 #define R_SYSTEM_LVDLVLR_LVD1LVL_MASK          (0x1f)
 #define R_SYSTEM_LVDCR0_SIZE              2
 
-/* TO DO */
+/* Voltage Monitor Circuit Control Register 0 (8-bits) */
 
 #define R_SYSTEM_LVDCR0_RN                (1 <<  7) /* 80: Voltage Monitor Reset Negate Select */
 #define R_SYSTEM_LVDCR0_RI                (1 <<  6) /* 40: Voltage Monitor Circuit Mode Select */
@@ -517,19 +518,19 @@
 #define R_SYSTEM_LVDCR0_RIE               (1 <<  0) /* 01: Voltage Monitor Interrupt/Reset Enable */
 #define R_SYSTEM_LVDCR1_SIZE              2
 
-/* TO DO */
+/* Voltage Monitor Circuit Control Register 1 (8-bits) */
 
 #define R_SYSTEM_LVDCR1_IRQSEL            (1 <<  2) /* 04: Voltage Monitor Interrupt Type Select */
 #define R_SYSTEM_LVDCR1_IDTSEL_SHIFT      (0)       /* 01: Voltage Monitor Interrupt Generation Condition Select */
 #define R_SYSTEM_LVDCR1_IDTSEL_MASK       (0x03)
 #define R_SYSTEM_LVDSR_SIZE               2
 
-/* TO DO */
+/* Voltage Monitor Circuit Status Register (8-bits) */
 
 #define R_SYSTEM_LVDSR_MON                (1 <<  1) /* 02: Voltage Monitor 1 Signal Monitor Flag */
 #define R_SYSTEM_LVDSR_DET                (1 <<  0) /* 01: Voltage Monitor Voltage Change Detection Flag NOTE: Only 0 can be written to this bit. After writing 0 to this bit, it takes 2 system clock cycles for the bit to be read as 0. */
 
-/* TO DO */
+/* Protect Register (16-bits) */
 
 #define R_SYSTEM_PRCR_PRKEY_SHIFT         (8)       /* 100: PRC Key Code */
 #define R_SYSTEM_PRCR_PRKEY_MASK          (0xff)
@@ -538,18 +539,18 @@
 #define R_SYSTEM_PRCR_PRC1                (1 <<  1) /* 02: Protect Bit 1 */
 #define R_SYSTEM_PRCR_PRC0                (1 <<  0) /* 01: Protect Bit 0 */
 
-/* TO DO */
+/* Reset Status Register 0 (8-bits) */
 
 #define R_SYSTEM_RSTSR0_LVD2RF            (1 <<  3) /* 08: Voltage Monitor 2 Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR0_LVD1RF            (1 <<  2) /* 04: Voltage Monitor 1 Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR0_LVD0RF            (1 <<  1) /* 02: Voltage Monitor 0 Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR0_PORF              (1 <<  0) /* 01: Power-On Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written with 0 after the reset flag is read as 1. */
 
-/* TO DO */
+/* Reset Status Register 2 (8-bits) */
 
 #define R_SYSTEM_RSTSR2_CWSF              (1 <<  0) /* 01: Cold/Warm Start Determination Flag Note: Only 1 can be written to set the flag. */
 
-/* TO DO */
+/* Reset Status Register 1 (16-bits) */
 
 #define R_SYSTEM_RSTSR1_SPERF             (1 << 12) /* 1000: SP Error Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR1_BUSMRF            (1 << 11) /* 800: Bus Master MPU Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
@@ -560,7 +561,7 @@
 #define R_SYSTEM_RSTSR1_WDTRF             (1 <<  1) /* 02: Watchdog Timer Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
 #define R_SYSTEM_RSTSR1_IWDTRF            (1 <<  0) /* 01: Independent Watchdog Timer Reset Detect Flag Note: Only 0 can be written to clear the flag. The reset flag must be written as 0 after the reset flag is read as 1. */
 
-/* TO DO */
+/* Backup Register Access Control Register (8-bits) */
 
 #define R_SYSTEM_BKRACR_BKRACS_SHIFT            (0) /* 01: Backup Register Access Control Register */
 #define R_SYSTEM_BKRACR_BKRACS_MASK            (0x07)

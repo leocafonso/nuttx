@@ -37,12 +37,12 @@
 
 /* This is the canonical configuration:
  *   System Clock source      : HOCO
- *   ICLK(Hz)                 : 32000000
- *   PCLKA(Hz)                : 32000000
- *   PCLKB(Hz)                : 32000000
- *   PCLKC(Hz)                : 32000000
- *   PCLKD(Hz)                : 32000000
- *   FCLK(Hz)                 : 32000000
+ *   ICLK(Hz)                 : 64000000
+ *   PCLKA(Hz)                : 64000000
+ *   PCLKB(Hz)                : 64000000
+ *   PCLKC(Hz)                : 64000000
+ *   PCLKD(Hz)                : 64000000
+ *   FCLK(Hz)                 : 64000000
  *   USBCLK(Hz)               : 0
  */
 
@@ -51,20 +51,20 @@
 #define RA_CKSEL  R_SYSTEM_SCKSCR_CKSEL_HOCO
 
 #define RA_HOCOEN     !R_OFS1_HOCOEN /* Inverted logic to enable */
-#define RA_HOCO_FREQUENCY  R_OFS1_HOCOFRQ1_32MHZ
+#define RA_HOCO_FREQUENCY  R_OFS1_HOCOFRQ1_64MHZ
 
 #define RA_ICK_DIV       R_SYSTEM_SCKDIVCR_ICK_DIV_1
-#define RA_ICLK_FREQUENCY  32000000
+#define RA_ICLK_FREQUENCY  64000000
 #define RA_FCK_DIV       R_SYSTEM_SCKDIVCR_FCK_DIV_1
-#define RA_FCK_FREQUENCY  32000000
+#define RA_FCK_FREQUENCY  64000000
 #define RA_PCKA_DIV      R_SYSTEM_SCKDIVCR_PCKA_DIV_1
-#define RA_PCKA_FREQUENCY  32000000
+#define RA_PCKA_FREQUENCY  64000000
 #define RA_PCKB_DIV      R_SYSTEM_SCKDIVCR_PCKB_DIV_1
-#define RA_PCKB_FREQUENCY  32000000
+#define RA_PCKB_FREQUENCY  64000000
 #define RA_PCKC_DIV      R_SYSTEM_SCKDIVCR_PCKC_DIV_1
-#define RA_PCKC_FREQUENCY  32000000
+#define RA_PCKC_FREQUENCY  64000000
 #define RA_PCKD_DIV      R_SYSTEM_SCKDIVCR_PCKD_DIV_1
-#define RA_PCKD_FREQUENCY  32000000
+#define RA_PCKD_FREQUENCY  64000000
 
 /* Alternate function pin selections */
 
