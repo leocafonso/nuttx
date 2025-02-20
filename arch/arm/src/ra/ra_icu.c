@@ -65,9 +65,32 @@
  * Public Functions
  ****************************************************************************/
 
-void ra_attach_icu(uint8_t event, uint8_t int_num)
+void ra_attach_icu(void)
 {
-  putreg32(event, R_ICU_IELSR(int_num - RA_IRQ_FIRST));
+#ifdef CONFIG_RA_SCI0_UART
+  putreg32(EVENT_SCI0_RXI, R_ICU_IELSR(SCI0_RXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI0_TXI, R_ICU_IELSR(SCI0_TXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI0_TEI, R_ICU_IELSR(SCI0_TEI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI0_ERI, R_ICU_IELSR(SCI0_ERI - RA_IRQ_FIRST));
+#endif
+#ifdef CONFIG_RA_SCI1_UART
+  putreg32(EVENT_SCI1_RXI, R_ICU_IELSR(SCI1_RXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI1_TXI, R_ICU_IELSR(SCI1_TXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI1_TEI, R_ICU_IELSR(SCI1_TEI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI1_ERI, R_ICU_IELSR(SCI1_ERI - RA_IRQ_FIRST));
+#endif
+#ifdef CONFIG_RA_SCI2_UART
+  putreg32(EVENT_SCI2_RXI, R_ICU_IELSR(SCI2_RXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI2_TXI, R_ICU_IELSR(SCI2_TXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI2_TEI, R_ICU_IELSR(SCI2_TEI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI2_ERI, R_ICU_IELSR(SCI2_ERI - RA_IRQ_FIRST));
+#endif
+#ifdef CONFIG_RA_SCI9_UART
+  putreg32(EVENT_SCI9_RXI, R_ICU_IELSR(SCI9_RXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI9_TXI, R_ICU_IELSR(SCI9_TXI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI9_TEI, R_ICU_IELSR(SCI9_TEI - RA_IRQ_FIRST));
+  putreg32(EVENT_SCI9_ERI, R_ICU_IELSR(SCI9_ERI - RA_IRQ_FIRST));
+#endif
 }
 
 void ra_clear_ir(int irq)

@@ -242,30 +242,9 @@ void up_irqinitialize(void)
   irq_attach(RA_IRQ_SVCALL, arm_svcall, NULL);
   irq_attach(RA_IRQ_HARDFAULT, arm_hardfault, NULL);
 
-#ifdef CONFIG_RA_SCI0_UART
-  ra_attach_icu(EVENT_SCI0_RXI, SCI0_RXI);
-  ra_attach_icu(EVENT_SCI0_TXI, SCI0_TXI);
-  ra_attach_icu(EVENT_SCI0_TEI, SCI0_TEI);
-  ra_attach_icu(EVENT_SCI0_ERI, SCI0_ERI);
-#endif
-#ifdef CONFIG_RA_SCI1_UART
-  ra_attach_icu(EVENT_SCI1_RXI, SCI1_RXI);
-  ra_attach_icu(EVENT_SCI1_TXI, SCI1_TXI);
-  ra_attach_icu(EVENT_SCI1_TEI, SCI1_TEI);
-  ra_attach_icu(EVENT_SCI1_ERI, SCI1_ERI);
-#endif
-#ifdef CONFIG_RA_SCI2_UART
-  ra_attach_icu(EVENT_SCI2_RXI, SCI2_RXI);
-  ra_attach_icu(EVENT_SCI2_TXI, SCI2_TXI);
-  ra_attach_icu(EVENT_SCI2_TEI, SCI2_TEI);
-  ra_attach_icu(EVENT_SCI2_ERI, SCI2_ERI);
-#endif
-#ifdef CONFIG_RA_SCI9_UART
-  ra_attach_icu(EVENT_SCI9_RXI, SCI9_RXI);
-  ra_attach_icu(EVENT_SCI9_TXI, SCI9_TXI);
-  ra_attach_icu(EVENT_SCI9_TEI, SCI9_TEI);
-  ra_attach_icu(EVENT_SCI9_ERI, SCI9_ERI);
-#endif
+  /* Attach the ICU events to the IRQ vector table */
+
+  ra_attach_icu();
 
   ra_prioritize_syscall(NVIC_SYSH_SVCALL_PRIORITY);
 

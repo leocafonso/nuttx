@@ -31,7 +31,7 @@
  * Public Data
  ****************************************************************************/
 
-void ra_attach_icu(uint8_t event, uint8_t int_num);
+void ra_attach_icu(void);
 void ra_clear_ir(int irq);
 
 #endif
