@@ -61,12 +61,6 @@
 #define R_PFS_PIDR                (1 <<  1) /* Bit 1: Port Input Data */
 #define R_PFS_PODR                (1 <<  0) /* Bit 0: Port Output Data */
 
-#define R_PFS_OUPUT               R_PFS_PDR
-#define R_PFS_INPUT               ~(R_PFS_PDR)
-
-#define R_PFS_LOW_DRIVE           ~(R_PFS_DSCR | 0xFFFFFFFF)
-#define R_PFS_MIDDLE_DRIVE        R_PFS_DSCR
-
 /* PMISC - Miscellaneous Port Control Register */
 #define R_PMISC_PWPR_OFFSET               0x0003
 #define R_PMISC_PWPR                      (R_PMISC_BASE + R_PMISC_PWPR_OFFSET)
@@ -117,6 +111,17 @@
 #define GPIO_TXD9_MOSI9_SDA9_3              (gpio_pinset_t){ PORT4,PIN9, (PFS_PSEL_SCI1 | R_PFS_PMR)}
 #define GPIO_RXD9_MISO9_SCL9_4              (gpio_pinset_t){ PORT6,PIN1, (PFS_PSEL_SCI1 | R_PFS_PMR)}
 #define GPIO_TXD9_MOSI9_SDA9_4              (gpio_pinset_t){ PORT6,PIN2, (PFS_PSEL_SCI1 | R_PFS_PMR)}
+
+/* GPIO Configuration */
+
+#define GPIO_OUPUT               R_PFS_PDR
+#define GPIO_INPUT               ~(R_PFS_PDR | 0xFFFFFFFF)
+
+#define GPIO_LOW_DRIVE          ~(R_PFS_DSCR | 0xFFFFFFFF)
+#define GPIO_MIDDLE_DRIVE       R_PFS_DSCR
+
+#define GPIO_OUTPUT_HIGH         R_PFS_PODR
+#define GPIO_OUTPUT_LOW         ~(R_PFS_PODR | 0xFFFFFFFF)
 
 /****************************************************************************
  * Public Types

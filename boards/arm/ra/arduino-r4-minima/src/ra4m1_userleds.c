@@ -99,10 +99,10 @@ void board_userled_all(uint32_t ledset)
   ra_gpiowrite(GPIO_L_LED, ledon);
 
   ledon = ((ledset & BOARD_LED_RX_BIT) != 0);
-  ra_gpiowrite(GPIO_RX_LED, !ledon);
+  ra_gpiowrite(GPIO_RX_LED, ledon);
 
   ledon = ((ledset & BOARD_LED_TX_BIT) != 0);
-  ra_gpiowrite(GPIO_TX_LED, !ledon);
+  ra_gpiowrite(GPIO_TX_LED, ledon);
 }
 
 #endif /* !CONFIG_ARCH_LEDS */

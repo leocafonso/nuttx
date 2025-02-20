@@ -77,9 +77,11 @@
 #define GPIO_SCI9_RX   GPIO_RXD9_MISO9_SCL9_1  /* P110 */
 #define GPIO_SCI9_TX   GPIO_TXD9_MOSI9_SDA9_1  /* P109 */
 
-#define GPIO_L_LED    (gpio_pinset_t){ PORT1,PIN11, (R_PFS_OUPUT | R_PFS_LOW_DRIVE)}               /* P111 */
-#define GPIO_TX_LED   (gpio_pinset_t){ PORT0,PIN12, (R_PFS_OUPUT | R_PFS_LOW_DRIVE | R_PFS_PODR)}  /* P012 */
-#define GPIO_RX_LED   (gpio_pinset_t){ PORT0,PIN13, (R_PFS_OUPUT | R_PFS_LOW_DRIVE | R_PFS_PODR)}  /* P013 */
+/* LED pin selections */
+
+#define GPIO_L_LED    (gpio_pinset_t){ PORT1,PIN11, (GPIO_OUPUT | GPIO_LOW_DRIVE | GPIO_OUTPUT_LOW)}   /* P111 */
+#define GPIO_TX_LED   (gpio_pinset_t){ PORT0,PIN12, (GPIO_OUPUT | GPIO_LOW_DRIVE | GPIO_OUTPUT_HIGH)}  /* P012 */
+#define GPIO_RX_LED   (gpio_pinset_t){ PORT0,PIN13, (GPIO_OUPUT | GPIO_LOW_DRIVE | GPIO_OUTPUT_HIGH)}  /* P013 */
 
 #define LED_DRIVER_PATH "/dev/userleds"
 
