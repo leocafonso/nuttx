@@ -96,6 +96,26 @@
 #define BOARD_LED_RX_BIT  (1 << BOARD_LED_RX)
 #define BOARD_LED_TX_BIT  (1 << BOARD_LED_TX)
 
+/* These LEDs are not used by the board port unless CONFIG_ARCH_LEDS is
+ * defined.  In that case, the usage by the board port is defined in
+ * include/board.h and src/ra4m1_leds.c. The LEDs are used to encode
+ * OS-related events as follows:
+ *
+ *  SYMBOL                MEANING                         LED STATE
+ *                                                         L   TX   RX
+ *  -----------------------  --------------------------  ---- ---- ----
+ */
+
+ #define LED_STARTED       0  /* NuttX has been started   OFF OFF  OFF      */
+ #define LED_HEAPALLOCATE  0  /* Heap has been allocated  OFF OFF  OFF      */
+ #define LED_IRQSENABLED   0  /* Interrupts enabled       OFF OFF  OFF      */
+ #define LED_STACKCREATED  1  /* Idle stack created       ON  OFF  OFF      */
+ #define LED_INIRQ         2  /* In an interrupt          N/C GLOW OFF      */
+ #define LED_SIGNAL        2  /* In a signal handler      N/C GLOW OFF      */
+ #define LED_ASSERTION     2  /* An assertion failed      N/C GLOW OFF      */
+ #define LED_PANIC         3  /* The system has crashed   N/C N/C  Blinking */
+ #define LED_PANIC         3  /* MCU is is sleep mode    ---- Not used ---- */
+
 /* ID_CODE */
 
 #define IDCODE1   0xFFFFFFFF

@@ -34,6 +34,7 @@
 #include "nvic.h"
 #include "ra_clockconfig.h"
 #include "ra_lowputc.h"
+#include "ra_start.h"
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -110,6 +111,8 @@ void __start(void)
   arm_fpuconfig();
   ra_lowsetup();
   showprogress('A');
+
+  ra_boardinitialize();
 
 #ifdef CONFIG_ARCH_PERF_EVENTS
   up_perf_init((void *)STM32_SYSCLK_FREQUENCY);

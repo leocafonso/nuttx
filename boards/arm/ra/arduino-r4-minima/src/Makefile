@@ -1,5 +1,5 @@
 ############################################################################
-# boards/arm/sam34/arduino-due/src/Makefile
+# boards/arm/ra/arduino-r4-minima/src/Makefile
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
@@ -20,37 +20,16 @@
 
 include $(TOPDIR)/Make.defs
 
-CSRCS = sam_boot.c sam_bringup.c
+CSRCS = ra4m1_boot.c ra4m1_bringup.c
 
 ifeq ($(CONFIG_ARCH_LEDS),y)
-CSRCS += sam_autoleds.c
+CSRCS += ra4m1_autoleds.c
 else
-CSRCS += sam_userleds.c
-endif
-
-ifeq ($(CONFIG_ARDUINO_ITHEAD_TFT),y)
-
-ifeq ($(CONFIG_SPI_BITBANG),y)
-ifeq ($(CONFIG_MMCSD_SPI),y)
-CSRCS += sam_mmcsd.c
-endif
-
-ifeq ($(CONFIG_INPUT_ADS7843E),y)
-CSRCS += sam_touchscreen.c
-endif
-endif
-
-ifeq ($(CONFIG_LCD),y)
-CSRCS += sam_lcd.c
-endif
+CSRCS += ra4m1_userleds.c
 endif
 
 ifeq ($(CONFIG_BOARDCTL),y)
-CSRCS += sam_appinit.c
-endif
-
-ifeq ($(CONFIG_SAM34_SPI0),y)
-CSRCS += sam_spidev.c
+CSRCS += ra4m1_appinit.c
 endif
 
 include $(TOPDIR)/boards/Board.mk

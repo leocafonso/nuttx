@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/src/sam_boot.c
+ * boards/arm/ra/arduino-r4-minima/src/ra4m1_boot.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -34,6 +34,25 @@
  * Public Functions
  ****************************************************************************/
 
+/****************************************************************************
+ * Name: ra4m1_boardinitialize
+ *
+ * Description:
+ *   All SAM3/4 architectures must provide the following entry point.  This
+ *   entry point is called early in the initialization -- after all memory
+ *   has been configured and mapped but before any devices have been
+ *   initialized.
+ *
+ ****************************************************************************/
+
+void ra_boardinitialize(void)
+{
+#ifdef CONFIG_ARCH_LEDS
+  /* Configure on-board LEDs if LED support has been selected. */
+
+  board_autoled_initialize();
+#endif
+}
 
 /****************************************************************************
  * Name: board_late_initialize
