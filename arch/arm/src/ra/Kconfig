@@ -7,11 +7,27 @@ comment "RA Configuration Options"
 
 choice
 	prompt "RA Chip Selection"
-	default ARCH_CHIP_R7FA4M1ABxxFP
+	default ARCH_CHIP_R7FA4M1ABxxFM
 	depends on ARCH_CHIP_RA
 
-config ARCH_CHIP_R7FA4M1ABxxFP 
+config ARCH_CHIP_R7FA4M1ABxxFP
 	bool "R7FA4M1ABxxFP"
+	select RA_HAVE_SCI0_UART
+	select RA_HAVE_SCI1_UART
+	select RA_HAVE_SCI2_UART
+	select RA_HAVE_SCI9_UART
+	select RA4M1_FAMILY
+
+config ARCH_CHIP_R7FA4M1ABxxFM
+	bool "R7FA4M1ABxxFM"
+	select RA_HAVE_SCI0_UART
+	select RA_HAVE_SCI1_UART
+	select RA_HAVE_SCI2_UART
+	select RA_HAVE_SCI9_UART
+	select RA4M1_FAMILY
+
+config ARCH_CHIP_R7FA4M1ABxxFL
+	bool "R7FA4M1ABxxFL"
 	select RA_HAVE_SCI0_UART
 	select RA_HAVE_SCI1_UART
 	select RA_HAVE_SCI2_UART
@@ -68,4 +84,3 @@ config RA_SCI9_UART
 	select SCI9_SERIALDRIVER
 
 endmenu # RA4M1 Peripheral Support
-

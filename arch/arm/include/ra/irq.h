@@ -45,8 +45,8 @@
 /* Common Processor Exceptions (vectors 0-15) */
 
 #define RA_IRQ_RESERVED       (0) /* Reserved vector (only used with CONFIG_DEBUG_FEATURES) */
-                                   /* Vector  0: Reset stack pointer value */
-                                   /* Vector  1: Reset (not handler as an IRQ) */
+                                  /* Vector  0: Reset stack pointer value */
+                                  /* Vector  1: Reset (not handler as an IRQ) */
 #define RA_IRQ_NMI            (2) /* Vector  2: Non-Maskable Interrupt (NMI) */
 #define RA_IRQ_HARDFAULT      (3) /* Vector  3: Hard fault */
 #define RA_IRQ_MEMFAULT       (4) /* Vector  4: Memory management (MPU) */
@@ -54,7 +54,7 @@
 #define RA_IRQ_USAGEFAULT     (6) /* Vector  6: Usage fault */
 #define RA_IRQ_SVCALL        (11) /* Vector 11: SVC call */
 #define RA_IRQ_DBGMONITOR    (12) /* Vector 12: Debug Monitor */
-                                   /* Vector 13: Reserved */
+                                  /* Vector 13: Reserved */
 #define RA_IRQ_PENDSV        (14) /* Vector 14: Pendable system service request */
 #define RA_IRQ_SYSTICK       (15) /* Vector 15: System tick */
 
@@ -62,8 +62,7 @@
 
 #define RA_IRQ_FIRST        (16) /* Vector number of the first external interrupt */
 
-
-#if defined(CONFIG_ARCH_CHIP_R7FA4M1ABxxFP)
+#if defined(CONFIG_RA4M1_FAMILY)
 #  include <arch/ra/ra4m1_irq.h>
 #else
 #  error Unrecognized RA architecture

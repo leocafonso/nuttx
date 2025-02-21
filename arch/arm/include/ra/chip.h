@@ -33,29 +33,31 @@
 
 /* Get customizations for each supported chip */
 
-/* RA Family *********************************************************/
+/* RA Family */
 
 /* Common FEATURES
  * Flash        256KB
- * DataFlash    8KB    
- * SRAM         32+16KB  
-*/
+ * DataFlash    8KB
+ * SRAM         32+16KB
+ */
 
 /* Internal memory */
 
 #  define RA_FLASH_SIZE            (256*1024)   /* 256KB */
 #  define RA_SRAM0_SIZE            (48*1024)    /* 48KB */
 
-/* FEATURE      R7FA4M1ABxxFP  R7FA4M1ABxxLJ  R7FA4M1ABxxFM R7FA4M1ABxxNB R7FA4M1ABxxFL R7FA4M1ABxxNE R7FA4M1ABxxNF
- * -----------  -------------  -------------  ------------- ------------- ------------- ------------- -------------
- * Package      LQFP100        LGA100         LQFP64        QFNP64        LQFP48        QFNP48        QFN40       
- * No. PIOs     81             81             49            49            33            33            25
- * SCI          4              4              4             4             4             4             4
+/* FEATURE      R7FA4M1ABxxFP  R7FA4M1ABxxLJ  R7FA4M1ABxxFM R7FA4M1ABxxNB
+ * -----------  -------------  -------------  ------------- -------------
+ * Package      LQFP100        LGA100         LQFP64        QFNP64
+ * No. PIOs     81             81             49            49
+ * SCI          4              4              4             4
+ *
+ * FEATURE      R7FA4M1ABxxFL R7FA4M1ABxxNE R7FA4M1ABxxNF
+ * -----------  ------------- ------------- -------------
+ * Package      LQFP48        QFNP48        QFN40
+ * No. PIOs     33            33            25
+ * SCI          4             4             4
  */
-
-#if defined(CONFIG_ARCH_CHIP_R7FA4M1ABxxFP)
-
-#endif
 
 /* NVIC priority levels *****************************************************/
 
