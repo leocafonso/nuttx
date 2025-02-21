@@ -114,9 +114,6 @@ void __start(void)
 
   ra_boardinitialize();
 
-#ifdef CONFIG_ARCH_PERF_EVENTS
-  up_perf_init((void *)STM32_SYSCLK_FREQUENCY);
-#endif
   showprogress('B');
 
   /* Perform early serial initialization */

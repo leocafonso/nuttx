@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-/* The ATSAM3X8E has 512KB of FLASH beginning at address 0x0008:0000 and
- * up to 100KB SRAM in three memory regions.
+/* The RA4M1 has 256Kb of FLASH beginning at address 0x0000:0000 and
+ * 32KB SRAM.
  */
 
 MEMORY

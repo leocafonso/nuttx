@@ -38,7 +38,7 @@
  * Name: ra4m1_boardinitialize
  *
  * Description:
- *   All SAM3/4 architectures must provide the following entry point.  This
+ *   All RA4M1 architectures must provide the following entry point.  This
  *   entry point is called early in the initialization -- after all memory
  *   has been configured and mapped but before any devices have been
  *   initialized.

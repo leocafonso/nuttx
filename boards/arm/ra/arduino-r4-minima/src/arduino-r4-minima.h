@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/sam34/arduino-due/src/arduino-due.h
+ * boards/arm/ra/arduino-r4-minima/src/arduino-r4-minima.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -33,12 +33,9 @@
 #include <arch/irq.h>
 #include <nuttx/irq.h>
 
-
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
-
-
 
 /****************************************************************************
  * Public Types
@@ -55,7 +52,7 @@
  ****************************************************************************/
 
 /****************************************************************************
- * Name: sam_bringup
+ * Name: ra_bringup
  *
  * Description:
  *   Perform architecture-specific initialization
@@ -69,7 +66,6 @@
  ****************************************************************************/
 
 int ra4m1_bringup(void);
-
 
 #endif /* __ASSEMBLY__ */
 #endif /* __BOARDS_ARM_RA4M1_ARDUINO_R4_MINIMA_SRC_H */

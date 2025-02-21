@@ -37,8 +37,6 @@
 #include "arm_internal.h"
 #include "ra_icu.h"
 
-/* #include "stm32_irq.h" */
-
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
@@ -382,7 +380,7 @@ int up_prioritize_irq(int irq, int priority)
   regval    |= (priority << shift);
   putreg32(regval, regaddr);
 
-  stm32_dumpnvic("prioritize", irq);
+  ra_dumpnvic("prioritize", irq);
   return OK;
 }
 

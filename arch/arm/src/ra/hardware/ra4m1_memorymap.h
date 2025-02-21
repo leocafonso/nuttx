@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/samv7/hardware/same70_memorymap.h
+ * arch/arm/src/ra/hardware/ra4m1_memorymap.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_MEMORYMAP_H
-#define __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_MEMORYMAP_H
+#ifndef __ARCH_ARM_SRC_RA_HARDWARE_RA4M1_MEMORYMAP_H
+#define __ARCH_ARM_SRC_RA_HARDWARE_RA4M1_MEMORYMAP_H
 
 /****************************************************************************
  * Included Files
@@ -27,13 +27,11 @@
 
 #include <nuttx/config.h>
 
-/* =========================================================================================================================== */
-/* ================                          Device Specific Peripheral Address Map                           ================ */
-/* =========================================================================================================================== */
+/****************************************************************************
+ * Pre-processor Definitions
+ ****************************************************************************/
 
-/** @addtogroup Device_Peripheral_peripheralAddr
- * @{
- */
+/* Registers Base Addresses */
 
  #define R_ACMPLP_BASE       0x40085E00UL
  #define R_ADC0_BASE         0x4005C000UL
@@ -89,7 +87,7 @@
  #define R_MPU_MMPU_BASE     0x40000000UL
  #define R_MPU_SMPU_BASE     0x40000C00UL
  #define R_MPU_SPMON_BASE    0x40000D00UL
- #define R_MSTP_BASE         0x40047000UL 
+ #define R_MSTP_BASE         0x40047000UL
  #define R_OPAMP_BASE        0x40086000UL
  #define R_PORT0_BASE        0x40040000UL
  #define R_PORT1_BASE        0x40040020UL
@@ -141,9 +139,6 @@
  #define R_AGTX9_BASE        0x40084900UL
  #define R_OFS_BASE          0x00000400UL
 
-/** @} */ /* End of group Device_Peripheral_peripheralAddr */
-
-/* =========================================  End of section using anonymous unions  ========================================= */
 /****************************************************************************
  * Public Types
  ****************************************************************************/
@@ -174,4 +169,4 @@ extern "C"
 
 #endif /* __ASSEMBLY__ */
 
-#endif /* __ARCH_ARM_SRC_RA4M1_HARDWARE_RA4M1_MEMORYMAP_H */
+#endif /* __ARCH_ARM_SRC_RA_HARDWARE_RA4M1_MEMORYMAP_H */

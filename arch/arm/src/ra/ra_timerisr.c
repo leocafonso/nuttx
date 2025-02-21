@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/stm32f7/stm32_timerisr.c
+ * arch/arm/src/ra/ra_timerisr.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -54,6 +54,7 @@
 /****************************************************************************
  * Private Functions
  ****************************************************************************/
+
 /****************************************************************************
  * Function:  ra_timerisr
  *
@@ -98,16 +99,6 @@ void up_timer_initialize(void)
   putreg32(regval, NVIC_SYSH12_15_PRIORITY);
 
   /* Make sure that the SYSTICK clock source is set correctly */
-
-#if 0 /* Does not work.  Comes up with HCLK source and I can't change it */
-  regval = getreg32(NVIC_SYSTICK_CTRL);
-#ifdef CONFIG_STM32_SYSTICK_HCLKd8
-  regval &= ~NVIC_SYSTICK_CTRL_CLKSOURCE;
-#else
-  regval |= NVIC_SYSTICK_CTRL_CLKSOURCE;
-#endif
-  putreg32(regval, NVIC_SYSTICK_CTRL);
-#endif
 
 #if defined(CONFIG_ARMV7M_SYSTICK) && defined(CONFIG_TIMER_ARCH)
   up_timer_set_lowerhalf(systick_initialize(true, RA_HOCO_FREQUENCY, -1));

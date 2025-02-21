@@ -93,7 +93,7 @@ void ra_gpiowrite(gpio_pinset_t pinset, bool value)
 }
 
 /****************************************************************************
- * Name: sam_gpioread
+ * Name: ra_gpioread
  *
  * Description:
  *   Read one or zero from the selected GPIO pin

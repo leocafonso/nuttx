@@ -62,7 +62,7 @@ extern "C"
  * Name: ra4m1_clockconfig
  *
  * Description:
- *   Called to initialize the SAM3/4.  This does whatever setup is needed to
+ *   Called to initialize the RA.  This does whatever setup is needed to
  *   put the SoC in a usable state.  This includes the initialization of
  *   clocking using the settings in board.h.
  *
