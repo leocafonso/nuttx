@@ -101,7 +101,7 @@ void up_timer_initialize(void)
   /* Make sure that the SYSTICK clock source is set correctly */
 
 #if defined(CONFIG_ARMV7M_SYSTICK) && defined(CONFIG_TIMER_ARCH)
-  up_timer_set_lowerhalf(systick_initialize(true, RA_HOCO_FREQUENCY, -1));
+  up_timer_set_lowerhalf(systick_initialize(true, SYSTICK_CLOCK, -1));
 #else
   /* Configure SysTick to interrupt at the requested rate */
 

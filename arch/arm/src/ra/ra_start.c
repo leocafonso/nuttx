@@ -40,13 +40,13 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
-#define IDLE_STACK  ((uint32_t)_ebss + CONFIG_IDLETHREAD_STACKSIZE)
+#define HEAP_BASE  ((uint32_t)_ebss + CONFIG_IDLETHREAD_STACKSIZE)
 
 /****************************************************************************
  * Public Data
  ****************************************************************************/
 
-const uintptr_t g_idle_topstack = IDLE_STACK;
+const uintptr_t g_idle_topstack = HEAP_BASE;
 
 /****************************************************************************
  * Private Functions
@@ -112,29 +112,17 @@ void __start(void)
   ra_lowsetup();
   showprogress('A');
 
-  ra_boardinitialize();
-
-  showprogress('B');
-
   /* Perform early serial initialization */
 #ifdef USE_EARLYSERIALINIT
   arm_earlyserialinit();
 #endif
-  showprogress('C');
-
-  /* For the case of the separate user-/kernel-space build, perform whatever
-   * platform specific initialization of the user memory is required.
-   * Normally this just means initializing the user space .data and .bss
-   * segments.
-   */
-
-#ifdef CONFIG_BUILD_PROTECTED
-  showprogress('D');
-#endif
+  showprogress('B');
 
   /* Initialize onboard resources */
 
-  showprogress('E');
+  ra_boardinitialize();
+
+  showprogress('C');
 
   /* Then start NuttX */
 
