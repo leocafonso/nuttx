@@ -155,6 +155,18 @@ SCI9:
 
 SCI9 is the serial console in the default configurations, at 115200 8N1.
 
+SCI0 is also wired out on this board, for use as a second UART
+(``CONFIG_RA_SCI0_UART``) independent of the console:
+
+    ==================   ============
+    Signal               R7FA8M1AHECBD
+    ==================   ============
+    TXD0                 P609
+    RXD0                 P610
+    ==================   ============
+
+Tested with an external USB-serial adapter.
+
 Timers
 ======
 
